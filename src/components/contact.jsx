@@ -19,11 +19,6 @@ const ContactComponent = () => {
       image: manoj
     },
     {
-      name: "Sahith Akula",
-      role: "Web Developer",
-      image: sahith
-    },
-    {
       name: "Pandu Ranga",
       role: "Web Master",
       image: pandu
