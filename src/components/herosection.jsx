@@ -1,10 +1,18 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
-import Detail from "./detailsection"
+import Detail from "./detailsection";
+import Timeline from './eventtimeline';
+import Theme from "./Themes";
+import Sponsor from "./sponser";
+import Contact from "./contact";
 // Mock Detail component since it's import
 
 const OmnitrixWebsite = () => {
   const Detailref = useRef(null);
+  const Timeref= useRef(null);
+  const Themeref = useRef(null);
+  const Sponsorref = useRef(null);
+  const contactref = useRef(null);
   return (
     <div className="min-h-screen bg-transparent text-white">
       {/* Navigation Bar with Inner Border */}
@@ -24,7 +32,7 @@ const OmnitrixWebsite = () => {
             
             {/* Navigation Links */}
             <div className="hidden md:flex items-center justify-center flex-1 space-x-8">
-              {['LOBBY', 'ABOUT', 'TRACKS', 'TIMELINE', 'PRIZES', 'SPONSORS', 'FAQs', 'TEAMS'].map((item) => (
+              {['Lobby', 'ABOUT', 'Themes', 'HackTime', 'Prizes', 'Sponsers', 'FAQs', 'Contact'].map((item) => (
                 <a
                   key={item}
                   href="#"
@@ -172,6 +180,18 @@ const OmnitrixWebsite = () => {
       </div>
       <div ref={Detailref}>
         <Detail/>
+      </div>
+      <div ref={Timeref}>
+        <Timeline/>
+      </div>
+      <div ref={Themeref}>
+        <Theme/>
+      </div>
+      <div ref={Sponsorref}>
+        <Sponsor/>
+      </div>
+      <div ref={contactref}>
+        <Contact/>
       </div>
     </div>
   );
