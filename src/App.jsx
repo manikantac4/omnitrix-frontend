@@ -11,7 +11,7 @@ const App = () => {
       <GlobalBackground />
       <div className="relative z-10">
         <Routes>
-        <Route path="/home" element={<Hero />} />
+        <Route path="/" element={<Hero />} />
         <Route path="/form" element={<Form/>} />
         </Routes>
       </div>
