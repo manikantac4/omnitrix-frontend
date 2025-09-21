@@ -1,5 +1,6 @@
 import React from 'react';
 import { useState, useEffect, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Detail from "./detailsection";
 import Timeline from './eventtimeline';
 import Theme from "./Themes";
@@ -7,6 +8,7 @@ import Sponsor from "./sponser";
 import Contact from "./contact";
 
 const OmnitrixWebsite = () => {
+  const navigate = useNavigate();
   const Detailref = useRef(null);
   const Timeref = useRef(null);
   const Themeref = useRef(null);
@@ -75,20 +77,20 @@ const OmnitrixWebsite = () => {
                   key={item}
                   onClick={() => handleNavClick(item)}
                   className={`text-gray-300 hover:text-green-400 px-3 py-2 text-sm font-medium transition-colors duration-200 border border-transparent hover:border-green-400/20 rounded-md hover:shadow-inner cursor-pointer ${
-                    ['HackTime', 'Prizes', 'FAQs'].includes(item) ? 'opacity-50 cursor-not-allowed' : ''
+                    ['HackTime', 'FAQs'].includes(item) ? 'opacity-50 cursor-not-allowed' : ''
                   }`}
                   style={{
                     transition: 'all 0.2s ease',
                   }}
                   onMouseEnter={(e) => {
-                    if (!['HackTime', 'Prizes', 'FAQs'].includes(item)) {
+                    if (!['HackTime', 'FAQs'].includes(item)) {
                       e.target.style.boxShadow = 'inset 0 0 0 1px rgba(34, 197, 94, 0.2)';
                     }
                   }}
                   onMouseLeave={(e) => {
                     e.target.style.boxShadow = 'none';
                   }}
-                  disabled={['HackTime', 'Prizes', 'FAQs'].includes(item)}
+                  disabled={['HackTime', 'FAQs'].includes(item)}
                 >
                   {item}
                 </button>

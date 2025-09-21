@@ -9,6 +9,7 @@ import eventtime from "./components/eventtimeline";
 import Theme from "./components/Themes";
 import Sponsor from "./components/sponser";
 import Contact from "./components/contact";
+import Prize from "./components/prizes";
 // ScrollToTop component - must be inside Router
 function ScrollToTop() {
   const location = useLocation();
@@ -46,6 +47,7 @@ function App() {
           <Route path="/theme" element={<Theme />} />
           <Route path="/sponsor" element={<Sponsor />} />
           <Route path="/contact" element={<Contact />} />
+          <Route path="/prize" element={<Prize />} />
                   </Routes>
       </div>
     </Router>

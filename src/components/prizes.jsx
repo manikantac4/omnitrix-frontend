@@ -133,13 +133,13 @@ const PrizesComponent = () => {
               <Trophy className="mx-auto h-12 w-12 sm:h-16 sm:w-16 text-emerald-400" />
             </div>
             <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
-              <span className="block text-white mb-2">Prizes &</span>
+              <span className="block text-white mb-2">Prize Pool &</span>
               <span className="block bg-gradient-to-r from-emerald-400 via-green-400 to-teal-400 bg-clip-text text-transparent">
-                Rewards
+                Recognition Awards
               </span>
             </h1>
             <p className="mx-auto mt-6 max-w-2xl text-base sm:text-lg lg:text-xl text-gray-300">
-              Compete for substantial cash prizes and prestigious recognition. Show your innovation and technical excellence to claim your reward.
+              Exceptional teams receive substantial monetary rewards and prestigious recognition for their innovative solutions and technical excellence in the Omnitrix Hackathon 2025.
             </p>
             <div className="mt-8 flex justify-center">
               <div className="flex items-center space-x-2 rounded-full bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-400 ring-1 ring-emerald-500/20">
