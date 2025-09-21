@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import footer from "../assets/footer.jpg";
+import footer from "../assets/footer.png";
 import pandu from "../assets/pandu.jpg";
 import manoj from "../assets/manoj.jpg";
 import sahith from "../assets/sahith.jpg";

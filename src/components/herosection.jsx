@@ -5,6 +5,7 @@ import Timeline from './eventtimeline';
 import Theme from "./Themes";
 import Sponsor from "./sponser";
 import Contact from "./contact";
+import title from "../assets/title.png";
 
 const OmnitrixWebsite = () => {
   const Detailref = useRef(null);
@@ -142,26 +143,11 @@ const OmnitrixWebsite = () => {
              style={{boxShadow: 'inset 0 0 0 1px rgba(34, 197, 94, 0.05), 0 0 0 1px rgba(34, 197, 94, 0.1)'}}>
           <div className="grid lg:grid-cols-2 gap-12 items-center">
             
-            {/* Left Side - Large OMNITRIX Logo */}
+            {/* Left Side - Logo Image Placeholder */}
             <div className="flex items-center justify-center lg:justify-start">
-              <div className="text-center lg:text-left border border-green-400/10 rounded-xl p-6"
-                   style={{boxShadow: 'inset 0 0 0 1px rgba(34, 197, 94, 0.05)'}}>
-                {/* Large OMNITRIX Text */}
-                <h1 className="text-8xl lg:text-9xl xl:text-[10rem] font-black text-white leading-none tracking-tight">
-                  <span className="block transform -rotate-12 origin-center">OMNI</span>
-                  <span className="block transform rotate-6 origin-center -mt-4">TRIX</span>
-                </h1>
-                
-                {/* Decorative Elements */}
-                <div className="flex items-center justify-center lg:justify-start mt-6 space-x-4">
-                  <div className="w-12 h-12 rounded-full bg-green-500/30 border-2 border-green-400 flex items-center justify-center"
-                       style={{boxShadow: 'inset 0 0 0 1px rgba(34, 197, 94, 0.4)'}}>
-                    <div className="w-6 h-6 rounded-full bg-green-400 animate-pulse border border-green-300"
-                         style={{boxShadow: 'inset 0 0 0 1px rgba(34, 197, 94, 0.6)'}}></div>
-                  </div>
-                  <div className="w-8 h-8 rounded-full bg-red-500/30 border-2 border-red-400"
-                       style={{boxShadow: 'inset 0 0 0 1px rgba(239, 68, 68, 0.4)'}}></div>
-                </div>
+              <div className="text-center lg:text-left">
+                {/* Placeholder for your image - replace this div with your img tag */}
+              <img src={title} alt="OMNITRIX Logo" className="w-full h-full object-contain" />
               </div>
             </div>
 
