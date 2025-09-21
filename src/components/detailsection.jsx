@@ -1,257 +1,289 @@
 import React, { useState, useEffect } from 'react';
-import { Trophy, Award, Medal, Gift } from 'lucide-react';
+import { useNavigate } from 'react-router-dom';
 
-const PrizesComponent = () => {
-  const [titleVisible, setTitleVisible] = useState(false);
-  const [cardsVisible, setCardsVisible] = useState(false);
+// RegisterButton component
+const RegisterButton = ({ isVisible }) => {
+  const navigate = useNavigate();
 
-  useEffect(() => {
-    const titleTimer = setTimeout(() => setTitleVisible(true), 300);
-    const cardsTimer = setTimeout(() => setCardsVisible(true), 600);
-    return () => {
-      clearTimeout(titleTimer);
-      clearTimeout(cardsTimer);
-    };
-  }, []);
+  const handleClick = () => {
+    navigate('/form');
+  };
 
-  // Inject professional animated styles
-  useEffect(() => {
-    if (typeof document === "undefined") return;
-    if (!document.getElementById("professional-prize-styles")) {
-      const professionalCSS = `
-        .professional-gradient-border {
-          position: relative;
-          background: linear-gradient(135deg, rgba(16, 185, 129, 0.1), rgba(6, 78, 59, 0.1));
-          backdrop-filter: blur(10px);
-          border: 1px solid rgba(16, 185, 129, 0.2);
-          transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-        
-        .professional-gradient-border::before {
-          content: "";
-          position: absolute;
-          inset: -1px;
-          padding: 1px;
-          background: linear-gradient(135deg, #10b981, transparent, #10b981);
-          border-radius: inherit;
-          mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-          mask-composite: xor;
-          opacity: 0;
-          transition: opacity 0.4s ease;
-        }
-        
-        .professional-gradient-border:hover::before {
-          opacity: 1;
-        }
-        
-        .professional-gradient-border:hover {
-          transform: translateY(-8px);
-          box-shadow: 0 25px 50px -12px rgba(16, 185, 129, 0.25);
-          border-color: rgba(16, 185, 129, 0.4);
-        }
-        
-        .prize-shimmer {
-          background: linear-gradient(
-            90deg,
-            transparent 0%,
-            rgba(16, 185, 129, 0.2) 50%,
-            transparent 100%
-          );
-          background-size: 200% 100%;
-          animation: shimmer 3s infinite;
-        }
-        
-        @keyframes shimmer {
-          0% { background-position: -200% 0; }
-          100% { background-position: 200% 0; }
-        }
-        
-        .winner-badge {
-          background: linear-gradient(135deg, #f59e0b, #d97706);
-          box-shadow: 0 10px 30px rgba(245, 158, 11, 0.3);
-        }
-        
-        .runner-up-badge-1 {
-          background: linear-gradient(135deg, #3b82f6, #1d4ed8);
-          box-shadow: 0 10px 30px rgba(59, 130, 246, 0.3);
-        }
-        
-        .runner-up-badge-2 {
-          background: linear-gradient(135deg, #10b981, #059669);
-          box-shadow: 0 10px 30px rgba(16, 185, 129, 0.3);
-        }
-      `;
+  return (
+    <button 
+      onClick={handleClick}
+      className={`group relative px-16 py-8 text-2xl md:text-3xl font-black tracking-wider uppercase bg-transparent border-4 border-green-400 rounded-full overflow-hidden cursor-pointer transition-all duration-700 hover:scale-110 hover:border-green-300 transform ${
+        isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+      }`}
+      style={{
+        fontFamily: '"Orbitron", "Exo 2", "Rajdhani", monospace',
+        boxShadow: `
+          0 0 30px rgba(34, 197, 94, 0.6),
+          0 0 60px rgba(34, 197, 94, 0.4),
+          0 0 90px rgba(34, 197, 94, 0.2),
+          inset 0 0 30px rgba(34, 197, 94, 0.1)
+        `,
+        animation: 'powerCorePulse 2.5s ease-in-out infinite',
+        transitionDelay: '0.3s'
+      }}
+      onMouseEnter={(e) => {
+        e.target.style.boxShadow = `
+          0 0 50px rgba(34, 197, 94, 0.9),
+          0 0 100px rgba(34, 197, 94, 0.7),
+          0 0 150px rgba(34, 197, 94, 0.5),
+          inset 0 0 50px rgba(34, 197, 94, 0.3)
+        `;
+      }}
+      onMouseLeave={(e) => {
+        e.target.style.boxShadow = `
+          0 0 30px rgba(34, 197, 94, 0.6),
+          0 0 60px rgba(34, 197, 94, 0.4),
+          0 0 90px rgba(34, 197, 94, 0.2),
+          inset 0 0 30px rgba(34, 197, 94, 0.1)
+        `;
+      }}>
       
-      const styleElement = document.createElement("style");
-      styleElement.id = "professional-prize-styles";
-      styleElement.type = "text/css";
-      styleElement.appendChild(document.createTextNode(professionalCSS));
-      document.head.appendChild(styleElement);
-    }
+      {/* Animated Background Waves */}
+      <div className="absolute inset-0 bg-gradient-to-r from-green-500/0 via-green-400/20 to-green-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+      <div className="absolute inset-0 bg-gradient-to-l from-green-300/0 via-green-500/10 to-green-300/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ animationDelay: '0.2s' }}></div>
+      
+      {/* Energy Rings */}
+      <div className="absolute inset-0 rounded-full border-2 border-green-300/30 group-hover:border-green-200/50 transition-colors duration-500" style={{ animation: 'energyRing 3s linear infinite' }}></div>
+      <div className="absolute inset-2 rounded-full border border-green-400/20 group-hover:border-green-300/40 transition-colors duration-500" style={{ animation: 'energyRing 3s linear infinite reverse' }}></div>
+      
+      {/* Scanning Lines */}
+      <div className="absolute inset-0 overflow-hidden rounded-full">
+        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-green-300/60 to-transparent" style={{ animation: 'scanLine 4s linear infinite' }}></div>
+        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-green-400/40 to-transparent" style={{ animation: 'scanLine 4s linear infinite reverse', animationDelay: '2s' }}></div>
+      </div>
+      
+      <span className="relative z-10 text-green-300 group-hover:text-white transition-colors duration-300 drop-shadow-[0_0_10px_rgba(34,197,94,0.8)]">
+        Register for Omnitrix ⚡
+      </span>
+    </button>
+  );
+};
+
+// Main OmnitrixRegistration component
+const OmnitrixRegistration = () => {
+  const [isVisible, setIsVisible] = useState(false);
+
+  useEffect(() => {
+    setIsVisible(true);
   }, []);
 
-  const prizes = [
+  const eventDetails = [
     {
-      position: 1,
-      title: "Winner",
-      amount: "₹15,000",
-      badge: "winner-badge",
-      icon: Trophy,
-      description: "Grand prize winner receives cash reward, certificate of excellence, exclusive merchandise, and recognition as the champion of Omnitrix Hackathon 2025.",
-      benefits: ["Cash Prize", "Certificate", "Merchandise", "Trophy", "LinkedIn Badge"]
+      icon: '⏳',
+      title: '24-Hour Hackathon',
+      subtitle: 'Non-stop coding marathon',
+      delay: 0.8
     },
     {
-      position: 2,
-      title: "First Runner-Up",
-      amount: "₹10,000",
-      badge: "runner-up-badge-1",
-      icon: Award,
-      description: "First runner-up receives substantial cash reward, certificate of achievement, and exclusive merchandise package.",
-      benefits: ["Cash Prize", "Certificate", "Merchandise", "Medal", "LinkedIn Badge"]
+      icon: '👥',
+      title: '2-4 Member Teams',
+      subtitle: 'Collaborative innovation',
+      delay: 1.0
     },
     {
-      position: 3,
-      title: "Second Runner-Up",
-      amount: "₹5,000",
-      badge: "runner-up-badge-2",
-      icon: Medal,
-      description: "Second runner-up receives cash reward, certificate of participation, and branded merchandise.",
-      benefits: ["Cash Prize", "Certificate", "Merchandise", "Recognition"]
+      icon: '🍔',
+      title: 'Full Meals Provided',
+      subtitle: 'Breakfast, lunch & snacks',
+      delay: 1.2
+    },
+    {
+      icon: '🎁',
+      title: 'Certificates & Swags',
+      subtitle: 'Recognition for participation',
+      delay: 1.4
     }
   ];
 
   return (
-    <div className="min-h-screen bg-transparent text-white">
-      {/* Header Section */}
-      <div className="relative overflow-hidden py-12 sm:py-16 lg:py-20">
-        <div className="absolute inset-0 bg-gradient-to-b from-green-500/5 to-transparent"></div>
-        <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className={`text-center transition-all duration-1000 ease-out ${
-            titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
-          }`}>
-            <div className="mb-6">
-              <Trophy className="mx-auto h-12 w-12 sm:h-16 sm:w-16 text-emerald-400" />
+    <div className="min-h-screen bg-transparent relative overflow-hidden py-16 px-4">
+      {/* Background Particles */}
+      <div className="absolute inset-0 pointer-events-none">
+        {[...Array(20)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-1 h-1 bg-green-400/30 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animation: `float ${3 + Math.random() * 4}s ease-in-out infinite`,
+              animationDelay: `${Math.random() * 2}s`
+            }}
+          />
+        ))}
+      </div>
+
+      {/* Floating Stars */}
+      <div className="absolute inset-0 pointer-events-none">
+        {[...Array(15)].map((_, i) => (
+          <div
+            key={`star-${i}`}
+            className="absolute w-2 h-2 bg-white/20 rounded-full"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animation: `twinkle ${2 + Math.random() * 3}s linear infinite`,
+              animationDelay: `${Math.random() * 3}s`
+            }}
+          />
+        ))}
+      </div>
+
+      <div className="max-w-5xl mx-auto">
+        {/* Section Title */}
+        <div className="text-center mb-12">
+          <h2 
+            className={`text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-green-300 via-green-400 to-green-300 mb-4 transform transition-all duration-1000 ${
+              isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+            }`}
+            style={{ 
+              fontFamily: '"Orbitron", "Exo 2", "Rajdhani", monospace',
+              textShadow: '0 0 20px rgba(34, 197, 94, 0.3)'
+            }}
+          >
+            POWER UP YOUR CODE
+          </h2>
+          <div className="w-32 h-1 bg-gradient-to-r from-transparent via-green-400 to-transparent mx-auto"></div>
+        </div>
+
+        {/* Central Power Core - Register Button */}
+        <div className="flex justify-center mb-16">
+          <RegisterButton isVisible={isVisible} />
+        </div>
+
+        {/* Event Details - 2+2 Layout */}
+        <div className="max-w-5xl mx-auto mb-12">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            
+            {/* Left Side - First Two Items */}
+            <div className="space-y-6">
+              {eventDetails.slice(0, 2).map((detail, index) => (
+                <div 
+                  key={index}
+                  className={`group relative transform transition-all duration-1000 ${
+                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+                  }`} 
+                  style={{ transitionDelay: `${detail.delay}s` }}
+                >
+                  <div className="p-6 bg-transparent backdrop-blur-sm border border-green-400/30 rounded-xl hover:border-green-400/60 transition-all duration-500 hover:bg-green-400/5"
+                       onMouseEnter={(e) => {
+                         e.target.style.transform = 'translateY(-5px)';
+                         e.target.style.boxShadow = '0 10px 40px rgba(34, 197, 94, 0.15)';
+                       }}
+                       onMouseLeave={(e) => {
+                         e.target.style.transform = 'translateY(0px)';
+                         e.target.style.boxShadow = 'none';
+                       }}>
+                    <div className="flex items-center space-x-4">
+                      <div className="text-4xl">{detail.icon}</div>
+                      <div>
+                        <h3 className="text-xl font-bold text-green-300 mb-1" style={{ fontFamily: '"Orbitron", monospace' }}>
+                          {detail.title}
+                        </h3>
+                        <p className="text-white/80 text-sm">{detail.subtitle}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
             </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
-              <span className="block text-white mb-2">Prizes &</span>
-              <span className="block bg-gradient-to-r from-emerald-400 via-green-400 to-teal-400 bg-clip-text text-transparent">
-                Rewards
-              </span>
-            </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-base sm:text-lg lg:text-xl text-gray-300">
-              Compete for substantial cash prizes and prestigious recognition. Show your innovation and technical excellence to claim your reward.
+
+            {/* Right Side - Last Two Items */}
+            <div className="space-y-6">
+              {eventDetails.slice(2, 4).map((detail, index) => (
+                <div 
+                  key={index + 2}
+                  className={`group relative transform transition-all duration-1000 ${
+                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+                  }`} 
+                  style={{ transitionDelay: `${detail.delay}s` }}
+                >
+                  <div className="p-6 bg-transparent backdrop-blur-sm border border-green-400/30 rounded-xl hover:border-green-400/60 transition-all duration-500 hover:bg-green-400/5"
+                       onMouseEnter={(e) => {
+                         e.target.style.transform = 'translateY(-5px)';
+                         e.target.style.boxShadow = '0 10px 40px rgba(34, 197, 94, 0.15)';
+                       }}
+                       onMouseLeave={(e) => {
+                         e.target.style.transform = 'translateY(0px)';
+                         e.target.style.boxShadow = 'none';
+                       }}>
+                    <div className="flex items-center space-x-4">
+                      <div className="text-4xl">{detail.icon}</div>
+                      <div>
+                        <h3 className="text-xl font-bold text-green-300 mb-1" style={{ fontFamily: '"Orbitron", monospace' }}>
+                          {detail.title}
+                        </h3>
+                        <p className="text-white/80 text-sm">{detail.subtitle}</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              ))}
+            </div>
+
+          </div>
+        </div>
+
+        {/* Bottom CTA */}
+        <div className="text-center mt-12">
+          <div className={`inline-block px-8 py-4 bg-green-900/20 backdrop-blur-sm rounded-full border border-green-400/30 transform transition-all duration-1000 ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+          }`} style={{ transitionDelay: '1.5s' }}>
+            <p className="text-green-300 font-medium text-lg">
+              Ready to transform your ideas into reality? Join the ultimate coding experience! 🚀
             </p>
-            <div className="mt-8 flex justify-center">
-              <div className="flex items-center space-x-2 rounded-full bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-400 ring-1 ring-emerald-500/20">
-                <Gift className="h-4 w-4" />
-                <span>Total Prize Pool: ₹30,000</span>
-              </div>
-            </div>
           </div>
         </div>
       </div>
 
-      {/* Prizes Grid */}
-      <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8 pb-12 sm:pb-16 lg:pb-20">
-        <div className="grid grid-cols-1 gap-6 sm:gap-8 lg:grid-cols-3">
-          {prizes.map((prize, index) => {
-            const IconComponent = prize.icon;
-            return (
-              <div
-                key={prize.position}
-                className={`professional-gradient-border rounded-2xl p-6 sm:p-8 transition-all duration-700 ease-out ${
-                  cardsVisible 
-                    ? 'opacity-100 translate-y-0' 
-                    : 'opacity-0 translate-y-12'
-                }`}
-                style={{ transitionDelay: `${index * 200}ms` }}
-              >
-                {/* Position Badge */}
-                <div className="mb-6 flex justify-center">
-                  <div className={`${prize.badge} flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-xl text-white shadow-lg`}>
-                    <span className="text-lg sm:text-xl font-bold">{prize.position}</span>
-                  </div>
-                </div>
+      {/* Custom Styles */}
+      <style jsx>{`
+        @keyframes powerCorePulse {
+          0%, 100% { 
+            box-shadow: 
+              0 0 30px rgba(34, 197, 94, 0.6),
+              0 0 60px rgba(34, 197, 94, 0.4),
+              0 0 90px rgba(34, 197, 94, 0.2),
+              inset 0 0 30px rgba(34, 197, 94, 0.1);
+          }
+          50% { 
+            box-shadow: 
+              0 0 50px rgba(34, 197, 94, 0.8),
+              0 0 80px rgba(34, 197, 94, 0.6),
+              0 0 120px rgba(34, 197, 94, 0.4),
+              inset 0 0 50px rgba(34, 197, 94, 0.2);
+          }
+        }
 
-                {/* Icon */}
-                <div className="mb-4 flex justify-center">
-                  <IconComponent className="h-8 w-8 sm:h-10 sm:w-10 text-emerald-400" />
-                </div>
+        @keyframes energyRing {
+          0% { transform: rotate(0deg) scale(1); opacity: 0.3; }
+          50% { opacity: 0.6; }
+          100% { transform: rotate(360deg) scale(1.05); opacity: 0.3; }
+        }
 
-                {/* Title */}
-                <h3 className="mb-4 text-center text-xl sm:text-2xl font-bold text-white">
-                  {prize.title}
-                </h3>
+        @keyframes scanLine {
+          0% { transform: translateX(-100%); }
+          100% { transform: translateX(100%); }
+        }
 
-                {/* Prize Amount */}
-                <div className="prize-shimmer mb-6 rounded-lg p-4 text-center">
-                  <div className="text-2xl sm:text-3xl lg:text-4xl font-bold text-emerald-400">
-                    {prize.amount}
-                  </div>
-                  <div className="mt-1 text-sm text-gray-400">Cash Prize</div>
-                </div>
+        @keyframes float {
+          0%, 100% { transform: translateY(0px); }
+          50% { transform: translateY(-20px); }
+        }
 
-                {/* Description */}
-                <p className="mb-6 text-center text-sm sm:text-base leading-relaxed text-gray-300">
-                  {prize.description}
-                </p>
+        @keyframes twinkle {
+          0%, 100% { opacity: 0.3; transform: scale(1); }
+          50% { opacity: 1; transform: scale(1.5); }
+        }
 
-                {/* Benefits */}
-                <div className="space-y-3">
-                  <h4 className="text-center text-sm font-semibold uppercase tracking-wide text-emerald-400">
-                    What You Get
-                  </h4>
-                  <div className="flex flex-wrap justify-center gap-2">
-                    {prize.benefits.map((benefit, benefitIndex) => (
-                      <span
-                        key={benefitIndex}
-                        className="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300 ring-1 ring-emerald-500/20"
-                      >
-                        {benefit}
-                      </span>
-                    ))}
-                  </div>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-
-        {/* Inspiration Section */}
-        <div className="mt-12 sm:mt-16 lg:mt-20">
-          <div className="professional-gradient-border rounded-2xl p-8 sm:p-12 text-center">
-            <div className="mx-auto max-w-4xl">
-              <h2 className="mb-6 text-2xl sm:text-3xl font-bold text-white">
-                Excellence in Innovation
-              </h2>
-              <blockquote className="text-lg sm:text-xl italic leading-relaxed text-gray-300">
-                "Innovation distinguishes between a leader and a follower. Every great developer got there by solving problems others never solved before."
-              </blockquote>
-              <p className="mt-4 text-emerald-400 font-medium">— Inspired by Steve Jobs</p>
-              
-              <div className="mt-8 pt-8 border-t border-gray-700">
-                <div className="text-xl sm:text-2xl font-bold text-emerald-400 tracking-wider">
-                  OMNITRIX HACKATHON 2025
-                </div>
-                <div className="mt-2 text-sm text-gray-400">
-                  Where Innovation Meets Excellence
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* Background Effects */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        <div className="absolute top-1/4 left-10 h-2 w-2 animate-pulse rounded-full bg-emerald-400/30"></div>
-        <div className="absolute top-1/3 right-20 h-3 w-3 animate-bounce rounded-full bg-emerald-300/20"></div>
-        <div className="absolute bottom-1/3 left-1/4 h-4 w-4 animate-ping rounded-full bg-emerald-500/25"></div>
-        <div className="absolute bottom-20 right-1/3 h-2 w-2 animate-pulse rounded-full bg-emerald-400/30"></div>
-        <div className="absolute top-1/2 right-10 h-3 w-3 animate-bounce rounded-full bg-emerald-300/20"></div>
-      </div>
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@400;700;900&family=Rajdhani:wght@400;700&display=swap');
+      `}</style>
     </div>
   );
 };
 
-export default PrizesComponent;
+export default OmnitrixRegistration;
