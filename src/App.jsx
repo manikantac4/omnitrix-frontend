@@ -4,7 +4,11 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 import Hero from "./components/herosection"
 import GlobalBackground from "./components/globalbackground";
 import Form from "./components/Register";
-
+import Detail from "./components/detailsection";
+import eventtime from "./components/eventtimeline";
+import Theme from "./components/Themes";
+import Sponsor from "./components/sponser";
+import Contact from "./components/contact";
 // ScrollToTop component - must be inside Router
 function ScrollToTop() {
   const location = useLocation();
@@ -36,9 +40,13 @@ function App() {
       <div className="App">
         <Routes>
           <Route path="/" element={<HomePage />} />
-          <Route path="/home" element={<Hero />} />
+          <Route path="/about" element={<Detail />} />
           <Route path="/form" element={<Form />} />
-        </Routes>
+          <Route path="/time" element={<eventtime />} />
+          <Route path="/theme" element={<Theme />} />
+          <Route path="/sponsor" element={<Sponsor />} />
+          <Route path="/contact" element={<Contact />} />
+                  </Routes>
       </div>
     </Router>
   );

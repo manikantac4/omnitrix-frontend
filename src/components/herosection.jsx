@@ -5,14 +5,52 @@ import Timeline from './eventtimeline';
 import Theme from "./Themes";
 import Sponsor from "./sponser";
 import Contact from "./contact";
-// Mock Detail component since it's import
 
 const OmnitrixWebsite = () => {
   const Detailref = useRef(null);
-  const Timeref= useRef(null);
+  const Timeref = useRef(null);
   const Themeref = useRef(null);
   const Sponsorref = useRef(null);
   const contactref = useRef(null);
+
+  // Scroll to section function
+  const scrollToSection = (ref) => {
+    ref.current?.scrollIntoView({ 
+      behavior: 'smooth',
+      block: 'start'
+    });
+  };
+
+  // Handle navigation clicks
+  const handleNavClick = (item) => {
+    switch(item) {
+      case 'ABOUT':
+        scrollToSection(Detailref);
+        break;
+      case 'Themes':
+        scrollToSection(Themeref);
+        break;
+      case 'Sponsers':
+        scrollToSection(Sponsorref);
+        break;
+      case 'Contact':
+        scrollToSection(contactref);
+        break;
+      case 'HackTime':
+      case 'Prizes':
+      case 'FAQs':
+        // These are null/not implemented yet
+        console.log(`${item} section coming soon!`);
+        break;
+      case 'Lobby':
+        // Scroll to top
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        break;
+      default:
+        break;
+    }
+  };
+
   return (
     <div className="min-h-screen bg-transparent text-white">
       {/* Navigation Bar with Inner Border */}
@@ -33,22 +71,27 @@ const OmnitrixWebsite = () => {
             {/* Navigation Links */}
             <div className="hidden md:flex items-center justify-center flex-1 space-x-8">
               {['Lobby', 'ABOUT', 'Themes', 'HackTime', 'Prizes', 'Sponsers', 'FAQs', 'Contact'].map((item) => (
-                <a
+                <button
                   key={item}
-                  href="#"
-                  className="text-gray-300 hover:text-green-400 px-3 py-2 text-sm font-medium transition-colors duration-200 border border-transparent hover:border-green-400/20 rounded-md hover:shadow-inner"
+                  onClick={() => handleNavClick(item)}
+                  className={`text-gray-300 hover:text-green-400 px-3 py-2 text-sm font-medium transition-colors duration-200 border border-transparent hover:border-green-400/20 rounded-md hover:shadow-inner cursor-pointer ${
+                    ['HackTime', 'Prizes', 'FAQs'].includes(item) ? 'opacity-50 cursor-not-allowed' : ''
+                  }`}
                   style={{
                     transition: 'all 0.2s ease',
                   }}
                   onMouseEnter={(e) => {
-                    e.target.style.boxShadow = 'inset 0 0 0 1px rgba(34, 197, 94, 0.2)';
+                    if (!['HackTime', 'Prizes', 'FAQs'].includes(item)) {
+                      e.target.style.boxShadow = 'inset 0 0 0 1px rgba(34, 197, 94, 0.2)';
+                    }
                   }}
                   onMouseLeave={(e) => {
                     e.target.style.boxShadow = 'none';
                   }}
+                  disabled={['HackTime', 'Prizes', 'FAQs'].includes(item)}
                 >
                   {item}
-                </a>
+                </button>
               ))}
             </div>
             
@@ -178,6 +221,7 @@ const OmnitrixWebsite = () => {
         <div className="absolute top-1/2 left-1/2 w-2 h-2 bg-green-400/30 rounded-full animate-pulse border border-green-400/50"
              style={{boxShadow: 'inset 0 0 0 1px rgba(34, 197, 94, 0.4)'}}></div>
       </div>
+      
       <div ref={Detailref}>
         <Detail/>
       </div>

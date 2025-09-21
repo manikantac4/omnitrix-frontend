@@ -18,11 +18,23 @@ const TRACKS = [
   
 
 export default function HackathonTracksPanel() {
+  // Always start with first track (index 0)
   const [activeIndex, setActiveIndex] = useState(0);
   const [query, setQuery] = useState('');
   const [titleVisible, setTitleVisible] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const listRef = useRef(null);
+
+  // Reset to clean state on component mount
+  useEffect(() => {
+    setActiveIndex(0);
+    setQuery('');
+    setMobileMenuOpen(false);
+    
+    // Title animation
+    const titleTimer = setTimeout(() => setTitleVisible(true), 300);
+    return () => clearTimeout(titleTimer);
+  }, []);
 
   const filtered = TRACKS.filter(t =>
     t.title.toLowerCase().includes(query.toLowerCase()) || 
@@ -32,10 +44,8 @@ export default function HackathonTracksPanel() {
   const active = filtered[activeIndex] || TRACKS[0];
 
   useEffect(() => {
-    const titleTimer = setTimeout(() => setTitleVisible(true), 300);
     const node = listRef.current?.querySelector(`[data-index="${activeIndex}"]`);
     if (node) node.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
-    return () => clearTimeout(titleTimer);
   }, [activeIndex]);
 
   const handlePrev = () => setActiveIndex(i => Math.max(0, i - 1));
