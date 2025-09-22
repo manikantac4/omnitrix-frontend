@@ -79,7 +79,7 @@ const RegistrationComponent = () => {
       <div className="mb-8">
         <button
           onClick={handleBackClick}
-          className="flex items-center space-x-2 bg-transparent border-2 border-green-400/30 text-green-400 hover:border-green-400/60 hover:text-green-300 transition-all duration-300 px-4 py-2 rounded-lg"
+          className="flex items-center space-x-2 bg-transparent border-2 border-green-400/30 text-green-400 hover:border-green-400/60 hover:text-green-300 transition-all duration-300 px-4 py-2 rounded-lg cursor-pointer"
         >
           <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
@@ -258,7 +258,7 @@ const RegistrationComponent = () => {
             <div className="pt-6">
               <button
                 onClick={handleSubmit}
-                className="w-full bg-transparent border-2 border-green-400/60 text-green-400 font-bold py-4 px-8 rounded-lg hover:bg-green-400/10 hover:border-green-400 hover:text-green-300 transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-green-400/30"
+                className="w-full bg-transparent border-2 border-green-400/60 text-green-400 font-bold py-4 px-8 rounded-lg hover:bg-green-400/10 hover:border-green-400 hover:text-green-300 transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-green-400/30 cursor-pointer"
               >
                 Register Team
               </button>

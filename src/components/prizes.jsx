@@ -126,22 +126,16 @@ const PrizesComponent = () => {
       <div className="relative overflow-hidden py-12 sm:py-16 lg:py-20">
         <div className="absolute inset-0 bg-gradient-to-b from-green-500/5 to-transparent"></div>
         <div className="relative mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
-          <div className={`text-center transition-all duration-1000 ease-out ${
+          <div className={`text-left transition-all duration-1000 ease-out ${
             titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-12'
           }`}>
-            <div className="mb-6">
-              <Trophy className="mx-auto h-12 w-12 sm:h-16 sm:w-16 text-emerald-400" />
-            </div>
-            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold tracking-tight">
+            <h1 className="text-2xl sm:text-3xl md:text-4xl font-bold tracking-tight italic">
               <span className="block text-white mb-2">Prize Pool &</span>
               <span className="block bg-gradient-to-r from-emerald-400 via-green-400 to-teal-400 bg-clip-text text-transparent">
                 Recognition Awards
               </span>
             </h1>
-            <p className="mx-auto mt-6 max-w-2xl text-base sm:text-lg lg:text-xl text-gray-300">
-              Exceptional teams receive substantial monetary rewards and prestigious recognition for their innovative solutions and technical excellence in the Omnitrix Hackathon 2025.
-            </p>
-            <div className="mt-8 flex justify-center">
+            <div className="mt-8 flex justify-start">
               <div className="flex items-center space-x-2 rounded-full bg-emerald-500/10 px-4 py-2 text-sm font-medium text-emerald-400 ring-1 ring-emerald-500/20">
                 <Gift className="h-4 w-4" />
                 <span>Total Prize Pool: ₹30,000</span>
@@ -195,23 +189,6 @@ const PrizesComponent = () => {
                 <p className="mb-6 text-center text-sm sm:text-base leading-relaxed text-gray-300">
                   {prize.description}
                 </p>
-
-                {/* Benefits */}
-                <div className="space-y-3">
-                  <h4 className="text-center text-sm font-semibold uppercase tracking-wide text-emerald-400">
-                    What You Get
-                  </h4>
-                  <div className="flex flex-wrap justify-center gap-2">
-                    {prize.benefits.map((benefit, benefitIndex) => (
-                      <span
-                        key={benefitIndex}
-                        className="rounded-full bg-emerald-500/10 px-3 py-1 text-xs font-medium text-emerald-300 ring-1 ring-emerald-500/20"
-                      >
-                        {benefit}
-                      </span>
-                    ))}
-                  </div>
-                </div>
               </div>
             );
           })}

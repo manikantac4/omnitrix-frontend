@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import Heat from "../assets/heat.png";
 
 // RegisterButton component
 const RegisterButton = ({ isVisible }) => {
@@ -8,57 +9,84 @@ const RegisterButton = ({ isVisible }) => {
   };
 
   return (
-    <button 
-      onClick={handleClick}
-      className={`group relative px-8 py-4 text-lg md:text-xl font-black tracking-wider uppercase bg-transparent border-3 border-green-400 rounded-full overflow-hidden cursor-pointer transition-all duration-700 hover:scale-105 hover:border-green-300 transform ${
-        isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-      }`}
-      style={{
-        fontFamily: '"Orbitron", "Exo 2", "Rajdhani", monospace',
-        boxShadow: `
-          0 0 20px rgba(34, 197, 94, 0.6),
-          0 0 40px rgba(34, 197, 94, 0.4),
-          0 0 60px rgba(34, 197, 94, 0.2),
-          inset 0 0 20px rgba(34, 197, 94, 0.1)
-        `,
-        animation: 'powerCorePulse 2.5s ease-in-out infinite',
-        transitionDelay: '0.3s'
-      }}
-      onMouseEnter={(e) => {
-        e.target.style.boxShadow = `
-          0 0 30px rgba(34, 197, 94, 0.9),
-          0 0 60px rgba(34, 197, 94, 0.7),
-          0 0 90px rgba(34, 197, 94, 0.5),
-          inset 0 0 30px rgba(34, 197, 94, 0.3)
-        `;
-      }}
-      onMouseLeave={(e) => {
-        e.target.style.boxShadow = `
-          0 0 20px rgba(34, 197, 94, 0.6),
-          0 0 40px rgba(34, 197, 94, 0.4),
-          0 0 60px rgba(34, 197, 94, 0.2),
-          inset 0 0 20px rgba(34, 197, 94, 0.1)
-        `;
-      }}>
-      
-      {/* Animated Background Waves */}
-      <div className="absolute inset-0 bg-gradient-to-r from-green-500/0 via-green-400/20 to-green-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-      <div className="absolute inset-0 bg-gradient-to-l from-green-300/0 via-green-500/10 to-green-300/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700" style={{ animationDelay: '0.2s' }}></div>
-      
-      {/* Energy Rings */}
-      <div className="absolute inset-0 rounded-full border-2 border-green-300/30 group-hover:border-green-200/50 transition-colors duration-500" style={{ animation: 'energyRing 3s linear infinite' }}></div>
-      <div className="absolute inset-2 rounded-full border border-green-400/20 group-hover:border-green-300/40 transition-colors duration-500" style={{ animation: 'energyRing 3s linear infinite reverse' }}></div>
-      
-      {/* Scanning Lines */}
-      <div className="absolute inset-0 overflow-hidden rounded-full">
-        <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-green-300/60 to-transparent" style={{ animation: 'scanLine 4s linear infinite' }}></div>
-        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-green-400/40 to-transparent" style={{ animation: 'scanLine 4s linear infinite reverse', animationDelay: '2s' }}></div>
-      </div>
-      
-      <span className="relative z-10 text-green-300 group-hover:text-white transition-colors duration-300 drop-shadow-[0_0_10px_rgba(34,197,94,0.8)]">
-        Register for Omnitrix ⚡
-      </span>
-    </button>
+    <div className="flex justify-center items-center ">
+    <button
+        onClick={handleClick}
+        className={`group relative px-8 py-4 text-lg md:text-xl font-black tracking-wider uppercase bg-transparent border-3 border-green-400 rounded-full overflow-hidden cursor-pointer transition-all duration-700 hover:scale-105 hover:border-green-300 transform ${
+          isVisible ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"
+        }`}
+        style={{
+          fontFamily: '"Orbitron", "Exo 2", "Rajdhani", monospace',
+          boxShadow: `
+            0 0 20px rgba(34, 197, 94, 0.6),
+            0 0 40px rgba(34, 197, 94, 0.4),
+            0 0 60px rgba(34, 197, 94, 0.2),
+            inset 0 0 20px rgba(34, 197, 94, 0.1)
+          `,
+          animation: "powerCorePulse 2.5s ease-in-out infinite",
+          transitionDelay: "0.3s",
+        }}
+        onMouseEnter={(e) => {
+          e.target.style.boxShadow = `
+            0 0 30px rgba(34, 197, 94, 0.9),
+            0 0 60px rgba(34, 197, 94, 0.7),
+            0 0 90px rgba(34, 197, 94, 0.5),
+            inset 0 0 30px rgba(34, 197, 94, 0.3)
+          `;
+        }}
+        onMouseLeave={(e) => {
+          e.target.style.boxShadow = `
+            0 0 20px rgba(34, 197, 94, 0.6),
+            0 0 40px rgba(34, 197, 94, 0.4),
+            0 0 60px rgba(34, 197, 94, 0.2),
+            inset 0 0 20px rgba(34, 197, 94, 0.1)
+          `;
+        }}
+      >
+        {/* Animated Background Waves */}
+        <div className="absolute inset-0 bg-gradient-to-r from-green-500/0 via-green-400/20 to-green-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+        <div
+          className="absolute inset-0 bg-gradient-to-l from-green-300/0 via-green-500/10 to-green-300/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
+          style={{ animationDelay: "0.2s" }}
+        ></div>
+
+        {/* Energy Rings */}
+        <div
+          className="absolute inset-0 rounded-full border-2 border-green-300/30 group-hover:border-green-200/50 transition-colors duration-500"
+          style={{ animation: "energyRing 3s linear infinite" }}
+        ></div>
+        <div
+          className="absolute inset-2 rounded-full border border-green-400/20 group-hover:border-green-300/40 transition-colors duration-500"
+          style={{ animation: "energyRing 3s linear infinite reverse" }}
+        ></div>
+
+        {/* Scanning Lines */}
+        <div className="absolute inset-0 overflow-hidden rounded-full">
+          <div
+            className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-green-300/60 to-transparent"
+            style={{ animation: "scanLine 4s linear infinite" }}
+          ></div>
+          <div
+            className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-green-400/40 to-transparent"
+            style={{
+              animation: "scanLine 4s linear infinite reverse",
+              animationDelay: "2s",
+            }}
+          ></div>
+        </div>
+
+        {/* Button Text */}
+        <span className="relative z-10 text-green-300 group-hover:text-white transition-colors duration-300 drop-shadow-[0_0_10px_rgba(34,197,94,0.8)]">
+          Register for Omnitrix ⚡
+        </span>
+      </button>
+      <img 
+    src={Heat} 
+    alt="Omnitrix" 
+    className="w-40 h-40 object-contain"
+  />
+    
+</div>
   );
 };
 
@@ -190,6 +218,7 @@ const OmnitrixRegistration = () => {
 
   return (
     <div className="min-h-screen bg-transparent relative overflow-hidden py-16 px-4">
+      
       {/* Background Particles */}
       <div className="absolute inset-0 pointer-events-none">
         {[...Array(20)].map((_, i) => (
@@ -233,6 +262,7 @@ const OmnitrixRegistration = () => {
 
         {/* Event Details - 2+2 Layout */}
         <div className="max-w-5xl mx-auto mb-12">
+          
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
             
             {/* Left Side - First Two Items */}
@@ -306,12 +336,16 @@ const OmnitrixRegistration = () => {
 
         {/* Bottom CTA */}
         <div className="text-center mt-12">
+          <div>
+            
           <div className={`inline-block px-8 py-4 bg-green-900/20 backdrop-blur-sm rounded-full border border-green-400/30 transform transition-all duration-1000 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
           }`} style={{ transitionDelay: '1.5s' }}>
+            
             <p className="text-green-300 font-medium text-lg">
               Ready to transform your ideas into reality? Join the ultimate coding experience! 🚀
             </p>
+          </div>
           </div>
         </div>
       </div>
