@@ -22,6 +22,11 @@ const ContactComponent = () => {
       name: "Pandu Ranga",
       role: "Web Master",
       image: pandu
+    },
+    {
+      name: "Sahith Akula",
+      role: "Web developer",
+      image: sahith
     }
   ];
 

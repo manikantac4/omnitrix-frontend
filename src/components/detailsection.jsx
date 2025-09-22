@@ -1,45 +1,43 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 // RegisterButton component
 const RegisterButton = ({ isVisible }) => {
-  const navigate = useNavigate();
-
   const handleClick = () => {
-    navigate('/form');
+    // Navigate to registration form - replace with your actual routing logic
+    window.location.href = '/form';
   };
 
   return (
     <button 
       onClick={handleClick}
-      className={`group relative px-16 py-8 text-2xl md:text-3xl font-black tracking-wider uppercase bg-transparent border-4 border-green-400 rounded-full overflow-hidden cursor-pointer transition-all duration-700 hover:scale-110 hover:border-green-300 transform ${
+      className={`group relative px-8 py-4 text-lg md:text-xl font-black tracking-wider uppercase bg-transparent border-3 border-green-400 rounded-full overflow-hidden cursor-pointer transition-all duration-700 hover:scale-105 hover:border-green-300 transform ${
         isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
       }`}
       style={{
         fontFamily: '"Orbitron", "Exo 2", "Rajdhani", monospace',
         boxShadow: `
-          0 0 30px rgba(34, 197, 94, 0.6),
-          0 0 60px rgba(34, 197, 94, 0.4),
-          0 0 90px rgba(34, 197, 94, 0.2),
-          inset 0 0 30px rgba(34, 197, 94, 0.1)
+          0 0 20px rgba(34, 197, 94, 0.6),
+          0 0 40px rgba(34, 197, 94, 0.4),
+          0 0 60px rgba(34, 197, 94, 0.2),
+          inset 0 0 20px rgba(34, 197, 94, 0.1)
         `,
         animation: 'powerCorePulse 2.5s ease-in-out infinite',
         transitionDelay: '0.3s'
       }}
       onMouseEnter={(e) => {
         e.target.style.boxShadow = `
-          0 0 50px rgba(34, 197, 94, 0.9),
-          0 0 100px rgba(34, 197, 94, 0.7),
-          0 0 150px rgba(34, 197, 94, 0.5),
-          inset 0 0 50px rgba(34, 197, 94, 0.3)
+          0 0 30px rgba(34, 197, 94, 0.9),
+          0 0 60px rgba(34, 197, 94, 0.7),
+          0 0 90px rgba(34, 197, 94, 0.5),
+          inset 0 0 30px rgba(34, 197, 94, 0.3)
         `;
       }}
       onMouseLeave={(e) => {
         e.target.style.boxShadow = `
-          0 0 30px rgba(34, 197, 94, 0.6),
-          0 0 60px rgba(34, 197, 94, 0.4),
-          0 0 90px rgba(34, 197, 94, 0.2),
-          inset 0 0 30px rgba(34, 197, 94, 0.1)
+          0 0 20px rgba(34, 197, 94, 0.6),
+          0 0 40px rgba(34, 197, 94, 0.4),
+          0 0 60px rgba(34, 197, 94, 0.2),
+          inset 0 0 20px rgba(34, 197, 94, 0.1)
         `;
       }}>
       
@@ -53,14 +51,105 @@ const RegisterButton = ({ isVisible }) => {
       
       {/* Scanning Lines */}
       <div className="absolute inset-0 overflow-hidden rounded-full">
-        <div className="absolute top-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-green-300/60 to-transparent" style={{ animation: 'scanLine 4s linear infinite' }}></div>
-        <div className="absolute bottom-0 left-0 w-full h-1 bg-gradient-to-r from-transparent via-green-400/40 to-transparent" style={{ animation: 'scanLine 4s linear infinite reverse', animationDelay: '2s' }}></div>
+        <div className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-green-300/60 to-transparent" style={{ animation: 'scanLine 4s linear infinite' }}></div>
+        <div className="absolute bottom-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-green-400/40 to-transparent" style={{ animation: 'scanLine 4s linear infinite reverse', animationDelay: '2s' }}></div>
       </div>
       
       <span className="relative z-10 text-green-300 group-hover:text-white transition-colors duration-300 drop-shadow-[0_0_10px_rgba(34,197,94,0.8)]">
         Register for Omnitrix ⚡
       </span>
     </button>
+  );
+};
+
+// Countdown Timer Component
+const CountdownTimer = ({ isVisible }) => {
+  const [timeLeft, setTimeLeft] = useState({
+    days: 0,
+    hours: 0,
+    minutes: 0,
+    seconds: 0
+  });
+
+  useEffect(() => {
+    // Set target date to October 24, 2025 11:00 AM (next year)
+    const targetDate = new Date('2025-10-24T11:00:00').getTime();
+
+    // Initial calculation
+    const calculateTimeLeft = () => {
+      const now = new Date().getTime();
+      const distance = targetDate - now;
+
+      if (distance > 0) {
+        return {
+          days: Math.floor(distance / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60)),
+          minutes: Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60)),
+          seconds: Math.floor((distance % (1000 * 60)) / 1000)
+        };
+      } else {
+        return { days: 0, hours: 0, minutes: 0, seconds: 0 };
+      }
+    };
+
+    // Set initial time
+    setTimeLeft(calculateTimeLeft());
+
+    const timer = setInterval(() => {
+      setTimeLeft(calculateTimeLeft());
+    }, 1000);
+
+    return () => clearInterval(timer);
+  }, []);
+
+  const timeUnits = [
+    { value: timeLeft.days, label: 'DAYS' },
+    { value: timeLeft.hours, label: 'HOURS' },
+    { value: timeLeft.minutes, label: 'MINUTES' },
+    { value: timeLeft.seconds, label: 'SECONDS' }
+  ];
+
+  return (
+    <div className={`transform transition-all duration-1000 ${
+      isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+    }`} style={{ transitionDelay: '0.5s' }}>
+      <div className="text-center mb-8">
+        <h2 className="text-2xl md:text-3xl font-bold text-green-300 mb-6" style={{ fontFamily: '"Orbitron", monospace' }}>
+          EVENT STARTS IN
+        </h2>
+        
+        <div className="flex justify-center items-center space-x-4 md:space-x-8 flex-wrap gap-4">
+          {timeUnits.map((unit, index) => (
+            <div key={unit.label} className="relative group">
+              <div 
+                className="bg-transparent backdrop-blur-sm border-2 border-green-400/50 rounded-2xl p-4 md:p-6 min-w-[80px] md:min-w-[100px] hover:border-green-300/70 transition-all duration-500"
+                style={{
+                  boxShadow: `
+                    0 0 20px rgba(34, 197, 94, 0.3),
+                    inset 0 0 20px rgba(34, 197, 94, 0.1)
+                  `,
+                  animation: 'timerPulse 2s ease-in-out infinite',
+                  animationDelay: `${index * 0.2}s`
+                }}
+              >
+                <div className="text-3xl md:text-4xl font-black text-green-300 font-mono leading-none mb-2">
+                  {String(unit.value).padStart(2, '0')}
+                </div>
+                <div className="text-xs md:text-sm font-bold text-green-400/80 tracking-widest" style={{ fontFamily: '"Orbitron", monospace' }}>
+                  {unit.label}
+                </div>
+              </div>
+              
+              {/* Animated corner accents */}
+              <div className="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-green-300/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-green-300/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-green-300/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+              <div className="absolute -bottom-1 -right-1 w-3 h-3 border-b-2 border-r-2 border-green-300/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+            </div>
+          ))}
+        </div>
+      </div>
+    </div>
   );
 };
 
@@ -134,21 +223,8 @@ const OmnitrixRegistration = () => {
       </div>
 
       <div className="max-w-5xl mx-auto">
-        {/* Section Title */}
-        <div className="text-center mb-12">
-          <h2 
-            className={`text-4xl md:text-6xl font-black text-transparent bg-clip-text bg-gradient-to-r from-green-300 via-green-400 to-green-300 mb-4 transform transition-all duration-1000 ${
-              isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-            }`}
-            style={{ 
-              fontFamily: '"Orbitron", "Exo 2", "Rajdhani", monospace',
-              textShadow: '0 0 20px rgba(34, 197, 94, 0.3)'
-            }}
-          >
-            POWER UP YOUR CODE
-          </h2>
-          <div className="w-32 h-1 bg-gradient-to-r from-transparent via-green-400 to-transparent mx-auto"></div>
-        </div>
+        {/* Countdown Timer */}
+        <CountdownTimer isVisible={isVisible} />
 
         {/* Central Power Core - Register Button */}
         <div className="flex justify-center mb-16">
@@ -245,17 +321,30 @@ const OmnitrixRegistration = () => {
         @keyframes powerCorePulse {
           0%, 100% { 
             box-shadow: 
-              0 0 30px rgba(34, 197, 94, 0.6),
-              0 0 60px rgba(34, 197, 94, 0.4),
-              0 0 90px rgba(34, 197, 94, 0.2),
-              inset 0 0 30px rgba(34, 197, 94, 0.1);
+              0 0 20px rgba(34, 197, 94, 0.6),
+              0 0 40px rgba(34, 197, 94, 0.4),
+              0 0 60px rgba(34, 197, 94, 0.2),
+              inset 0 0 20px rgba(34, 197, 94, 0.1);
           }
           50% { 
             box-shadow: 
-              0 0 50px rgba(34, 197, 94, 0.8),
-              0 0 80px rgba(34, 197, 94, 0.6),
-              0 0 120px rgba(34, 197, 94, 0.4),
-              inset 0 0 50px rgba(34, 197, 94, 0.2);
+              0 0 30px rgba(34, 197, 94, 0.8),
+              0 0 60px rgba(34, 197, 94, 0.6),
+              0 0 90px rgba(34, 197, 94, 0.4),
+              inset 0 0 30px rgba(34, 197, 94, 0.2);
+          }
+        }
+
+        @keyframes timerPulse {
+          0%, 100% { 
+            box-shadow: 
+              0 0 20px rgba(34, 197, 94, 0.3),
+              inset 0 0 20px rgba(34, 197, 94, 0.1);
+          }
+          50% { 
+            box-shadow: 
+              0 0 30px rgba(34, 197, 94, 0.5),
+              inset 0 0 30px rgba(34, 197, 94, 0.2);
           }
         }
 

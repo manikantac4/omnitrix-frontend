@@ -5,17 +5,18 @@ import Quantumimg from "../assets/quantum.png";
 import Appimg from "../assets/app.png";
 import Openimg from "../assets/open.png";
 import Cybimg from "../assets/cyber.jpg";
+import Aimlimg from "../assets/AIML.png";
+
 
 const TRACKS = [
-    { id: 'aiml', title: 'Artificial Intelligence & Machine Learning', tag: 'Intelligent systems & automation', description: 'Develop AI-powered solutions...', imageAlt: '', imageSrc:  webImg},
-    { id: 'cybersecurity', title: 'Cybersecurity & Digital Defense', tag: 'Protecting digital infrastructure', description: 'Create robust security solutions...', imageAlt: 'Cybersecurity and digital protection', imageSrc:  Cybimg },
-    { id: 'quantum', title: 'Quantum Computing Solutions', tag: 'Next-generation computational power', description: 'Harness quantum computing...', imageAlt: 'Quantum computing visualization', imageSrc:  Quantumimg },
-    { id: 'webdev', title: 'Full-Stack Web Development', tag: 'Building the future of web', description: 'Create innovative web applications...', imageAlt: 'Modern web development interface', imageSrc: webImg },
-    { id: 'web3', title: 'Web3 & Blockchain Innovation', tag: 'Decentralized future technologies', description: 'Build decentralized applications...', imageAlt: 'Blockchain and web3 technology', imageSrc: Blockimg },
-    { id: 'appdev', title: 'Mobile Application Development', tag: 'Native & cross-platform excellence', description: 'Develop high-performance mobile applications...', imageAlt: 'Mobile app development', imageSrc:  Appimg},
-    { id: 'openinnovation', title: 'Open Innovation Challenge', tag: 'Creative solutions for global problems', description: 'This track allows maximum creativity and impact...', imageAlt: 'Innovation and creativity', imageSrc: Openimg}
-  ];
-  
+    { id: 'aiml', title: 'Artificial Intelligence & Machine Learning', tag: 'Intelligent systems & automation', description: 'Develop AI-powered solutions using cutting-edge machine learning algorithms, neural networks, and deep learning frameworks. Create intelligent systems that can learn, adapt, and provide meaningful insights from complex data patterns.', imageAlt: 'AI and Machine Learning', imageSrc: Aimlimg},
+    { id: 'cybersecurity', title: 'Cybersecurity & Digital Defense', tag: 'Protecting digital infrastructure', description: 'Create robust security solutions to protect digital assets, networks, and sensitive information. Build innovative tools for threat detection, vulnerability assessment, and cyber defense mechanisms.', imageAlt: 'Cybersecurity and digital protection', imageSrc: Cybimg },
+    { id: 'quantum', title: 'Quantum Computing Solutions', tag: 'Next-generation computational power', description: 'Harness quantum computing principles to solve complex computational problems. Explore quantum algorithms, quantum machine learning, and quantum cryptography applications.', imageAlt: 'Quantum computing visualization', imageSrc: Quantumimg },
+    { id: 'webdev', title: 'Full-Stack Web Development', tag: 'Building the future of web', description: 'Create innovative web applications using modern frameworks and technologies. Build responsive, scalable, and user-friendly web solutions that address real-world problems.', imageAlt: 'Modern web development interface', imageSrc: webImg },
+    { id: 'web3', title: 'Web3 & Blockchain Innovation', tag: 'Decentralized future technologies', description: 'Build decentralized applications using blockchain technology, smart contracts, and cryptocurrency protocols. Create solutions for DeFi, NFTs, and decentralized governance systems.', imageAlt: 'Blockchain and web3 technology', imageSrc: Blockimg },
+    { id: 'appdev', title: 'Mobile Application Development', tag: 'Native & cross-platform excellence', description: 'Develop high-performance mobile applications for iOS and Android platforms. Create engaging user experiences with native functionality and cross-platform compatibility.', imageAlt: 'Mobile app development', imageSrc: Appimg},
+    { id: 'openinnovation', title: 'Open Innovation Challenge', tag: 'Creative solutions for global problems', description: 'This track allows maximum creativity and impact. Choose your own problem statement and create innovative solutions that can make a real difference in the world.', imageAlt: 'Innovation and creativity', imageSrc: Openimg}
+];
 
 export default function HackathonTracksPanel() {
   // Always start with first track (index 0)
@@ -71,12 +72,12 @@ export default function HackathonTracksPanel() {
         <p className="text-green-400 text-xs sm:text-sm font-medium mt-4 tracking-wider uppercase">Choose Your Innovation Path</p>
       </div>
 
-      <div className="max-w-7xl mx-auto lg:grid lg:grid-cols-12 lg:gap-6">
+      <div className="max-w-7xl mx-auto flex flex-col lg:flex-row gap-6 h-full">
         {/* Mobile Track Selector */}
         <div className="lg:hidden mb-4">
           <button
             onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-            className="w-full flex items-center justify-between p-3 rounded-lg border border-green-400/30 bg-slate-900/40 backdrop-blur-md shadow-lg shadow-green-400/10"
+            className="w-full flex items-center justify-between p-3 rounded-lg border border-green-400/30 bg-transparent backdrop-blur-md shadow-lg shadow-green-400/10"
           >
             <div className="flex items-center gap-3">
               <div className="w-6 h-6 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center text-black font-bold text-xs shadow-lg shadow-green-400/50">T</div>
@@ -91,7 +92,7 @@ export default function HackathonTracksPanel() {
           </button>
           
           {mobileMenuOpen && (
-            <div className="mt-2 rounded-lg border border-green-400/30 bg-slate-900/40 backdrop-blur-md shadow-lg shadow-green-400/10 p-4">
+            <div className="mt-2 rounded-lg border border-green-400/30 bg-transparent backdrop-blur-md shadow-lg shadow-green-400/10 p-4">
               <label className="relative block mb-3">
                 <span className="sr-only">Search tracks</span>
                 <input
@@ -129,8 +130,8 @@ export default function HackathonTracksPanel() {
           )}
         </div>
 
-        {/* Desktop Sidebar */}
-        <aside className="hidden lg:block lg:col-span-4 xl:col-span-3 rounded-lg border border-green-400/30 p-4 bg-transparent backdrop-blur-md shadow-lg shadow-green-400/10">
+        {/* Left Sidebar - Desktop */}
+        <aside className="hidden lg:block lg:w-80 xl:w-96 rounded-lg border border-green-400/30 p-4 bg-transparent backdrop-blur-md shadow-lg shadow-green-400/10 h-fit">
           <div className="flex items-center gap-3 mb-4">
             <div className="w-8 h-8 rounded-full bg-gradient-to-br from-green-400 to-emerald-500 flex items-center justify-center text-black font-bold shadow-lg shadow-green-400/50">T</div>
             <div className="flex-1">
@@ -138,8 +139,8 @@ export default function HackathonTracksPanel() {
               <div className="text-xs text-gray-400">Use ← → or j/k to navigate</div>
             </div>
             <div className="flex gap-2">
-              <button onClick={handlePrev} disabled={activeIndex === 0} className="p-2 rounded bg-green-400 text-black hover:bg-emerald-500 hover:scale-105 transition font-bold shadow-lg shadow-green-400/30">◀</button>
-              <button onClick={handleNext} disabled={activeIndex === filtered.length - 1} className="p-2 rounded bg-green-400 text-black hover:bg-emerald-500 hover:scale-105 transition font-bold shadow-lg shadow-green-400/30">▶</button>
+              <button onClick={handlePrev} disabled={activeIndex === 0} className="p-2 rounded bg-green-400 text-black hover:bg-emerald-500 hover:scale-105 transition font-bold shadow-lg shadow-green-400/30 disabled:opacity-50 disabled:cursor-not-allowed">◀</button>
+              <button onClick={handleNext} disabled={activeIndex === filtered.length - 1} className="p-2 rounded bg-green-400 text-black hover:bg-emerald-500 hover:scale-105 transition font-bold shadow-lg shadow-green-400/30 disabled:opacity-50 disabled:cursor-not-allowed">▶</button>
             </div>
           </div>
 
@@ -157,7 +158,26 @@ export default function HackathonTracksPanel() {
             )}
           </label>
 
-          <nav ref={listRef} className="space-y-2 max-h-[60vh] overflow-auto pr-2" aria-label="Track list">
+          <nav ref={listRef} className="space-y-2 max-h-[calc(100vh-300px)] overflow-auto pr-2" aria-label="Track list"
+            style={{
+              scrollbarWidth: 'thin',
+              scrollbarColor: 'rgba(34, 197, 94, 0.5) transparent'
+            }}>
+            <style jsx>{`
+              nav::-webkit-scrollbar {
+                width: 6px;
+              }
+              nav::-webkit-scrollbar-track {
+                background: transparent;
+              }
+              nav::-webkit-scrollbar-thumb {
+                background: rgba(34, 197, 94, 0.5);
+                border-radius: 3px;
+              }
+              nav::-webkit-scrollbar-thumb:hover {
+                background: rgba(34, 197, 94, 0.7);
+              }
+            `}</style>
             {filtered.length ? filtered.map((t, idx) => {
               const isActive = active.id === t.id;
               return (
@@ -181,8 +201,8 @@ export default function HackathonTracksPanel() {
           </nav>
         </aside>
 
-        {/* Main Content */}
-        <main className="lg:col-span-8 xl:col-span-9 rounded-lg border border-green-400/30 p-4 sm:p-6 bg-transparent backdrop-blur-md shadow-lg shadow-green-400/10">
+        {/* Main Content - Fills remaining space */}
+        <main className="flex-1 rounded-lg border border-green-400/30 p-4 sm:p-6 bg-transparent backdrop-blur-md shadow-lg shadow-green-400/10 lg:min-h-[calc(100vh-200px)]">
           
           {/* Mobile Navigation Controls */}
           <div className="lg:hidden flex items-center justify-between mb-4">
@@ -193,16 +213,16 @@ export default function HackathonTracksPanel() {
             <button onClick={handleNext} disabled={activeIndex === filtered.length - 1} className="p-2 rounded bg-green-400 text-black hover:bg-emerald-500 hover:scale-105 transition font-bold shadow-lg shadow-green-400/30 disabled:opacity-50 disabled:cursor-not-allowed">▶</button>
           </div>
 
-          <div className="flex flex-col lg:flex-row gap-4 sm:gap-6">
+          <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 h-full">
             {/* Image */}
-            <div className="w-full lg:w-1/2 rounded-lg overflow-hidden border border-green-400/30 bg-slate-800/40 shadow-lg shadow-green-400/10">
+            <div className="w-full lg:w-1/2 rounded-lg overflow-hidden border border-green-400/30 bg-transparent shadow-lg shadow-green-400/10">
               <div className="relative h-64 sm:h-80 lg:h-96 xl:h-[520px] flex items-center justify-center">
                 <img src={active.imageSrc} alt={active.imageAlt} className="w-full h-full object-cover rounded-lg"/>
               </div>
             </div>
 
             {/* Details */}
-            <section className="w-full lg:w-1/2">
+            <section className="w-full lg:w-1/2 flex flex-col">
               <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-2 sm:gap-4">
                 <div className="flex-1">
                   <h1 className="text-xl sm:text-2xl lg:text-3xl font-extrabold text-white leading-tight">{active.title}</h1>
@@ -213,8 +233,8 @@ export default function HackathonTracksPanel() {
                 </div>
               </div>
 
-              <div className="mt-4 sm:mt-6 text-gray-200 leading-relaxed">
-                <p className="text-sm sm:text-base">{active.description}</p>
+              <div className="mt-4 sm:mt-6 text-gray-200 leading-relaxed flex-1">
+                <p className="text-sm sm:text-base mb-4">{active.description}</p>
 
                 {active.id === 'openinnovation' ? (
                   <div className="mt-4 p-3 sm:p-4 bg-green-400/10 border border-green-400/30 rounded-lg">

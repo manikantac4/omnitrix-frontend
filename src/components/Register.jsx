@@ -1,5 +1,4 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
 
 const RegistrationComponent = () => {
   const [titleVisible, setTitleVisible] = useState(false);
@@ -9,11 +8,10 @@ const RegistrationComponent = () => {
     phoneNumber: '',
     email: '',
     college: '',
+    otherCollege: '',
     teamSize: '',
     yearOfStudy: ''
   });
-
-  const navigate = useNavigate();
 
   useEffect(() => {
     const titleTimer = setTimeout(() => setTitleVisible(true), 300);
@@ -46,21 +44,33 @@ const RegistrationComponent = () => {
       ...prev,
       [name]: value
     }));
+
+    // Clear otherCollege field if college selection is not "Other"
+    if (name === 'college' && value !== 'Other') {
+      setFormData(prev => ({
+        ...prev,
+        college: value,
+        otherCollege: ''
+      }));
+    }
   };
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log('Form Data:', formData);
+    const finalFormData = {
+      ...formData,
+      // Use otherCollege value if college is "Other", otherwise use college
+      finalCollege: formData.college === 'Other' ? formData.otherCollege : formData.college
+    };
+    console.log('Form Data:', finalFormData);
     // Handle form submission here
-    alert('Registration submitted successfully!');
+    // Replaced alert with a console log as alerts are not supported
+    console.log('Registration submitted successfully!');
   };
 
   const handleBackClick = () => {
-    navigate('/');
-    // Scroll to top after navigation
-    setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
-    }, 100);
+    // Navigate back to home
+    window.location.href = '/';
   };
 
   return (
@@ -90,7 +100,7 @@ const RegistrationComponent = () => {
         
         <div className="bg-transparent border-2 border-green-400/30 rounded-xl p-8 hover:border-green-400/60 hover:shadow-lg hover:shadow-green-400/20 transition-all duration-300">
           
-          <form onSubmit={handleSubmit} className="space-y-8">
+          <div className="space-y-8">
             
             {/* Team Leader Name */}
             <div className="space-y-2">
@@ -175,8 +185,27 @@ const RegistrationComponent = () => {
                     {college}
                   </option>
                 ))}
+                <option value="Other" className="bg-slate-800 text-green-400">Other</option>
               </select>
             </div>
+
+            {/* Other College Input - Shows only when "Other" is selected */}
+            {formData.college === 'Other' && (
+              <div className="space-y-2">
+                <label className="block text-white font-semibold text-lg">
+                  College Name <span className="text-red-400">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="otherCollege"
+                  value={formData.otherCollege}
+                  onChange={handleInputChange}
+                  required
+                  className="w-full bg-transparent border-2 border-green-400/30 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:border-green-400/60 focus:outline-none transition-all duration-300"
+                  placeholder="Enter your college name"
+                />
+              </div>
+            )}
 
             {/* Team Size and Year of Study - Two columns */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -228,14 +257,14 @@ const RegistrationComponent = () => {
             {/* Submit Button */}
             <div className="pt-6">
               <button
-                type="submit"
+                onClick={handleSubmit}
                 className="w-full bg-transparent border-2 border-green-400/60 text-green-400 font-bold py-4 px-8 rounded-lg hover:bg-green-400/10 hover:border-green-400 hover:text-green-300 transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-green-400/30"
               >
                 Register Team
               </button>
             </div>
 
-          </form>
+          </div>
 
         </div>
 

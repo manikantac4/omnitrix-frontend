@@ -41,29 +41,15 @@ const SponsorsComponent = () => {
       image: pandu
     },
     {
-      name: "Bharath",
-      role: "TREASURER",
-      image: bharath
+      name: "Poojitha",
+      role: "IEEE VICE CHAIR", 
+      image: null
     }
   ];
 
   // Second row: Vice Chair, Secretary, Publisher
   const secondaryCoordinators = [
-    {
-      name: "Poojitha",
-      role: "IEEE VICE CHAIR", 
-      image: null
-    },
-    {
-      name: "Anand",
-      role: "SECRETARY",
-      image: null
-    },
-    {
-      name: "Praveen",
-      role: "PUBLISHER",
-      image: null
-    }
+    
   ];
 
   const organizers = [
