@@ -3,6 +3,7 @@ import footer from "../assets/footer.png";
 import pandu from "../assets/pandu.jpg";
 import manoj from "../assets/manoj.jpg";
 import sahith from "../assets/sahith.jpg";
+import vilgax from "../assets/vilgax.png";
 
 const ContactComponent = () => {
   const [titleVisible, setTitleVisible] = useState(false);
@@ -25,14 +26,14 @@ const ContactComponent = () => {
       role: "Web Master",
       image: pandu,
       phone: "9618223350",
-      linkedinUrl: "www.linkedin.com/in/pandu-ranga-tummuri-1b1b772a2" // Placeholder for LinkedIn profile
+      linkedinUrl: "LINKEDIN_PROFILE_URL_PANDU" // Placeholder for LinkedIn profile
     },
     {
       name: "Sahith Akula",
-      role: "Backend Developer",
+      role: "Web developer",
       image: sahith,
       phone: "8341999296",
-      linkedinUrl: "www.linkedin.com/in/sahith-akula" // Placeholder for LinkedIn profile
+      linkedinUrl: "LINKEDIN_PROFILE_URL_SAHITH" // Placeholder for LinkedIn profile
     }
   ];
 
@@ -83,7 +84,19 @@ const ContactComponent = () => {
       <div className={`text-center mb-16 transition-all duration-1000 ${
         titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'
       }`}>
-        <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6">Contact Us</h1>
+        <div className="flex items-center justify-center gap-4 mb-6">
+          <img 
+            src={vilgax} 
+            alt="Vilgax" 
+            className="w-24 h-24 sm:w-32 sm:h-32 object-contain"
+          />
+          <h1 className="text-4xl sm:text-5xl font-bold text-white">Contact Us</h1>
+          <img 
+            src={vilgax} 
+            alt="Vilgax" 
+            className="w-24 h-24 sm:w-32 sm:h-32 object-contain scale-x-[-1]"
+          />
+        </div>
         <p className="text-green-400/80 text-lg">Get in touch with us for more information</p>
       </div>
 

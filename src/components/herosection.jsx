@@ -1,25 +1,59 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Detail from "./detailsection";
 import Timeline from './eventtimeline';
 import Sponsor from "./sponser";
 import Contact from "./contact";
 import title from "../assets/title.png";
+import openingVideo from "../assets/opening.mp4";
 
 const OmnitrixWebsite = () => {
   const navigate = useNavigate();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showVideo, setShowVideo] = useState(true);
+  const [videoEnded, setVideoEnded] = useState(false);
+  const [showTransition, setShowTransition] = useState(false);
+  
+  const videoRef = useRef(null);
   const Detailref = useRef(null);
   const Timeref = useRef(null);
   const Sponsorref = useRef(null);
   const contactref = useRef(null);
+
+  useEffect(() => {
+    // Check if video has been viewed in this session
+    const hasViewedVideo = sessionStorage.getItem('omnitrix_video_viewed');
+    if (hasViewedVideo) {
+      setShowVideo(false);
+      setVideoEnded(true);
+    }
+  }, []);
+
+  const handleVideoEnd = () => {
+    setShowTransition(true);
+    // After transition effect, hide video and show website
+    setTimeout(() => {
+      setVideoEnded(true);
+      setShowVideo(false);
+      sessionStorage.setItem('omnitrix_video_viewed', 'true');
+    }, 1500); // 1.5s for transition effect
+  };
+
+  const skipVideo = () => {
+    setShowTransition(true);
+    setTimeout(() => {
+      setVideoEnded(true);
+      setShowVideo(false);
+      sessionStorage.setItem('omnitrix_video_viewed', 'true');
+    }, 800);
+  };
 
   const scrollToSection = (ref) => {
     ref.current?.scrollIntoView({ 
       behavior: 'smooth',
       block: 'start'
     });
-    setMobileMenuOpen(false); // Close mobile menu after navigation
+    setMobileMenuOpen(false);
   };
 
   const handleNavClick = (item) => {
@@ -60,6 +94,66 @@ const OmnitrixWebsite = () => {
 
   const navigationItems = ['Lobby', 'ABOUT', 'Themes', 'HackTime', 'Prizes', 'Sponsers', 'FAQs', 'Contact'];
 
+  // Opening Video Component
+  if (showVideo && !videoEnded) {
+    return (
+      <div className="fixed inset-0 z-[9999] bg-black flex items-center justify-center">
+        {/* Video Container */}
+        <div className="relative w-full h-full overflow-hidden">
+          <video
+            ref={videoRef}
+            className="w-full h-full object-cover"
+            autoPlay
+            muted
+            playsInline
+            onEnded={handleVideoEnd}
+            onError={() => skipVideo()} // Fallback if video fails to load
+          >
+            <source src={openingVideo} type="video/mp4" />
+            Your browser does not support the video tag.
+          </video>
+          
+          {/* Skip Button */}
+          <button
+            onClick={skipVideo}
+            className="absolute top-4 right-4 sm:top-6 sm:right-6 bg-black/50 hover:bg-black/70 
+                     text-white px-3 py-2 sm:px-4 sm:py-2 rounded-lg backdrop-blur-sm
+                     transition-all duration-300 hover:scale-105 text-sm sm:text-base
+                     border border-green-400/30 hover:border-green-400/50"
+          >
+            Skip Intro
+          </button>
+          
+          {/* Loading indicator for slow connections */}
+          <div className="absolute bottom-4 left-4 sm:bottom-6 sm:left-6">
+            <div className="flex items-center space-x-2 text-white/70 text-sm">
+              <div className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></div>
+              <span>Loading OMNITRIX...</span>
+            </div>
+          </div>
+        </div>
+        
+        {/* Transition Effect */}
+        {showTransition && (
+          <div className="absolute inset-0 bg-black animate-pulse">
+            <div className="w-full h-full bg-gradient-to-r from-transparent via-green-400/20 to-transparent
+                          transform translate-x-[-100%] animate-[slideAcross_1.5s_ease-in-out]"></div>
+          </div>
+        )}
+        
+        {/* Custom CSS for transition animation */}
+        <style jsx>{`
+          @keyframes slideAcross {
+            0% { transform: translateX(-100%); }
+            50% { transform: translateX(0%); }
+            100% { transform: translateX(100%); }
+          }
+        `}</style>
+      </div>
+    );
+  }
+
+  // Main Website Content (same as before)
   return (
     <div className="min-h-screen bg-transparent text-white flex flex-col">
       {/* Navigation Bar */}
