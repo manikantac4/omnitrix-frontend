@@ -104,7 +104,6 @@ const OmnitrixWebsite = () => {
             ref={videoRef}
             className="w-full h-full object-cover"
             autoPlay
-            muted
             playsInline
             onEnded={handleVideoEnd}
             onError={() => skipVideo()} // Fallback if video fails to load
