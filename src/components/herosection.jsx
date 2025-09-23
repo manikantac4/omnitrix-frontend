@@ -5,7 +5,7 @@ import Timeline from './eventtimeline';
 import Sponsor from "./sponser";
 import Contact from "./contact";
 import title from "../assets/title.png";
-import humong from "../assets/humong.png";
+import humong from "../assets/humoung.png";
 import openingVideo from "../assets/opening.mp4";
 
 const OmnitrixWebsite = () => {
@@ -258,10 +258,10 @@ const OmnitrixWebsite = () => {
       </div>
 
       {/* Hero Section */}
-      <div className="flex-1 flex flex-col items-center justify-between min-h-screen px-4 sm:px-6 lg:px-8 text-center font-mono">
+      <div className="flex-1 flex flex-col items-center justify-center sm:justify-between min-h-screen px-4 sm:px-6 lg:px-8 text-center font-mono">
         
         {/* Top Section */}
-        <div className="flex flex-col items-center mt-4 sm:mt-8">
+        <div className="flex flex-col items-center mt-4 sm:mt-8 mb-4 sm:mb-0">
           {/* Presenter Line */}
           <p className="text-green-400 text-xs sm:text-sm lg:text-base font-medium tracking-wider mb-2 sm:mb-4">
             SAHE IEEE STUDENT CHAPTERS PRESENTS
@@ -294,8 +294,8 @@ const OmnitrixWebsite = () => {
           </div>
         </div>
 
-        {/* Bottom Section - Event Info + Quote - Reduced gap from title */}
-        <div className="space-y-4 sm:space-y-6 lg:space-y-8 w-full max-w-4xl mx-auto mb-8 sm:mb-12">
+        {/* Bottom Section - Event Info + Quote - No gap on mobile */}
+        <div className="space-y-4 sm:space-y-6 lg:space-y-8 w-full max-w-4xl mx-auto mb-8 sm:mb-12 mt-0 sm:mt-auto">
           {/* Event Info */}
           <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 justify-center items-center">
             {/* Event Date */}
