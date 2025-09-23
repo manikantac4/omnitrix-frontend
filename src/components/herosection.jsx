@@ -5,6 +5,7 @@ import Timeline from './eventtimeline';
 import Sponsor from "./sponser";
 import Contact from "./contact";
 import title from "../assets/title.png";
+import humong from "../assets/humoung.png";
 import openingVideo from "../assets/opening.mp4";
 
 const OmnitrixWebsite = () => {
@@ -266,16 +267,35 @@ const OmnitrixWebsite = () => {
             SAHE IEEE STUDENT CHAPTERS PRESENTS
           </p>
 
-          {/* Title Image */}
-          <img 
-            src={title} 
-            alt="OMNITRIX Logo" 
-            className="w-full max-w-[280px] sm:max-w-[320px] md:max-w-[400px] lg:max-w-xl xl:max-w-2xl mx-auto h-auto object-contain mb-2" 
-          />
+          {/* Title with Alien Images */}
+          <div className="relative flex items-end justify-center w-full max-w-[280px] sm:max-w-[320px] md:max-w-[400px] lg:max-w-xl xl:max-w-2xl mx-auto mb-4 sm:mb-6">
+            {/* Left Alien - positioned at 'O' */}
+            <img 
+              src={humong} 
+              alt="Alien Left" 
+              className="absolute left-0 bottom-0 w-10 h-10 sm:w-12 sm:h-12 md:w-15 md:h-15 lg:w-20 lg:h-20 object-contain z-10
+                         hover:scale-110 transition-transform duration-300" 
+            />
+            
+            {/* Title Image */}
+            <img 
+              src={title} 
+              alt="OMNITRIX Logo" 
+              className="w-full h-auto object-contain" 
+            />
+            
+            {/* Right Alien - positioned at 'X' */}
+            <img 
+              src={humong} 
+              alt="Alien Right" 
+              className="absolute right-0 bottom-0 w-10 h-10 sm:w-12 sm:h-12 md:w-15 md:h-15 lg:w-20 lg:h-20 object-contain z-10 transform scale-x-[-1]
+                         hover:scale-110 hover:scale-x-[-1.1] transition-transform duration-300" 
+            />
+          </div>
         </div>
 
-        {/* Bottom Section - Event Info + Quote */}
-        <div className="space-y-6 sm:space-y-8 w-full max-w-4xl mx-auto mb-8 sm:mb-12">
+        {/* Bottom Section - Event Info + Quote - Adjusted spacing for mobile */}
+        <div className="space-y-4 sm:space-y-6 lg:space-y-8 w-full max-w-4xl mx-auto mb-8 sm:mb-12">
           {/* Event Info */}
           <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 justify-center items-center">
             {/* Event Date */}
