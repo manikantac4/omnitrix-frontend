@@ -154,7 +154,7 @@ const OmnitrixWebsite = () => {
     );
   }
 
-  // Main Website Content (same as before)
+  // Main Website Content
   return (
     <div className="min-h-screen bg-transparent text-white flex flex-col">
       {/* Navigation Bar */}
@@ -257,23 +257,23 @@ const OmnitrixWebsite = () => {
         </div>
       </div>
 
-      {/* Hero Section */}
-      <div className="flex-1 flex flex-col items-center justify-center sm:justify-between min-h-screen px-4 sm:px-6 lg:px-8 text-center font-mono">
+      {/* Hero Section - FIXED MOBILE SPACING */}
+      <div className="flex-1 flex flex-col items-center justify-center min-h-screen px-4 sm:px-6 lg:px-8 text-center font-mono">
         
-        {/* Top Section */}
-        <div className="flex flex-col items-center mt-4 sm:mt-8 mb-4 sm:mb-0">
+        {/* Top Section - Reduced spacing on mobile */}
+        <div className="flex flex-col items-center mt-6 sm:mt-8 mb-8 sm:mb-12">
           {/* Presenter Line */}
-          <p className="text-green-400 text-xs sm:text-sm lg:text-base font-medium tracking-wider mb-2 sm:mb-4">
+          <p className="text-green-400 text-xs sm:text-sm lg:text-base font-medium tracking-wider mb-3 sm:mb-4">
             SAHE IEEE STUDENT CHAPTERS PRESENTS
           </p>
 
-          {/* Title with Alien Images */}
-          <div className="relative flex items-end justify-center w-full max-w-[280px] sm:max-w-[320px] md:max-w-[400px] lg:max-w-xl xl:max-w-2xl mx-auto mb-2">
-            {/* Left Alien - positioned at 'O' */}
+          {/* Title with Alien Images - IMPROVED MOBILE LAYOUT */}
+          <div className="relative flex items-end justify-center w-full max-w-[320px] sm:max-w-[380px] md:max-w-[480px] lg:max-w-xl xl:max-w-2xl mx-auto">
+            {/* Left Alien - INCREASED SIZE */}
             <img 
               src={humong} 
               alt="Alien Left" 
-              className="absolute left-0 bottom-0 w-10 h-10 sm:w-12 sm:h-12 md:w-15 md:h-15 lg:w-20 lg:h-20 object-contain z-10
+              className="absolute left-[-8px] bottom-0 w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain z-10
                          hover:scale-110 transition-transform duration-300" 
             />
             
@@ -284,18 +284,18 @@ const OmnitrixWebsite = () => {
               className="w-full h-auto object-contain" 
             />
             
-            {/* Right Alien - positioned at 'X' */}
+            {/* Right Alien - INCREASED SIZE */}
             <img 
               src={humong} 
               alt="Alien Right" 
-              className="absolute right-0 bottom-0 w-10 h-10 sm:w-12 sm:h-12 md:w-15 md:h-15 lg:w-20 lg:h-20 object-contain z-10 transform scale-x-[-1]
+              className="absolute right-[-8px] bottom-0 w-14 h-14 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain z-10 transform scale-x-[-1]
                          hover:scale-110 hover:scale-x-[-1.1] transition-transform duration-300" 
             />
           </div>
         </div>
 
-        {/* Bottom Section - Event Info + Quote - No gap on mobile */}
-        <div className="space-y-4 sm:space-y-6 lg:space-y-8 w-full max-w-4xl mx-auto mb-8 sm:mb-12 mt-0 sm:mt-auto">
+        {/* Bottom Section - REDUCED SPACING ON MOBILE */}
+        <div className="space-y-4 sm:space-y-6 lg:space-y-8 w-full max-w-4xl mx-auto mb-8 sm:mb-12">
           {/* Event Info */}
           <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 justify-center items-center">
             {/* Event Date */}
