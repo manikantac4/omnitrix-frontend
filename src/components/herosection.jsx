@@ -281,16 +281,13 @@ const OmnitrixWebsite = () => {
           </p>
 
           {/* Title Image - Enhanced Responsiveness */}
-          <img 
-            src={title} 
-            alt="OMNITRIX Logo" 
-            className="w-full max-w-[240px] xs:max-w-[280px] sm:max-w-[320px] 
-                     md:max-w-[400px] lg:max-w-xl xl:max-w-2xl 2xl:max-w-4xl
-                     mx-auto h-auto object-contain mb-2 sm:mb-3 md:mb-4
-                     drop-shadow-[0_0_20px_rgba(74,222,128,0.3)]
-                     hover:drop-shadow-[0_0_30px_rgba(74,222,128,0.5)] 
-                     transition-all duration-300" 
-          />
+           <div className="w-full max-w-[260px] xs:max-w-[300px] sm:max-w-[350px] md:max-w-[450px] lg:max-w-xl xl:max-w-2xl mx-auto">
+            <img 
+              src={title} 
+              alt="OMNITRIX Logo" 
+              className="w-full h-auto object-contain mb-4 sm:mb-6 drop-shadow-lg" 
+            />
+          </div>
         </div>
 
         {/* Bottom Section - Event Info + Quote - Enhanced Responsiveness */}
