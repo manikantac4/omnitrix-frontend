@@ -5,7 +5,7 @@ import Hero from "./components/herosection"
 import GlobalBackground from "./components/globalbackground";
 import Form from "./components/Register";
 import Detail from "./components/detailsection";
-import eventtime from "./components/eventtimeline";
+import FAQ from "./components/FAQ";
 import Theme from "./components/Themes";
 import Sponsor from "./components/sponser";
 import Contact from "./components/contact";
@@ -43,8 +43,8 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<Detail />} />
           <Route path="/form" element={<Form />} />
-          <Route path="/time" element={<eventtime />} />
           <Route path="/theme" element={<Theme />} />
+          <Route path="/faq" element={<FAQ />} />
           <Route path="/sponsor" element={<Sponsor />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/prize" element={<Prize />} />

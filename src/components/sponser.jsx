@@ -4,7 +4,6 @@ import sahe from "..//assets/sahe.png"
 import smc from "../assets/ieeesmc.png";
 import it from "../assets/it.jpg";
 import pandu from "../assets/pandu.jpg";
-import bharath from "../assets/bharath.jpg"
 import manoj from "../assets/manoj.jpg";
 
 const SponsorsComponent = () => {

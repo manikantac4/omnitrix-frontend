@@ -37,8 +37,10 @@ const OmnitrixWebsite = () => {
       case 'Prizes':
         navigate('/prize');
         break;
-      case 'HackTime':
       case 'FAQs':
+        navigate('/faq');
+        break;
+      case 'HackTime':
         console.log(`${item} section coming soon!`);
         break;
       case 'Lobby':
@@ -71,9 +73,9 @@ const OmnitrixWebsite = () => {
                   key={item}
                   onClick={() => handleNavClick(item)}
                   className={`text-gray-300 hover:text-green-400 px-3 py-2 text-sm font-medium transition-colors duration-200 cursor-pointer ${
-                    ['HackTime', 'FAQs'].includes(item) ? 'opacity-50 cursor-not-allowed' : ''
+                    ['HackTime'].includes(item) ? 'opacity-50 cursor-not-allowed' : ''
                   }`}
-                  disabled={['HackTime', 'FAQs'].includes(item)}
+                  disabled={['HackTime'].includes(item)}
                 >
                   {item}
                 </button>
@@ -112,11 +114,7 @@ const OmnitrixWebsite = () => {
           <img 
             src={title} 
             alt="OMNITRIX Logo" 
-          
             className="w-full max-w-[320px] sm:max-w-[400px] lg:max-w-xl mx-auto h-auto object-contain mb-2" 
-          
-
-
           />
         </div>
 
