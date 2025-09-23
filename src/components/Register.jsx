@@ -1,7 +1,11 @@
 import React, { useState, useEffect } from 'react';
-
+import omnitrix from '../assets/omnitrix.png'
 const RegistrationComponent = () => {
   const [titleVisible, setTitleVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [showMessage, setShowMessage] = useState(false);
+  const [messageType, setMessageType] = useState('success'); // 'success' or 'error'
+  const [messageContent, setMessageContent] = useState('');
   const [formData, setFormData] = useState({
     teamLeaderName: '',
     teamName: '',
@@ -55,17 +59,60 @@ const RegistrationComponent = () => {
     }
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+
+    // Prepare final data
     const finalFormData = {
       ...formData,
-      // Use otherCollege value if college is "Other", otherwise use college
-      finalCollege: formData.college === 'Other' ? formData.otherCollege : formData.college
+      college: formData.college === 'Other' ? formData.otherCollege : formData.college
     };
-    console.log('Form Data:', finalFormData);
-    // Handle form submission here
-    // Replaced alert with a console log as alerts are not supported
-    console.log('Registration submitted successfully!');
+
+    // Remove the otherCollege field before sending
+    delete finalFormData.otherCollege;
+
+    console.log('Posting data:', finalFormData);
+
+    try {
+      const response = await fetch('https://omnitrix-backend-1.onrender.com/api/team/register', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(finalFormData)
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        console.log('✅ Registration successful:', data);
+        setMessageType('success');
+        setMessageContent({
+          title: 'Team Registered Successfully!',
+          description: 'Check your email for your Team ID. If you didn\'t receive it, reach us!'
+        });
+        setShowMessage(true);
+      } else {
+        console.error('❌ Registration failed:', data.error);
+        setMessageType('error');
+        setMessageContent({
+          title: 'Registration Failed',
+          description: 'Please check your information and try again.'
+        });
+        setShowMessage(true);
+      }
+    } catch (err) {
+      console.error('❌ Error posting data:', err);
+      setMessageType('error');
+      setMessageContent({
+        title: 'Connection Error',
+        description: 'Please check your internet connection and try again later.'
+      });
+      setShowMessage(true);
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   const handleBackClick = () => {
@@ -73,8 +120,107 @@ const RegistrationComponent = () => {
     window.location.href = '/';
   };
 
+  const closeMessage = () => {
+    setShowMessage(false);
+  };
+
+  // Ben 10 Watch Loading Component
+  const Ben10Loading = () => (
+    <div className="flex flex-col items-center justify-center space-y-6">
+      <div className="relative">
+        {/* Ben 10 Watch Image - Replace this URL with your actual Ben 10 watch image */}
+        <img 
+          src={omnitrix}
+          alt="Ben 10 Omnitrix Watch" 
+          className="w-24 h-24 object-contain animate-spin"
+          style={{ animationDuration: '2s' }}
+        />
+        
+        {/* Glowing Ring Effect */}
+        <div className="absolute inset-0 rounded-full border-2 border-green-400/50 animate-ping"></div>
+        <div className="absolute inset-2 rounded-full border border-green-300/30 animate-pulse"></div>
+      </div>
+      
+      <div className="text-green-400 font-semibold animate-pulse text-lg">
+        Registering Team...
+      </div>
+      
+      <div className="text-green-300/60 text-sm">
+        Activating Omnitrix...
+      </div>
+      
+      {/* Additional loading dots */}
+      <div className="flex space-x-2">
+        <div className="w-2 h-2 bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
+        <div className="w-2 h-2 bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
+        <div className="w-2 h-2 bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
+      </div>
+    </div>
+  );
+
   return (
     <div className="min-h-screen bg-transparent text-white p-4 sm:p-8">
+      {/* Loading Overlay */}
+      {isLoading && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50">
+          <div className="bg-transparent border-2 border-green-400/60 rounded-xl p-8 shadow-2xl shadow-green-400/20">
+            <Ben10Loading />
+          </div>
+        </div>
+      )}
+
+      {/* Success/Error Message Modal */}
+      {showMessage && (
+        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+          <div className={`bg-transparent border-2 rounded-xl p-8 shadow-2xl max-w-md w-full ${
+            messageType === 'success' 
+              ? 'border-green-400/60 shadow-green-400/20' 
+              : 'border-red-400/60 shadow-red-400/20'
+          }`}>
+            <div className="text-center space-y-4">
+              {/* Icon */}
+              <div className={`w-16 h-16 mx-auto rounded-full flex items-center justify-center ${
+                messageType === 'success' ? 'bg-green-400/20' : 'bg-red-400/20'
+              }`}>
+                {messageType === 'success' ? (
+                  <svg className="w-8 h-8 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" />
+                  </svg>
+                ) : (
+                  <svg className="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
+                  </svg>
+                )}
+              </div>
+
+              {/* Title */}
+              <h3 className={`text-2xl font-bold ${
+                messageType === 'success' ? 'text-green-400' : 'text-red-400'
+              }`}>
+                {messageContent.title}
+              </h3>
+
+              {/* Description */}
+              <p className="text-gray-300 text-lg leading-relaxed">
+                {messageContent.description}
+              </p>
+
+              {/* Close Button */}
+              <button
+                onClick={closeMessage}
+                className={`w-full font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-[1.02] ${
+                  messageType === 'success' 
+                    ? 'bg-transparent border-2 border-green-400/60 text-green-400 hover:bg-green-400/10 hover:border-green-400 hover:text-green-300 shadow-lg hover:shadow-green-400/30' 
+                    : 'bg-transparent border-2 border-red-400/60 text-red-400 hover:bg-red-400/10 hover:border-red-400 hover:text-red-300 shadow-lg hover:shadow-red-400/30'
+                }`}
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {/* Back Button */}
       <div className="mb-8">
         <button
@@ -258,9 +404,14 @@ const RegistrationComponent = () => {
             <div className="pt-6">
               <button
                 onClick={handleSubmit}
-                className="w-full bg-transparent border-2 border-green-400/60 text-green-400 font-bold py-4 px-8 rounded-lg hover:bg-green-400/10 hover:border-green-400 hover:text-green-300 transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-green-400/30 cursor-pointer"
+                disabled={isLoading}
+                className={`w-full bg-transparent border-2 border-green-400/60 text-green-400 font-bold py-4 px-8 rounded-lg transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-green-400/30 cursor-pointer ${
+                  isLoading 
+                    ? 'opacity-50 cursor-not-allowed' 
+                    : 'hover:bg-green-400/10 hover:border-green-400 hover:text-green-300'
+                }`}
               >
-                Register Team
+                {isLoading ? 'Registering...' : 'Register Team'}
               </button>
             </div>
 
