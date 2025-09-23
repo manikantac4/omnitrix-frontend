@@ -5,7 +5,7 @@ import Timeline from './eventtimeline';
 import Sponsor from "./sponser";
 import Contact from "./contact";
 import title from "../assets/title.png";
-import humong from "../assets/humoung.png";
+import humong from "../assets/humong.png";
 import openingVideo from "../assets/opening.mp4";
 
 const OmnitrixWebsite = () => {
@@ -268,7 +268,7 @@ const OmnitrixWebsite = () => {
           </p>
 
           {/* Title with Alien Images */}
-          <div className="relative flex items-end justify-center w-full max-w-[280px] sm:max-w-[320px] md:max-w-[400px] lg:max-w-xl xl:max-w-2xl mx-auto mb-4 sm:mb-6">
+          <div className="relative flex items-end justify-center w-full max-w-[280px] sm:max-w-[320px] md:max-w-[400px] lg:max-w-xl xl:max-w-2xl mx-auto mb-2">
             {/* Left Alien - positioned at 'O' */}
             <img 
               src={humong} 
@@ -294,7 +294,7 @@ const OmnitrixWebsite = () => {
           </div>
         </div>
 
-        {/* Bottom Section - Event Info + Quote - Adjusted spacing for mobile */}
+        {/* Bottom Section - Event Info + Quote - Reduced gap from title */}
         <div className="space-y-4 sm:space-y-6 lg:space-y-8 w-full max-w-4xl mx-auto mb-8 sm:mb-12">
           {/* Event Info */}
           <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 justify-center items-center">
