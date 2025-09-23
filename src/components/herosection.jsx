@@ -154,17 +154,17 @@ const OmnitrixWebsite = () => {
     );
   }
 
-  // Main Website Content (same as before)
+  // Main Website Content
   return (
     <div className="min-h-screen bg-transparent text-white flex flex-col">
       {/* Navigation Bar */}
       <nav className="fixed top-0 left-0 right-0 z-50 bg-black/20 backdrop-blur-sm border-b border-green-400/20">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-16">
+        <div className="w-full px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto">
+          <div className="flex items-center justify-between h-14 sm:h-16">
             
-            {/* Logo/Brand - Mobile */}
-            <div className="md:hidden flex items-center">
-              <span className="text-green-400 text-lg font-bold">OMNITRIX</span>
+            {/* Logo/Brand - Mobile & Desktop */}
+            <div className="flex items-center">
+              <span className="text-green-400 text-lg sm:text-xl font-bold">OMNITRIX</span>
             </div>
 
             {/* Mobile menu button */}
@@ -188,7 +188,7 @@ const OmnitrixWebsite = () => {
             </div>
             
             {/* Desktop Navigation Links */}
-            <div className="hidden md:flex items-center justify-center flex-1 space-x-4 lg:space-x-8">
+            <div className="hidden md:flex items-center justify-center flex-1 ml-8 space-x-2 lg:space-x-6">
               {navigationItems.map((item) => (
                 <button
                   key={item}
@@ -206,13 +206,13 @@ const OmnitrixWebsite = () => {
 
           {/* Mobile Navigation Menu */}
           {mobileMenuOpen && (
-            <div className="md:hidden">
-              <div className="px-2 pt-2 pb-3 space-y-1 bg-black/40 backdrop-blur-md border-t border-green-400/20 rounded-b-lg">
+            <div className="md:hidden absolute top-full left-0 right-0 bg-black/95 backdrop-blur-md border-b border-green-400/20">
+              <div className="px-4 py-3 space-y-1">
                 {navigationItems.map((item) => (
                   <button
                     key={item}
                     onClick={() => handleNavClick(item)}
-                    className={`block w-full text-left px-3 py-2 rounded-md text-base font-medium transition-colors duration-200 ${
+                    className={`block w-full text-left px-4 py-3 rounded-md text-base font-medium transition-colors duration-200 ${
                       ['HackTime'].includes(item) 
                         ? 'text-gray-500 cursor-not-allowed' 
                         : 'text-gray-300 hover:text-green-400 hover:bg-green-900/20'
@@ -235,99 +235,108 @@ const OmnitrixWebsite = () => {
           onClick={() => setMobileMenuOpen(false)}
         />
       )}
-
-      {/* Announcements Banner */}
-      <div className="bg-gradient-to-r from-green-900/30 to-green-800/30 border-b border-green-400/20 mt-16">
-        <div className="max-w-7xl mx-auto px-4 py-2 sm:py-3">
-          <div className="flex flex-col sm:flex-row items-center justify-center text-center space-y-1 sm:space-y-0">
-            <div className="flex items-center">
-              <span className="text-green-400 font-semibold mr-2 text-sm sm:text-base">ANNOUNCEMENTS</span>
-              <span className="text-red-400 mr-2">📢</span>
-            </div>
-            <div className="text-gray-300 text-xs sm:text-sm px-2">
-              <span className="block sm:inline">Registration is now open! • Transform your ideas into reality</span>
-              <span className="block sm:inline mt-1 sm:mt-0">
-                • Join us on Instagram{' '}
-                <a href="#" className="text-blue-400 underline hover:text-blue-300">Follow Here</a>
-                {' '}• Stay connected on LinkedIn{' '}
-                <a href="#" className="text-blue-400 underline hover:text-blue-300">Connect</a>
-              </span>
+  <div className="bg-gradient-to-r from-green-900/30 to-green-800/30 border-b border-green-400/20 mt-14 sm:mt-16">
+        <div className="w-full px-4 sm:px-6 py-3 sm:py-4">
+          <div className="flex items-center justify-center text-center">
+            <div className="flex items-center justify-center space-x-2 sm:space-x-4 text-xs sm:text-sm">
+              <span className="text-green-400 font-semibold">📢 ANNOUNCEMENTS</span>
+              <span className="text-gray-300">Registration Open!</span>
+              <span className="hidden sm:inline text-gray-400">•</span>
+              <span className="text-gray-300 hidden sm:inline">Transform ideas into reality</span>
+              <span className="text-gray-400">•</span>
+              <a href="#" className="text-blue-400 underline hover:text-blue-300">Follow Instagram</a>
+              <span className="text-gray-400 hidden md:inline">•</span>
+              <a href="#" className="text-blue-400 underline hover:text-blue-300 hidden md:inline">LinkedIn</a>
             </div>
           </div>
         </div>
       </div>
 
-      {/* Hero Section */}
-      <div className="flex-1 flex flex-col items-center justify-center sm:justify-between min-h-screen px-4 sm:px-6 lg:px-8 text-center font-mono">
+      {/* Hero Section - IMPROVED MOBILE LAYOUT */}
+      <div className="flex-1 flex flex-col items-center justify-center min-h-[calc(100vh-8rem)] px-4 sm:px-6 lg:px-8 text-center font-mono py-8 sm:py-12">
         
-        {/* Top Section */}
-        <div className="flex flex-col items-center mt-4 sm:mt-8 mb-4 sm:mb-0">
+        {/* Top Section - Better mobile spacing */}
+        <div className="flex flex-col items-center w-full max-w-6xl mx-auto mb-8 sm:mb-12">
           {/* Presenter Line */}
-          <p className="text-green-400 text-xs sm:text-sm lg:text-base font-medium tracking-wider mb-2 sm:mb-4">
-            SAHE IEEE STUDENT CHAPTERS PRESENTS
-          </p>
+          <div className="mb-4 sm:mb-6">
+            <p className="text-green-400 text-xs sm:text-sm lg:text-base font-medium tracking-wider px-2 text-center">
+              SAHE IEEE STUDENT CHAPTERS PRESENTS
+            </p>
+          </div>
 
-          {/* Title with Alien Images */}
-          <div className="relative flex items-end justify-center w-full max-w-[280px] sm:max-w-[320px] md:max-w-[400px] lg:max-w-xl xl:max-w-2xl mx-auto mb-2">
-            {/* Left Alien - positioned at 'O' */}
-            <img 
-              src={humong} 
-              alt="Alien Left" 
-              className="absolute left-0 bottom-0 w-10 h-10 sm:w-12 sm:h-12 md:w-15 md:h-15 lg:w-20 lg:h-20 object-contain z-10
-                         hover:scale-110 transition-transform duration-300" 
-            />
-            
-            {/* Title Image */}
-            <img 
-              src={title} 
-              alt="OMNITRIX Logo" 
-              className="w-full h-auto object-contain" 
-            />
-            
-            {/* Right Alien - positioned at 'X' */}
-            <img 
-              src={humong} 
-              alt="Alien Right" 
-              className="absolute right-0 bottom-0 w-10 h-10 sm:w-12 sm:h-12 md:w-15 md:h-15 lg:w-20 lg:h-20 object-contain z-10 transform scale-x-[-1]
-                         hover:scale-110 hover:scale-x-[-1.1] transition-transform duration-300" 
-            />
+          {/* Title with Alien Images - COMPLETELY REDESIGNED FOR MOBILE */}
+          <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto mb-6 sm:mb-8">
+            <div className="relative flex items-center justify-center">
+              {/* Left Alien - Better positioned */}
+              <div className="absolute left-0 bottom-0 transform -translate-x-2 sm:-translate-x-4 translate-y-1 sm:translate-y-2">
+                <img 
+                  src={humong} 
+                  alt="Alien Left" 
+                  className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain
+                           hover:scale-110 transition-transform duration-300" 
+                />
+              </div>
+              
+              {/* Title Image - Centered */}
+              <div className="px-8 sm:px-12 md:px-16">
+                <img 
+                  src={title} 
+                  alt="OMNITRIX Logo" 
+                  className="w-full h-auto object-contain max-w-[240px] sm:max-w-[300px] md:max-w-[400px] lg:max-w-[500px] mx-auto" 
+                />
+              </div>
+              
+              {/* Right Alien - Better positioned */}
+              <div className="absolute right-0 bottom-0 transform translate-x-2 sm:translate-x-4 translate-y-1 sm:translate-y-2">
+                <img 
+                  src={humong} 
+                  alt="Alien Right" 
+                  className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain transform scale-x-[-1]
+                           hover:scale-110 hover:scale-x-[-1.1] transition-transform duration-300" 
+                />
+              </div>
+            </div>
           </div>
         </div>
 
-        {/* Bottom Section - Event Info + Quote - No gap on mobile */}
-        <div className="space-y-4 sm:space-y-6 lg:space-y-8 w-full max-w-4xl mx-auto mb-8 sm:mb-12 mt-0 sm:mt-auto">
-          {/* Event Info */}
-          <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 justify-center items-center">
-            {/* Event Date */}
-            <div className="flex items-center space-x-2 text-green-400 bg-black/20 rounded-lg p-3 sm:p-4 backdrop-blur-sm border border-green-400/20 w-full sm:w-auto">
-              <svg className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
-              </svg>
-              <div className="text-left">
-                <div className="text-sm sm:text-base font-semibold text-white">October 24 - 25, 2025</div>
-                <div className="text-xs sm:text-sm text-green-300">Event Dates</div>
+        {/* Bottom Section - Better mobile layout */}
+        <div className="w-full max-w-5xl mx-auto space-y-6 sm:space-y-8">
+          {/* Event Info - IMPROVED MOBILE RESPONSIVENESS */}
+          <div className="flex flex-col lg:flex-row gap-4 sm:gap-6 justify-center items-stretch">
+            {/* Event Date - Full width on mobile */}
+            <div className="flex items-center space-x-3 text-green-400 bg-black/20 rounded-lg p-4 sm:p-5 backdrop-blur-sm border border-green-400/20 w-full lg:w-auto lg:min-w-[300px]">
+              <div className="flex-shrink-0">
+                <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z" />
+                </svg>
+              </div>
+              <div className="text-left flex-1 min-w-0">
+                <div className="text-base sm:text-lg font-semibold text-white truncate">October 24 - 25, 2025</div>
+                <div className="text-sm sm:text-base text-green-300">Event Dates</div>
               </div>
             </div>
 
-            {/* Venue */}
-            <div className="flex items-center space-x-2 text-green-400 bg-black/20 rounded-lg p-3 sm:p-4 backdrop-blur-sm border border-green-400/20 w-full sm:w-auto">
-              <svg className="w-5 h-5 sm:w-6 sm:h-6 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
-              </svg>
-              <div className="text-left">
-                <div className="text-sm sm:text-base font-semibold text-white">Siddhartha Academy of Higher Education</div>
-                <div className="text-xs sm:text-sm text-green-300">Vijayawada, Andhra Pradesh</div>
+            {/* Venue - Full width on mobile */}
+            <div className="flex items-center space-x-3 text-green-400 bg-black/20 rounded-lg p-4 sm:p-5 backdrop-blur-sm border border-green-400/20 w-full lg:w-auto lg:min-w-[320px]">
+              <div className="flex-shrink-0">
+                <svg className="w-6 h-6 sm:w-7 sm:h-7" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+                </svg>
+              </div>
+              <div className="text-left flex-1 min-w-0">
+                <div className="text-base sm:text-lg font-semibold text-white">Siddhartha Academy</div>
+                <div className="text-sm sm:text-base text-green-300">Vijayawada, Andhra Pradesh</div>
               </div>
             </div>
           </div>
 
-          {/* Quote Box */}
-          <div className="flex justify-center px-4">
-            <div className="bg-green-900/20 rounded-lg border border-green-400/30 backdrop-blur-sm p-4 sm:p-6 max-w-md sm:max-w-lg mx-auto
+          {/* Quote Box - Better mobile sizing */}
+          <div className="flex justify-center">
+            <div className="bg-green-900/20 rounded-lg border border-green-400/30 backdrop-blur-sm p-5 sm:p-6 w-full max-w-md sm:max-w-lg mx-auto
                           hover:bg-green-800/30 hover:border-green-300/50 hover:shadow-lg hover:shadow-green-400/20 
                           transition-all duration-300 cursor-pointer group">
-              <p className="text-green-300 text-sm sm:text-base font-medium text-center group-hover:text-green-200 
+              <p className="text-green-300 text-sm sm:text-base lg:text-lg font-medium text-center group-hover:text-green-200 
                            group-hover:drop-shadow-[0_0_6px_rgba(74,222,128,0.8)] leading-relaxed">
                 Developers Assemble! Don't let the bugs delay you
               </p>
