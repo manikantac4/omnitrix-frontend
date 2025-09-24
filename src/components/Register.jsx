@@ -10,13 +10,18 @@ const RegistrationComponent = () => {
   const [validationErrors, setValidationErrors] = useState({});
   const [formData, setFormData] = useState({
     teamLeaderName: '',
+    teamLeaderGender: '',
     teamName: '',
     phoneNumber: '',
     email: '',
     college: '',
     otherCollege: '',
     teamSize: '',
-    yearOfStudy: ''
+    yearOfStudy: '',
+    teamMember2Name: '',
+    teamMember2Gender: '',
+    teamMember3Name: '',
+    teamMember3Gender: ''
   });
 
   useEffect(() => {
@@ -26,7 +31,7 @@ const RegistrationComponent = () => {
 
   const colleges = [
     'Loyola Institute of Technology and Management (LITAM)',
-    'Vignan\'s Foundation for Science, Technology & Research (VFSTR), Vadlamudi',
+    "Vignan's Foundation for Science, Technology & Research (VFSTR), Vadlamudi",
     'R. V. R. & J. C. College of Engineering, Chowdavaram',
     'Vasireddy Venkatadri International Technological University (VVITU), Namburu, Pedakakani',
     'Andhra Loyola Institute of Engineering and Technology (ALIET)',
@@ -41,8 +46,9 @@ const RegistrationComponent = () => {
     'KLU (Koneru Lakshmaiah University)'
   ];
 
-  const teamSizes = ['2', '3', '4'];
+  const teamSizes = ['2', '3'];
   const yearsOfStudy = ['1st Year', '2nd Year', '3rd Year', '4th Year'];
+  const genderOptions = ['Male', 'Female', 'Other'];
 
   // Validation functions
   const validateForm = () => {
@@ -53,6 +59,11 @@ const RegistrationComponent = () => {
       errors.teamLeaderName = 'Team leader name is required';
     } else if (formData.teamLeaderName.trim().length < 2) {
       errors.teamLeaderName = 'Name must be at least 2 characters';
+    }
+
+    // Team Leader Gender validation
+    if (!formData.teamLeaderGender) {
+      errors.teamLeaderGender = 'Team leader gender is required';
     }
 
     // Team Name validation
@@ -93,12 +104,55 @@ const RegistrationComponent = () => {
       errors.yearOfStudy = 'Please select year of study';
     }
 
+    // Team Member 2 validation (Required for both team sizes)
+    if (formData.teamSize && parseInt(formData.teamSize) >= 2) {
+      if (!formData.teamMember2Name.trim()) {
+        errors.teamMember2Name = 'Second team member name is required';
+      } else if (formData.teamMember2Name.trim().length < 2) {
+        errors.teamMember2Name = 'Name must be at least 2 characters';
+      }
+
+      if (!formData.teamMember2Gender) {
+        errors.teamMember2Gender = 'Second team member gender is required';
+      }
+    }
+
+    // Team Member 3 validation (Optional for team size 3, but if name is provided, gender is required)
+    if (formData.teamSize && parseInt(formData.teamSize) === 3) {
+      if (formData.teamMember3Name.trim() && !formData.teamMember3Gender) {
+        errors.teamMember3Gender = 'Gender is required when name is provided';
+      }
+      if (formData.teamMember3Gender && !formData.teamMember3Name.trim()) {
+        errors.teamMember3Name = 'Name is required when gender is selected';
+      }
+    }
+
     setValidationErrors(errors);
     return Object.keys(errors).length === 0;
   };
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
+    
+    // Check for team size change first to handle clearing fields
+    if (name === 'teamSize') {
+      setFormData(prev => ({
+        ...prev,
+        [name]: value,
+        teamMember2Name: '',
+        teamMember2Gender: '',
+        teamMember3Name: '',
+        teamMember3Gender: ''
+      }));
+      
+      // Clear team member validation errors
+      setValidationErrors(prevErrors => {
+        const {  ...rest } = prevErrors;
+        return rest;
+      });
+      return; // Exit early to avoid subsequent logic
+    }
+
     setFormData(prev => ({
       ...prev,
       [name]: value
@@ -154,10 +208,18 @@ const RegistrationComponent = () => {
       teamName: formData.teamName.trim(),
       phoneNumber: formData.phoneNumber.trim(),
       email: formData.email.trim().toLowerCase(),
+      teamMember2Name: formData.teamMember2Name.trim(),
+      teamMember3Name: formData.teamMember3Name.trim(),
     };
 
     // Remove the otherCollege field before sending
     delete finalFormData.otherCollege;
+
+    // Remove empty team member 3 fields if not provided
+    if (!finalFormData.teamMember3Name) {
+      delete finalFormData.teamMember3Name;
+      delete finalFormData.teamMember3Gender;
+    }
 
     console.log('Posting data:', finalFormData);
 
@@ -177,20 +239,25 @@ const RegistrationComponent = () => {
         setMessageType('success');
         setMessageContent({
           title: 'Team Registered Successfully!',
-          description: 'Hey Alien 👽, thank you for registering! Check your email for your Team ID. If you didn’t receive it, please check your Spam/Promotions folder. Still not found? Reach us!'
+          description: 'Hey Alien 👽, thank you for registering! Check your email for your Team ID. If you didn\'t receive it, please check your Spam/Promotions folder. Still not found? Reach us!'
         });
         setShowMessage(true);
         
         // Reset form on successful submission
         setFormData({
           teamLeaderName: '',
+          teamLeaderGender: '',
           teamName: '',
           phoneNumber: '',
           email: '',
           college: '',
           otherCollege: '',
           teamSize: '',
-          yearOfStudy: ''
+          yearOfStudy: '',
+          teamMember2Name: '',
+          teamMember2Gender: '',
+          teamMember3Name: '',
+          teamMember3Gender: ''
         });
         setValidationErrors({});
       } else {
@@ -226,14 +293,36 @@ const RegistrationComponent = () => {
 
   // Check if form is valid for submit button state
   const isFormValid = () => {
-    return formData.teamLeaderName.trim() &&
-           formData.teamName.trim() &&
-           formData.phoneNumber.trim() &&
-           formData.email.trim() &&
-           formData.college &&
-           (formData.college !== 'Other' || formData.otherCollege.trim()) &&
-           formData.teamSize &&
-           formData.yearOfStudy;
+    // This is a simplified check for UI purposes, the full validation is in validateForm()
+    const baseValid = formData.teamLeaderName.trim() &&
+                      formData.teamLeaderGender &&
+                      formData.teamName.trim() &&
+                      formData.phoneNumber.trim() &&
+                      formData.email.trim() &&
+                      formData.college &&
+                      (formData.college !== 'Other' || formData.otherCollege.trim()) &&
+                      formData.teamSize &&
+                      formData.yearOfStudy;
+
+    if (!baseValid) return false;
+
+    // Check team member 2 (required for both team sizes)
+    if (parseInt(formData.teamSize) >= 2) {
+      if (!formData.teamMember2Name.trim() || !formData.teamMember2Gender) {
+        return false;
+      }
+    }
+
+    // Check team member 3 (if either field is filled, both must be filled)
+    if (parseInt(formData.teamSize) === 3) {
+      const hasMember3Name = !!formData.teamMember3Name.trim();
+      const hasMember3Gender = !!formData.teamMember3Gender;
+      if (hasMember3Name !== hasMember3Gender) {
+        return false;
+      }
+    }
+
+    return true;
   };
 
   // Ben 10 Watch Loading Component
@@ -356,27 +445,58 @@ const RegistrationComponent = () => {
           
           <div className="space-y-8">
             
-            {/* Team Leader Name */}
-            <div className="space-y-2">
-              <label className="block text-white font-semibold text-lg">
-                Team Leader Name <span className="text-red-400">*</span>
-              </label>
-              <input
-                type="text"
-                name="teamLeaderName"
-                value={formData.teamLeaderName}
-                onChange={handleInputChange}
-                required
-                className={`w-full bg-transparent border-2 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none transition-all duration-300 ${
-                  validationErrors.teamLeaderName 
-                    ? 'border-red-400/60 focus:border-red-400' 
-                    : 'border-green-400/30 focus:border-green-400/60'
-                }`}
-                placeholder="Enter team leader's full name"
-              />
-              {validationErrors.teamLeaderName && (
-                <p className="text-red-400 text-sm mt-1">{validationErrors.teamLeaderName}</p>
-              )}
+            {/* Team Leader Section */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+              {/* Team Leader Name */}
+              <div className="space-y-2">
+                <label className="block text-white font-semibold text-lg">
+                  Team Leader Name <span className="text-red-400">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="teamLeaderName"
+                  value={formData.teamLeaderName}
+                  onChange={handleInputChange}
+                  required
+                  className={`w-full bg-transparent border-2 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none transition-all duration-300 ${
+                    validationErrors.teamLeaderName 
+                      ? 'border-red-400/60 focus:border-red-400' 
+                      : 'border-green-400/30 focus:border-green-400/60'
+                  }`}
+                  placeholder="Enter team leader's full name"
+                />
+                {validationErrors.teamLeaderName && (
+                  <p className="text-red-400 text-sm mt-1">{validationErrors.teamLeaderName}</p>
+                )}
+              </div>
+
+              {/* Team Leader Gender */}
+              <div className="space-y-2">
+                <label className="block text-white font-semibold text-lg">
+                  Gender <span className="text-red-400">*</span>
+                </label>
+                <select
+                  name="teamLeaderGender"
+                  value={formData.teamLeaderGender}
+                  onChange={handleInputChange}
+                  required
+                  className={`w-full bg-transparent border-2 rounded-lg px-4 py-3 text-white focus:outline-none transition-all duration-300 ${
+                    validationErrors.teamLeaderGender 
+                      ? 'border-red-400/60 focus:border-red-400' 
+                      : 'border-green-400/30 focus:border-green-400/60'
+                  }`}
+                >
+                  <option value="" className="bg-slate-800 text-gray-300">Select gender</option>
+                  {genderOptions.map((gender, index) => (
+                    <option key={index} value={gender} className="bg-slate-800 text-white">
+                      {gender}
+                    </option>
+                  ))}
+                </select>
+                {validationErrors.teamLeaderGender && (
+                  <p className="text-red-400 text-sm mt-1">{validationErrors.teamLeaderGender}</p>
+                )}
+              </div>
             </div>
 
             {/* Team Name */}
@@ -563,6 +683,134 @@ const RegistrationComponent = () => {
               </div>
 
             </div>
+
+            {/* Team Members Section - Shows when team size is selected */}
+            {formData.teamSize && parseInt(formData.teamSize) >= 2 && (
+              <div className="space-y-8 pt-4 border-t border-green-400/20">
+                <h2 className="text-2xl font-bold text-green-400 mb-4">Team Members</h2>
+                
+                {/* Team Member 2 - Required */}
+                <div className="bg-green-400/5 border border-green-400/20 rounded-lg p-6">
+                  <h3 className="text-xl font-semibold text-white mb-4">
+                    Team Member 2 <span className="text-red-400">*</span>
+                  </h3>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    {/* Team Member 2 Name */}
+                    <div className="space-y-2">
+                      <label className="block text-white font-semibold">
+                        Full Name <span className="text-red-400">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        name="teamMember2Name"
+                        value={formData.teamMember2Name}
+                        onChange={handleInputChange}
+                        required
+                        className={`w-full bg-transparent border-2 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none transition-all duration-300 ${
+                          validationErrors.teamMember2Name 
+                            ? 'border-red-400/60 focus:border-red-400' 
+                            : 'border-green-400/30 focus:border-green-400/60'
+                        }`}
+                        placeholder="Enter team member's full name"
+                      />
+                      {validationErrors.teamMember2Name && (
+                        <p className="text-red-400 text-sm mt-1">{validationErrors.teamMember2Name}</p>
+                      )}
+                    </div>
+
+                    {/* Team Member 2 Gender */}
+                    <div className="space-y-2">
+                      <label className="block text-white font-semibold">
+                        Gender <span className="text-red-400">*</span>
+                      </label>
+                      <select
+                        name="teamMember2Gender"
+                        value={formData.teamMember2Gender}
+                        onChange={handleInputChange}
+                        required
+                        className={`w-full bg-transparent border-2 rounded-lg px-4 py-3 text-white focus:outline-none transition-all duration-300 ${
+                          validationErrors.teamMember2Gender 
+                            ? 'border-red-400/60 focus:border-red-400' 
+                            : 'border-green-400/30 focus:border-green-400/60'
+                        }`}
+                      >
+                        <option value="" className="bg-slate-800 text-gray-300">Select gender</option>
+                        {genderOptions.map((gender, index) => (
+                          <option key={index} value={gender} className="bg-slate-800 text-white">
+                            {gender}
+                          </option>
+                        ))}
+                      </select>
+                      {validationErrors.teamMember2Gender && (
+                        <p className="text-red-400 text-sm mt-1">{validationErrors.teamMember2Gender}</p>
+                      )}
+                    </div>
+                  </div>
+                </div>
+
+                {/* Team Member 3 - Optional (only for 3-member teams) */}
+                {parseInt(formData.teamSize) === 3 && (
+                  <div className="bg-blue-400/5 border border-blue-400/20 rounded-lg p-6">
+                    <h3 className="text-xl font-semibold text-white mb-4">
+                      Team Member 3 <span className="text-blue-400">(Optional)</span>
+                    </h3>
+                    <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                      {/* Team Member 3 Name */}
+                      <div className="space-y-2">
+                        <label className="block text-white font-semibold">
+                          Full Name
+                        </label>
+                        <input
+                          type="text"
+                          name="teamMember3Name"
+                          value={formData.teamMember3Name}
+                          onChange={handleInputChange}
+                          className={`w-full bg-transparent border-2 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none transition-all duration-300 ${
+                            validationErrors.teamMember3Name 
+                              ? 'border-red-400/60 focus:border-red-400' 
+                              : 'border-blue-400/30 focus:border-blue-400/60'
+                          }`}
+                          placeholder="Enter team member's full name (optional)"
+                        />
+                        {validationErrors.teamMember3Name && (
+                          <p className="text-red-400 text-sm mt-1">{validationErrors.teamMember3Name}</p>
+                        )}
+                      </div>
+
+                      {/* Team Member 3 Gender */}
+                      <div className="space-y-2">
+                        <label className="block text-white font-semibold">
+                          Gender
+                        </label>
+                        <select
+                          name="teamMember3Gender"
+                          value={formData.teamMember3Gender}
+                          onChange={handleInputChange}
+                          className={`w-full bg-transparent border-2 rounded-lg px-4 py-3 text-white focus:outline-none transition-all duration-300 ${
+                            validationErrors.teamMember3Gender 
+                              ? 'border-red-400/60 focus:border-red-400' 
+                              : 'border-blue-400/30 focus:border-blue-400/60'
+                          }`}
+                        >
+                          <option value="" className="bg-slate-800 text-gray-300">Select gender (optional)</option>
+                          {genderOptions.map((gender, index) => (
+                            <option key={index} value={gender} className="bg-slate-800 text-white">
+                              {gender}
+                            </option>
+                          ))}
+                        </select>
+                        {validationErrors.teamMember3Gender && (
+                          <p className="text-red-400 text-sm mt-1">{validationErrors.teamMember3Gender}</p>
+                        )}
+                      </div>
+                    </div>
+                    <p className="text-blue-300/70 text-sm mt-4">
+                      Note: If you provide a name, gender selection becomes required and vice versa.
+                    </p>
+                  </div>
+                )}
+              </div>
+            )}
 
             {/* Submit Button */}
             <div className="pt-6">
