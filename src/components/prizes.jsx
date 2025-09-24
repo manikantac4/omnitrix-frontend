@@ -91,6 +91,10 @@ const PrizesComponent = () => {
     }
   }, []);
 
+  const handleBackClick = () => {
+    window.location.href = '/';
+  };
+
   const prizes = [
     {
       position: 1,
@@ -123,6 +127,21 @@ const PrizesComponent = () => {
 
   return (
     <div className="min-h-screen bg-transparent text-white">
+      {/* Back Button */}
+      <div className="px-4 sm:px-6 lg:px-8 pt-8 pb-4">
+        <div className="max-w-7xl mx-auto">
+          <button
+            onClick={handleBackClick}
+            className="flex items-center space-x-2 bg-transparent border-2 border-green-400/30 text-green-400 hover:border-green-400/60 hover:text-green-300 transition-all duration-300 px-4 py-2 rounded-lg cursor-pointer"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            <span className="font-medium">Back to Home</span>
+          </button>
+        </div>
+      </div>
+
       {/* Header Section */}
       <div className="relative overflow-hidden py-12 sm:py-16 lg:py-20">
         <div className="absolute inset-0 bg-gradient-to-b from-green-500/5 to-transparent"></div>

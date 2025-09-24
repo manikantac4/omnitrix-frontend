@@ -37,6 +37,10 @@ export default function HackathonTracksPanel() {
     return () => clearTimeout(titleTimer);
   }, []);
 
+  const handleBackClick = () => {
+    window.location.href = '/';
+  };
+
   const filtered = TRACKS.filter(t =>
     t.title.toLowerCase().includes(query.toLowerCase()) || 
     t.tag.toLowerCase().includes(query.toLowerCase())
@@ -66,6 +70,19 @@ export default function HackathonTracksPanel() {
   return (
     <div className="min-h-screen bg-transparent text-gray-100 font-mono">
       <div className="p-4 sm:p-6">
+        {/* Back Button */}
+        <div className="mb-6">
+          <button
+            onClick={handleBackClick}
+            className="flex items-center space-x-2 bg-transparent border-2 border-green-400/30 text-green-400 hover:border-green-400/60 hover:text-green-300 transition-all duration-300 px-4 py-2 rounded-lg cursor-pointer"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            <span className="font-medium">Back to Home</span>
+          </button>
+        </div>
+
         {/* Header */}
         <div className={`text-center mb-6 sm:mb-8 transition-all duration-1000 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'}`}>
           <h1 className="text-2xl sm:text-3xl lg:text-4xl font-bold text-white mb-4 tracking-wide">HACKATHON THEMES</h1>
