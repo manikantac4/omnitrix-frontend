@@ -6,6 +6,7 @@ import it from "../assets/it.jpg";
 import pandu from "../assets/pandu.jpg";
 import manoj from "../assets/manoj.jpg";
 import poojitha from "../assets/poojitha.jpg";
+import hodImage from "../assets/pandu.jpg"; // Add your HOD image path
 
 const SponsorsComponent = () => {
   const [titleVisible, setTitleVisible] = useState(false);
@@ -15,48 +16,82 @@ const SponsorsComponent = () => {
     return () => clearTimeout(titleTimer);
   }, []);
 
+  // Conveyor - HOD
+  const conveyor = {
+    name: "Dr. M. Suneetha",
+    role: "Dean of R&D,IQAC \n Professor & HOD of IT, SAHE",
+    image: hodImage,
+    linkedin: "" // Placeholder for LinkedIn URL
+  };
+
   const facultyCoordinators = [
     {
       name: "Dr. M. Gargi",
       role: "IEEE-CIS Chapter Incharge",
-      image: null
+      image: null,
+      linkedin: "" // Placeholder for LinkedIn URL
     },
     {
       name: "Dr. Ch. Subbareddy",
       role: "IEEE-SMC Chapter Incharge", 
-      image: null
+      image: null,
+      linkedin: "" // Placeholder for LinkedIn URL
     }
   ];
 
-  // First row: Chair, Web Master, Treasurer
+  // First row: Chair, Web Master, Vice Chair
   const primaryCoordinators = [
     {
       name: "Manoj Kumar",
       role: "IEEE CHAIR",
-      image: manoj
+      image: manoj,
+      linkedin: "" // Placeholder for LinkedIn URL
     },
     {
       name: "Pandu Ranga",
       role: "WEB MASTER",
-      image: pandu
+      image: pandu,
+      linkedin: "" // Placeholder for LinkedIn URL
     },
     {
       name: "Poojitha",
       role: "IEEE VICE CHAIR", 
-      image: poojitha
+      image: poojitha,
+      linkedin: "" // Placeholder for LinkedIn URL
     }
   ];
 
   // Second row: Vice Chair, Secretary, Publisher
   const secondaryCoordinators = [
-    
+    // Add more coordinators here as needed
   ];
 
   const organizers = [
-    { name: "IEEE CIS", image: cis },
-    { name: "IEEE SMC", image: smc },
-    { name: "IT Department", image: it },
-    { name: "SAHE", image: sahe }
+    { 
+      name: "IEEE", 
+      image: null, // Add IEEE main logo
+      linkedin: "" // Placeholder for LinkedIn URL
+    },
+    { 
+      name: "IEEE CIS", 
+      image: cis,
+      linkedin: "" // Placeholder for LinkedIn URL
+    },
+    { 
+      name: "IEEE SMC", 
+      image: smc,
+      linkedin: "" // Placeholder for LinkedIn URL
+    },
+    { 
+      name: "IT Department", 
+      image: it,
+      linkedin: "" // Placeholder for LinkedIn URL
+    },
+    { 
+      name: "SAHE", 
+      image: sahe,
+      linkedin: "" // Placeholder for LinkedIn URL
+    }
   ];
 
   const SponsorCard = ({ sponsor }) => (
@@ -71,9 +106,33 @@ const SponsorsComponent = () => {
     </div>
   );
 
+  const ConveyorCard = ({ person }) => (
+    <div className="flex flex-col items-center text-center space-y-3 md:space-y-4 w-full max-w-[200px] mx-auto">
+      <div 
+        className="w-32 h-32 md:w-36 md:h-36 lg:w-40 lg:h-40 rounded-full bg-slate-800/40 border-2 border-green-400/30 flex items-center justify-center overflow-hidden shadow-lg shadow-green-400/10 hover:border-green-400/60 hover:shadow-green-400/30 transition-all duration-300 cursor-pointer"
+        onClick={() => person.linkedin && window.open(person.linkedin, '_blank')}
+      >
+        {person.image ? (
+          <img src={person.image} alt={person.name} className="w-full h-full object-cover" />
+        ) : (
+          <div className="text-green-400/60 text-2xl md:text-3xl font-bold">
+            {person.name.charAt(0)}
+          </div>
+        )}
+      </div>
+      <div className="px-2">
+        <h3 className="text-white font-semibold text-sm md:text-base lg:text-lg break-words">{person.name}</h3>
+        <p className="text-green-400/80 text-xs md:text-sm whitespace-pre-line break-words leading-relaxed">{person.role}</p>
+      </div>
+    </div>
+  );
+
   const PersonCard = ({ person }) => (
     <div className="flex flex-col items-center text-center space-y-2 md:space-y-3 w-full max-w-[120px] mx-auto">
-      <div className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full bg-slate-800/40 border-2 border-green-400/30 flex items-center justify-center overflow-hidden shadow-lg shadow-green-400/10 hover:border-green-400/60 hover:shadow-green-400/30 transition-all duration-300">
+      <div 
+        className="w-20 h-20 md:w-24 md:h-24 lg:w-28 lg:h-28 rounded-full bg-slate-800/40 border-2 border-green-400/30 flex items-center justify-center overflow-hidden shadow-lg shadow-green-400/10 hover:border-green-400/60 hover:shadow-green-400/30 transition-all duration-300 cursor-pointer"
+        onClick={() => person.linkedin && window.open(person.linkedin, '_blank')}
+      >
         {person.image ? (
           <img src={person.image} alt={person.name} className="w-full h-full object-cover" />
         ) : (
@@ -91,7 +150,10 @@ const SponsorsComponent = () => {
 
   const OrganizerCard = ({ org }) => (
     <div className="flex flex-col items-center text-center space-y-2 md:space-y-3 w-full max-w-[100px] mx-auto">
-      <div className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full bg-slate-800/40 border-2 border-green-400/30 flex items-center justify-center overflow-hidden shadow-lg shadow-green-400/10 hover:border-green-400/60 hover:shadow-green-400/30 transition-all duration-300">
+      <div 
+        className="w-16 h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 rounded-full bg-slate-800/40 border-2 border-green-400/30 flex items-center justify-center overflow-hidden shadow-lg shadow-green-400/10 hover:border-green-400/60 hover:shadow-green-400/30 transition-all duration-300 cursor-pointer"
+        onClick={() => org.linkedin && window.open(org.linkedin, '_blank')}
+      >
         {org.image ? (
           <img src={org.image} alt={org.name} className="w-full h-full object-cover" />
         ) : (
@@ -132,6 +194,16 @@ const SponsorsComponent = () => {
           </div>
         </section>
 
+        {/* Conveyor Section */}
+        <section className="px-4">
+          <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-6 md:mb-8 tracking-wider text-center">
+            CONVEYOR
+          </h2>
+          <div className="flex justify-center">
+            <ConveyorCard person={conveyor} />
+          </div>
+        </section>
+
         {/* Coordinators */}
         <section className="px-4">
           <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-6 md:mb-8 tracking-wider text-center">
@@ -157,7 +229,7 @@ const SponsorsComponent = () => {
                 Student Coordinators
               </h3>
               <div className="space-y-6 md:space-y-8">
-                {/* First row: Chair, Web Master, Treasurer */}
+                {/* First row: Chair, Web Master, Vice Chair */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 justify-items-center max-w-4xl mx-auto">
                   {primaryCoordinators.map((person, index) => (
                     <PersonCard key={index} person={person} />
@@ -165,11 +237,13 @@ const SponsorsComponent = () => {
                 </div>
                 
                 {/* Second row: Vice Chair, Secretary, Publisher */}
-                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 justify-items-center max-w-4xl mx-auto">
-                  {secondaryCoordinators.map((person, index) => (
-                    <PersonCard key={index} person={person} />
-                  ))}
-                </div>
+                {secondaryCoordinators.length > 0 && (
+                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 justify-items-center max-w-4xl mx-auto">
+                    {secondaryCoordinators.map((person, index) => (
+                      <PersonCard key={index} person={person} />
+                    ))}
+                  </div>
+                )}
               </div>
             </div>
           </div>
@@ -180,7 +254,7 @@ const SponsorsComponent = () => {
           <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-6 md:mb-8 tracking-wider text-center">
             ORGANIZERS
           </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 md:gap-6 lg:gap-8 justify-items-center max-w-3xl mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 lg:gap-8 justify-items-center max-w-4xl mx-auto">
             {organizers.map((org, index) => (
               <OrganizerCard key={index} org={org} />
             ))}

@@ -251,10 +251,10 @@ const OmnitrixWebsite = () => {
         <div className="flex flex-col items-center w-full max-w-6xl mx-auto mb-8 sm:mb-12">
           {/* Presenter Line */}
           <div className="mb-4 sm:mb-6">
-            <p className="text-green-400 text-xs sm:text-sm lg:text-base font-medium tracking-wider px-2 text-center">
-              SAHE IEEE STUDENT CHAPTERS PRESENTS
-            </p>
-          </div>
+  <p className="text-green-500 sm:text-lg lg:text-xl font-bold tracking-widest uppercase text-center drop-shadow-[0_0_8px_rgba(34,197,94,0.8)]">
+    SAHE IEEE STUDENT CHAPTERS PRESENTS
+  </p>
+</div>
 
           {/* Title with Alien Images - INCREASED SIZE */}
           <div className="relative w-full max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto mb-6 sm:mb-8">
@@ -317,23 +317,14 @@ const OmnitrixWebsite = () => {
                 </svg>
               </div>
               <div className="text-left flex-1 min-w-0">
-                <div className="text-base sm:text-lg font-semibold text-white">Siddhartha Academy</div>
+                <div className="text-base sm:text-lg font-semibold text-white">Siddhartha Academy of Higher Education</div>
                 <div className="text-sm sm:text-base text-green-300">Vijayawada, Andhra Pradesh</div>
               </div>
             </div>
           </div>
 
           {/* Quote Box - Better mobile sizing */}
-          <div className="flex justify-center">
-            <div className="bg-green-900/20 rounded-lg border border-green-400/30 backdrop-blur-sm p-5 sm:p-6 w-full max-w-md sm:max-w-lg mx-auto
-                          hover:bg-green-800/30 hover:border-green-300/50 hover:shadow-lg hover:shadow-green-400/20 
-                          transition-all duration-300 cursor-pointer group">
-              <p className="text-green-300 text-sm sm:text-base lg:text-lg font-medium text-center group-hover:text-green-200 
-                           group-hover:drop-shadow-[0_0_6px_rgba(74,222,128,0.8)] leading-relaxed">
-                Developers Assemble! Don't let the bugs delay you
-              </p>
-            </div>
-          </div>
+          
         </div>
       </div>
 

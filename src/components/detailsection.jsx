@@ -1,6 +1,45 @@
 import React, { useState, useEffect } from 'react';
 import Heat from "../assets/heat.png";
 
+// SVG Icons Components
+const ClockIcon = () => (
+  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+    <polyline points="12,6 12,12 16,14" stroke="currentColor" strokeWidth="2"/>
+  </svg>
+);
+
+const UsersIcon = () => (
+  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" stroke="currentColor" strokeWidth="2"/>
+    <circle cx="9" cy="7" r="4" stroke="currentColor" strokeWidth="2"/>
+    <path d="M23 21v-2a4 4 0 0 0-3-3.87" stroke="currentColor" strokeWidth="2"/>
+    <path d="M16 3.13a4 4 0 0 1 0 7.75" stroke="currentColor" strokeWidth="2"/>
+  </svg>
+);
+
+const FoodIcon = () => (
+  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M8.5 8.5c0-1 0-2 1-3s2.5-1.5 3.5-1 2 .5 2.5 1.5 1 2 1 3-1 2-2 2.5-2.5.5-3.5 0-1.5-1.5-1.5-2.5z" stroke="currentColor" strokeWidth="2"/>
+    <path d="M7 21c0-2.5 0-5 0-7.5 0-1.5 1-2.5 2.5-2.5h5c1.5 0 2.5 1 2.5 2.5 0 2.5 0 5 0 7.5" stroke="currentColor" strokeWidth="2"/>
+    <path d="M7 11h10" stroke="currentColor" strokeWidth="2"/>
+    <path d="M7 21h10" stroke="currentColor" strokeWidth="2"/>
+    <circle cx="12" cy="7" r="1" fill="currentColor"/>
+    <circle cx="10" cy="9" r="0.5" fill="currentColor"/>
+    <circle cx="14" cy="9" r="0.5" fill="currentColor"/>
+  </svg>
+);
+
+const GiftIcon = () => (
+  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <polyline points="20,12 20,22 4,22 4,12" stroke="currentColor" strokeWidth="2"/>
+    <rect x="2" y="7" width="20" height="5" stroke="currentColor" strokeWidth="2"/>
+    <line x1="12" y1="22" x2="12" y2="7" stroke="currentColor" strokeWidth="2"/>
+    <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" stroke="currentColor" strokeWidth="2"/>
+    <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" stroke="currentColor" strokeWidth="2"/>
+  </svg>
+);
+
 // RegisterButton component
 const RegisterButton = ({ isVisible }) => {
   const handleClick = () => {
@@ -191,25 +230,25 @@ const OmnitrixRegistration = () => {
 
   const eventDetails = [
     {
-      icon: '⏳',
+      icon: <ClockIcon />,
       title: '24-Hour Hackathon',
       subtitle: 'Non-stop coding marathon',
       delay: 0.8
     },
     {
-      icon: '👥',
+      icon: <UsersIcon />,
       title: '2-4 Member Teams',
       subtitle: 'Collaborative innovation',
       delay: 1.0
     },
     {
-      icon: '🍔',
-      title: 'Full Meals Provided',
+      icon: <FoodIcon />,
+      title: 'Meals Provided',
       subtitle: 'Breakfast, lunch & snacks',
       delay: 1.2
     },
     {
-      icon: '🎁',
+      icon: <GiftIcon />,
       title: 'Certificates & Swags',
       subtitle: 'Recognition for participation',
       delay: 1.4
@@ -285,7 +324,7 @@ const OmnitrixRegistration = () => {
                          e.target.style.boxShadow = 'none';
                        }}>
                     <div className="flex items-center space-x-4">
-                      <div className="text-4xl">{detail.icon}</div>
+                      <div className="text-green-400 group-hover:text-green-300 transition-colors duration-300">{detail.icon}</div>
                       <div>
                         <h3 className="text-xl font-bold text-green-300 mb-1" style={{ fontFamily: '"Orbitron", monospace' }}>
                           {detail.title}
@@ -318,7 +357,7 @@ const OmnitrixRegistration = () => {
                          e.target.style.boxShadow = 'none';
                        }}>
                     <div className="flex items-center space-x-4">
-                      <div className="text-4xl">{detail.icon}</div>
+                      <div className="text-green-400 group-hover:text-green-300 transition-colors duration-300">{detail.icon}</div>
                       <div>
                         <h3 className="text-xl font-bold text-green-300 mb-1" style={{ fontFamily: '"Orbitron", monospace' }}>
                           {detail.title}
