@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react';
+import Footer from './Footer';
+
 
 const FAQComponent = () => {
   const [titleVisible, setTitleVisible] = useState(false);
@@ -204,6 +206,7 @@ const FAQComponent = () => {
           transform: rotateY(180deg);
         }
       `}</style>
+      <Footer/>
     </div>
   );
 };

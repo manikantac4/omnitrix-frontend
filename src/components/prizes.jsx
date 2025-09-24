@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { Trophy, Award, Medal, Gift } from 'lucide-react';
+import Footer from './Footer';
 
 const PrizesComponent = () => {
   const [titleVisible, setTitleVisible] = useState(false);
@@ -227,6 +228,7 @@ const PrizesComponent = () => {
         <div className="absolute bottom-20 right-1/3 h-2 w-2 animate-pulse rounded-full bg-emerald-400/30"></div>
         <div className="absolute top-1/2 right-10 h-3 w-3 animate-bounce rounded-full bg-emerald-300/20"></div>
       </div>
+      <Footer/>
     </div>
   );
 };
