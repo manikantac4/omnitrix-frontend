@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
+import omnitrix from '../assets/omnitrix.png';
 
 const Timeline = () => {
   const [visibleItems, setVisibleItems] = useState(new Set());
@@ -164,6 +165,26 @@ const Timeline = () => {
 
   return (
     <div className="min-h-screen bg-transparent flex items-center justify-center p-4 sm:p-8 overflow-hidden">
+      <style jsx>{`
+        .omnitrix-rotate {
+          animation: omnitrix-spin 8s linear infinite;
+        }
+        
+        .omnitrix-rotate-reverse {
+          animation: omnitrix-spin-reverse 10s linear infinite;
+        }
+        
+        @keyframes omnitrix-spin {
+          from { transform: rotate(0deg); }
+          to { transform: rotate(360deg); }
+        }
+        
+        @keyframes omnitrix-spin-reverse {
+          from { transform: rotate(360deg); }
+          to { transform: rotate(0deg); }
+        }
+      `}</style>
+      
       <div className="relative max-w-4xl w-full" ref={timelineRef}>
         {/* Professional Header */}
         <div className={`text-center mb-8 sm:mb-12 transition-all duration-1000 ease-out ${
@@ -180,16 +201,17 @@ const Timeline = () => {
           </p>
         </div>
 
-        {/* Top Hub */}
+        {/* Top Hub with Omnitrix Image */}
         <div className={`relative mx-auto w-12 h-12 sm:w-16 sm:h-16 mb-6 sm:mb-8 transition-all duration-1000 ease-out ${
           pageLoaded 
             ? 'opacity-100 scale-100 rotate-0' 
             : 'opacity-0 scale-0 -rotate-180'
         }`}>
-          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-green-400 to-emerald-500 border-2 border-green-400 shadow-lg shadow-green-400/50 animate-pulse">
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-white rounded-full shadow-lg shadow-green-400/50"></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 border-2 border-green-400 rounded-full border-t-transparent animate-spin"></div>
-          </div>
+          <img 
+            src={omnitrix}
+            alt="Omnitrix" 
+            className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover omnitrix-rotate"
+          />
         </div>
 
         {/* Timeline Container */}
@@ -279,16 +301,17 @@ const Timeline = () => {
           </div>
         </div>
 
-        {/* Bottom Hub */}
+        {/* Bottom Hub with Omnitrix Image */}
         <div className={`relative mx-auto w-12 h-12 sm:w-16 sm:h-16 mt-6 sm:mt-8 transition-all duration-1000 ease-out ${
           pageLoaded 
             ? 'opacity-100 scale-100 rotate-0' 
             : 'opacity-0 scale-0 rotate-180'
         }`}>
-          <div className="absolute inset-0 rounded-full bg-gradient-to-r from-emerald-500 to-green-400 border-2 border-green-400 shadow-lg shadow-green-400/50 animate-pulse">
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3 h-3 sm:w-4 sm:h-4 bg-white rounded-full shadow-lg shadow-green-400/50"></div>
-            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 sm:w-12 sm:h-12 border-2 border-green-400 rounded-full border-b-transparent animate-spin" style={{animationDirection: 'reverse'}}></div>
-          </div>
+          <img 
+            src={omnitrix}
+            alt="Omnitrix" 
+            className="w-12 h-12 sm:w-16 sm:h-16 rounded-full object-cover omnitrix-rotate-reverse"
+          />
         </div>
       </div>
     </div>
