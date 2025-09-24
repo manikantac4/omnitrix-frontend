@@ -177,7 +177,7 @@ const RegistrationComponent = () => {
         setMessageType('success');
         setMessageContent({
           title: 'Team Registered Successfully!',
-          description: 'Check your email for your Team ID. If you didn\'t receive it, reach us!'
+          description: 'Hey Alien 👽, thank you for registering! Check your email for your Team ID. If you didn’t receive it, please check your Spam/Promotions folder. Still not found? Reach us!'
         });
         setShowMessage(true);
         
