@@ -81,7 +81,7 @@ const OmnitrixWebsite = () => {
         setMobileMenuOpen(false);
         break;
       case 'HackTime':
-        console.log(`${item} section coming soon!`);
+        navigate('/hacktime');
         setMobileMenuOpen(false);
         break;
       case 'Lobby':
@@ -193,10 +193,7 @@ const OmnitrixWebsite = () => {
                 <button
                   key={item}
                   onClick={() => handleNavClick(item)}
-                  className={`text-gray-300 hover:text-green-400 px-2 lg:px-3 py-2 text-xs lg:text-sm font-medium transition-colors duration-200 cursor-pointer whitespace-nowrap ${
-                    ['HackTime'].includes(item) ? 'opacity-50 cursor-not-allowed' : ''
-                  }`}
-                  disabled={['HackTime'].includes(item)}
+                  className="text-gray-300 hover:text-green-400 px-2 lg:px-3 py-2 text-xs lg:text-sm font-medium transition-colors duration-200 cursor-pointer whitespace-nowrap"
                 >
                   {item}
                 </button>
@@ -212,12 +209,7 @@ const OmnitrixWebsite = () => {
                   <button
                     key={item}
                     onClick={() => handleNavClick(item)}
-                    className={`block w-full text-left px-4 py-3 rounded-md text-base font-medium transition-colors duration-200 ${
-                      ['HackTime'].includes(item) 
-                        ? 'text-gray-500 cursor-not-allowed' 
-                        : 'text-gray-300 hover:text-green-400 hover:bg-green-900/20'
-                    }`}
-                    disabled={['HackTime'].includes(item)}
+                    className="block w-full text-left px-4 py-3 rounded-md text-base font-medium text-gray-300 hover:text-green-400 hover:bg-green-900/20 transition-colors duration-200"
                   >
                     {item}
                   </button>

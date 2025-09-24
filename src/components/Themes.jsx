@@ -276,7 +276,7 @@ export default function HackathonTracksPanel() {
                         <span className="text-emerald-400 font-semibold text-sm">Important Notice</span>
                       </div>
                       <p className="text-xs sm:text-sm text-gray-300">
-                        Problem statements will be released on <strong className="text-emerald-400">10 Oct, 12:00 AM</strong>. 
+                        Problem statements will be released on <strong className="text-emerald-400"> 7 Oct, 12:00 AM</strong>. 
                         Stay tuned for detailed challenge descriptions and requirements.
                       </p>
                     </div>

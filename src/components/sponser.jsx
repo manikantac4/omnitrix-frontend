@@ -5,6 +5,7 @@ import smc from "../assets/ieeesmc.png";
 import it from "../assets/it.jpg";
 import pandu from "../assets/pandu.jpg";
 import manoj from "../assets/manoj.jpg";
+import poojitha from "../assets/poojitha.jpg";
 
 const SponsorsComponent = () => {
   const [titleVisible, setTitleVisible] = useState(false);
@@ -42,7 +43,7 @@ const SponsorsComponent = () => {
     {
       name: "Poojitha",
       role: "IEEE VICE CHAIR", 
-      image: null
+      image: poojitha
     }
   ];
 

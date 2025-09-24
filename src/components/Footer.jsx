@@ -1,6 +1,6 @@
 import React from 'react';
 import humoungImg from "../assets/way.png";
-import titleImg from "../assets/foot.png";
+import titleImg from "../assets/footer.png";
 
 // Team member images
 import manojImg from "../assets/manoj.jpg";
@@ -155,6 +155,26 @@ export default function Footer() {
             </div>
           </div>
         </div>
+
+        {/* Footer Section */}
+        <section className="mt-12">
+          <div className="w-full max-w-none mx-auto px-0">
+            {/* Footer Image */}
+            <div className="relative w-full h-80 sm:h-96 lg:h-[500px] xl:h-[600px] rounded-2xl overflow-hidden border-2 border-green-400/30 shadow-2xl shadow-green-400/20 mb-8">
+              <img 
+                src={titleImg} 
+                alt="Footer" 
+                className="w-full h-full object-cover object-center"
+                style={{ 
+                  objectFit: 'cover',
+                  objectPosition: 'center'
+                }}
+              />
+              {/* Overlay gradient for better text readability if needed */}
+              <div className="absolute inset-0 bg-gradient-to-t from-black/20 via-transparent to-transparent"></div>
+            </div>
+          </div>
+        </section>
 
         {/* Bottom Footer - Copyright */}
         <div className="mt-6 pt-4 border-t border-green-400/20">
