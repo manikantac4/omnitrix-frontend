@@ -101,7 +101,7 @@ const CountdownTimer = ({ isVisible }) => {
 
   useEffect(() => {
     // Set target date to October 24, 2025 11:00 AM (next year)
-    const targetDate = new Date('2025-10-24T11:00:00').getTime();
+    const targetDate = new Date('2025-10-17T11:00:00').getTime();
 
     // Initial calculation
     const calculateTimeLeft = () => {

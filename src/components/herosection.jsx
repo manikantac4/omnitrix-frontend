@@ -311,7 +311,7 @@ const OmnitrixWebsite = () => {
                 </svg>
               </div>
               <div className="text-left flex-1 min-w-0">
-                <div className="text-base sm:text-lg font-semibold text-white truncate">October 24 - 25, 2025</div>
+                <div className="text-base sm:text-lg font-semibold text-white truncate">October 17 - 18, 2025</div>
                 <div className="text-sm sm:text-base text-green-300">Event Dates</div>
               </div>
             </div>

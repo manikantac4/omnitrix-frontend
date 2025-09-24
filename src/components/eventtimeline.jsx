@@ -94,7 +94,7 @@ const Timeline = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
       ),
-      date: "9 Oct, 11:59 PM",
+      date: "7 Oct, 11:59 PM",
       title: "Registration Closes"
     },
     {
@@ -103,7 +103,7 @@ const Timeline = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
         </svg>
       ),
-      date: "10 Oct, 12:00 AM",
+      date: "8 Oct, 12:00 AM",
       title: "Problem Statement Released"
     },
     {
@@ -112,7 +112,7 @@ const Timeline = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M11 5H6a2 2 0 00-2 2v11a2 2 0 002 2h11a2 2 0 002-2v-5m-1.414-9.414a2 2 0 112.828 2.828L11.828 15H9v-2.828l8.586-8.586z" />
         </svg>
       ),
-      date: "12 Oct, 11:59 PM",
+      date: "10 Oct, 11:59 PM",
       title: "Last Date to Submit PPT Solution"
     },
     {
@@ -121,7 +121,7 @@ const Timeline = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" />
         </svg>
       ),
-      date: "15 Oct, 10:00 AM",
+      date: "11 Oct, 5:00 PM",
       title: "Results of Shortlisting"
     },
     {
@@ -130,7 +130,7 @@ const Timeline = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
         </svg>
       ),
-      date: "15 Oct, 6:00 PM",
+      date: "11 Oct, 6:00 PM",
       title: "Payment Opens for Selected Teams"
     },
     {
@@ -139,7 +139,7 @@ const Timeline = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
         </svg>
       ),
-      date: "19 Oct, 11:59 PM",
+      date: "13 Oct, 2:00 PM",
       title: "Payment Closes"
     },
     {
@@ -148,7 +148,7 @@ const Timeline = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 10V3L4 14h7v7l9-11h-7z" />
         </svg>
       ),
-      date: "24 Oct, 11:00 AM",
+      date: "17 Oct, 11:00 AM",
       title: "Hackathon Starts"
     },
     {
@@ -157,7 +157,7 @@ const Timeline = () => {
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5H7a2 2 0 00-2 2v10a2 2 0 002 2h8a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2m-6 9l2 2 4-4" />
         </svg>
       ),
-      date: "25 Oct, 11:00 AM",
+      date: "18 Oct, 11:00 AM",
       title: "Hackathon Ends"
     }
   ];
