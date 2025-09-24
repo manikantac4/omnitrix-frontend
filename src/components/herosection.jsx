@@ -236,9 +236,9 @@ const OmnitrixWebsite = () => {
               <span className="hidden sm:inline text-gray-400">•</span>
               <span className="text-gray-300 hidden sm:inline">Transform ideas into reality</span>
               <span className="text-gray-400">•</span>
-              <a href="#" className="text-blue-400 underline hover:text-blue-300">Follow Instagram</a>
+              <a href="https://chat.whatsapp.com/JgbMinWTnaRG30yGSJP5f0?mode=ems_share_t" className="text-blue-400 underline hover:text-blue-300">Follow Instagram</a>
               <span className="text-gray-400 hidden md:inline">•</span>
-              <a href="#" className="text-blue-400 underline hover:text-blue-300 hidden md:inline">LinkedIn</a>
+              <a href="https://www.instagram.com/omnitrix_2025?igsh=MXVtejZzODQ5NDhwYw==" className="text-blue-400 underline hover:text-blue-300 hidden md:inline">WhatsApp</a>
             </div>
           </div>
         </div>
@@ -256,25 +256,25 @@ const OmnitrixWebsite = () => {
             </p>
           </div>
 
-          {/* Title with Alien Images - COMPLETELY REDESIGNED FOR MOBILE */}
-          <div className="relative w-full max-w-xs sm:max-w-sm md:max-w-md lg:max-w-lg xl:max-w-xl mx-auto mb-6 sm:mb-8">
+          {/* Title with Alien Images - INCREASED SIZE */}
+          <div className="relative w-full max-w-md sm:max-w-lg md:max-w-2xl lg:max-w-3xl xl:max-w-4xl mx-auto mb-6 sm:mb-8">
             <div className="relative flex items-center justify-center">
               {/* Left Alien - Better positioned */}
               <div className="absolute left-0 bottom-0 transform -translate-x-2 sm:-translate-x-4 translate-y-1 sm:translate-y-2">
                 <img 
                   src={humong} 
                   alt="Alien Left" 
-                  className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain
+                  className="w-14 h-14 sm:w-20 sm:h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36 object-contain
                            hover:scale-110 transition-transform duration-300" 
                 />
               </div>
               
-              {/* Title Image - Centered */}
-              <div className="px-8 sm:px-12 md:px-16">
+              {/* Title Image - Centered and MUCH LARGER */}
+              <div className="px-10 sm:px-16 md:px-20 lg:px-24">
                 <img 
                   src={title} 
                   alt="OMNITRIX Logo" 
-                  className="w-full h-auto object-contain max-w-[240px] sm:max-w-[300px] md:max-w-[400px] lg:max-w-[500px] mx-auto" 
+                  className="w-full h-auto object-contain max-w-[320px] sm:max-w-[450px] md:max-w-[600px] lg:max-w-[750px] xl:max-w-[900px] mx-auto" 
                 />
               </div>
               
@@ -283,7 +283,7 @@ const OmnitrixWebsite = () => {
                 <img 
                   src={humong} 
                   alt="Alien Right" 
-                  className="w-12 h-12 sm:w-16 sm:h-16 md:w-20 md:h-20 lg:w-24 lg:h-24 object-contain transform scale-x-[-1]
+                  className="w-14 h-14 sm:w-20 sm:h-20 md:w-28 md:h-28 lg:w-32 lg:h-32 xl:w-36 xl:h-36 object-contain transform scale-x-[-1]
                            hover:scale-110 hover:scale-x-[-1.1] transition-transform duration-300" 
                 />
               </div>

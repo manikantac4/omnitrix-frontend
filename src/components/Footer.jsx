@@ -88,14 +88,14 @@ export default function Footer() {
                   <LinkedInIcon />
                 </a>
                 <a 
-                  href="#" 
+                  href="https://www.instagram.com/omnitrix_2025?igsh=MXVtejZzODQ5NDhwYw=="
                   className="p-3 rounded-full border-2 border-green-400/30 hover:bg-green-400/10 hover:border-green-400/60 transition-all duration-300 transform hover:scale-110 text-green-400 hover:text-green-300"
                   aria-label="Instagram"
                 >
                   <InstagramIcon />
                 </a>
                 <a 
-                  href="#" 
+                  href="https://chat.whatsapp.com/JgbMinWTnaRG30yGSJP5f0?mode=ems_share_t"
                   className="p-3 rounded-full border-2 border-green-400/30 hover:bg-green-400/10 hover:border-green-400/60 transition-all duration-300 transform hover:scale-110 text-green-400 hover:text-green-300"
                   aria-label="WhatsApp"
                 >
