@@ -66,7 +66,7 @@ const OmnitrixWebsite = () => {
         navigate('/theme');
         setMobileMenuOpen(false);
         break;
-      case 'Sponsers':
+      case 'Our Team':
         scrollToSection(Sponsorref);
         break;
       case 'Contact':
@@ -93,7 +93,7 @@ const OmnitrixWebsite = () => {
     }
   };
 
-  const navigationItems = ['Lobby', 'ABOUT', 'Themes', 'HackTime', 'Prizes', 'Sponsers', 'FAQs', 'Contact'];
+  const navigationItems = ['Lobby', 'ABOUT', 'Themes', 'HackTime', 'Prizes', 'Our Team', 'FAQs', 'Contact'];
 
   // Opening Video Component
   if (showVideo && !videoEnded) {

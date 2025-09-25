@@ -6,10 +6,12 @@ import it from "../assets/it.jpg";
 import pandu from "../assets/pandu.jpg";
 import manoj from "../assets/manoj.jpg";
 import poojitha from "../assets/poojitha.jpg";
-import hodImage from "../assets/pandu.jpg"; // Add your HOD image path
+import subbhu from "../assets/subbhu.jpg";
+import hodImage from "../assets/Hod.jpg"; 
+import  iEEE from "../assets/ieee.webp";// Add your HOD image path
 
 const SponsorsComponent = () => {
-  const [titleVisible, setTitleVisible] = useState(false);
+  const [ setTitleVisible] = useState(false);
 
   useEffect(() => {
     const titleTimer = setTimeout(() => setTitleVisible(true), 300);
@@ -21,7 +23,7 @@ const SponsorsComponent = () => {
     name: "Dr. M. Suneetha",
     role: "Dean of R&D,IQAC \n Professor & HOD of IT, SAHE",
     image: hodImage,
-    linkedin: "" // Placeholder for LinkedIn URL
+    linkedin: "https://www.linkedin.com/in/dr-suneetha-manne-1a26b635?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" // Placeholder for LinkedIn URL
   };
 
   const facultyCoordinators = [
@@ -29,13 +31,13 @@ const SponsorsComponent = () => {
       name: "Dr. M. Gargi",
       role: "IEEE-CIS Chapter Incharge",
       image: null,
-      linkedin: "" // Placeholder for LinkedIn URL
+      linkedin: "https://www.linkedin.com/in/dr-gargi-madala-209ab02b7?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" // Placeholder for LinkedIn URL
     },
     {
       name: "Dr. Ch. Subbareddy",
       role: "IEEE-SMC Chapter Incharge", 
-      image: null,
-      linkedin: "" // Placeholder for LinkedIn URL
+      image: subbhu,
+      linkedin: "https://www.linkedin.com/in/dr-chavva-subba-reddy-5280113b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" // Placeholder for LinkedIn URL
     }
   ];
 
@@ -45,13 +47,13 @@ const SponsorsComponent = () => {
       name: "Manoj Kumar",
       role: "IEEE CHAIR",
       image: manoj,
-      linkedin: "" // Placeholder for LinkedIn URL
+      linkedin: "https://www.linkedin.com/in/manojkumar-allu-1537b6242?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" // Placeholder for LinkedIn URL
     },
     {
       name: "Pandu Ranga",
       role: "WEB MASTER",
       image: pandu,
-      linkedin: "" // Placeholder for LinkedIn URL
+      linkedin: "https://www.linkedin.com/in/pandu-ranga-tummuri-1b1b772a2?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" // Placeholder for LinkedIn URL
     },
     {
       name: "Poojitha",
@@ -69,32 +71,32 @@ const SponsorsComponent = () => {
   const organizers = [
     { 
       name: "IEEE", 
-      image: null, // Add IEEE main logo
-      linkedin: "" // Placeholder for LinkedIn URL
+      image: iEEE, // Add IEEE main logo
+      linkedin: "https://www.ieee.org/" // Placeholder for LinkedIn URL
     },
     { 
       name: "IEEE CIS", 
       image: cis,
-      linkedin: "" // Placeholder for LinkedIn URL
+      linkedin: "https://www.linkedin.com/company/ieee-cis-vrsec/" // Placeholder for LinkedIn URL
     },
     { 
       name: "IEEE SMC", 
       image: smc,
-      linkedin: "" // Placeholder for LinkedIn URL
+      linkedin: "https://www.ieeesmc.org/" // Placeholder for LinkedIn URL
     },
     { 
       name: "IT Department", 
       image: it,
-      linkedin: "" // Placeholder for LinkedIn URL
+      linkedin: "https://www.linkedin.com/company/dept-of-it-siddhartha-academy-of-higher-education/" // Placeholder for LinkedIn URL
     },
     { 
       name: "SAHE", 
       image: sahe,
-      linkedin: "" // Placeholder for LinkedIn URL
+      linkedin: "https://siddhartha.edu.in/" // Placeholder for LinkedIn URL
     }
   ];
 
-  const SponsorCard = ({ sponsor }) => (
+  /*const SponsorCard = ({ sponsor }) => (
     <div className="bg-white rounded-lg p-4 md:p-6 flex items-center justify-center h-16 md:h-20 hover:shadow-lg transition-shadow duration-300">
       {sponsor.logo ? (
         <img src={sponsor.logo} alt={sponsor.name} className="max-h-full max-w-full object-contain" />
@@ -105,7 +107,7 @@ const SponsorsComponent = () => {
       )}
     </div>
   );
-
+*/
   const ConveyorCard = ({ person }) => (
     <div className="flex flex-col items-center text-center space-y-3 md:space-y-4 w-full max-w-[200px] mx-auto">
       <div 
@@ -169,31 +171,11 @@ const SponsorsComponent = () => {
   return (
     <div className="min-h-screen bg-transparent text-white p-3 sm:p-4 md:p-6 lg:p-8">
       {/* Header */}
-      <div className={`text-center mb-8 md:mb-12 transition-all duration-1000 ${
-        titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'
-      }`}>
-        <h1 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-4 md:mb-6 px-4">Our Sponsors</h1>
-      </div>
+     
 
       <div className="max-w-7xl mx-auto space-y-12 md:space-y-16">
         
-        {/* Sponsors Section - Empty */}
-        <section className="px-4">
-          <div className="text-center py-8 md:py-12">
-            <div className="w-12 h-12 md:w-16 md:h-16 mx-auto mb-4 rounded-full bg-green-400/10 border border-green-400/30 flex items-center justify-center">
-              <svg className="w-6 h-6 md:w-8 md:h-8 text-green-400/60" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
-              </svg>
-            </div>
-            <p className="text-gray-400 text-base md:text-lg px-4">
-              Sponsor information will be updated soon
-            </p>
-            <p className="text-green-400/80 text-sm md:text-base mt-2 px-4">
-              Stay tuned for exciting partnerships!
-            </p>
-          </div>
-        </section>
-
+        
         {/* Conveyor Section */}
         <section className="px-4">
           <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-6 md:mb-8 tracking-wider text-center">

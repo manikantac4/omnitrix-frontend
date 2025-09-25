@@ -1,6 +1,7 @@
 import React from 'react';
 import humoungImg from "../assets/way.png";
-import titleImg from "../assets/footer.png";
+import titleImg from "../assets/footer.jpg";
+import title from "../assets/foot.png";
 
 // Team member images
 import manojImg from "../assets/manoj.jpg";
@@ -143,7 +144,7 @@ export default function Footer() {
             <div className="flex-1 flex justify-center lg:justify-end">
               <div className="relative">
                 <img 
-                  src={titleImg} 
+                  src={title} 
                   alt="Title image"
                   className="max-w-full h-auto object-contain w-64 sm:w-80 lg:w-96"
                   style={{ 

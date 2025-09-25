@@ -26,7 +26,7 @@ const FAQComponent = () => {
   const faqs = [
     {
       question: "When will the hackathon take place?",
-      answer: "The hackathon will be held on 24th – 25th October 2025 (24 hrs, 11:00 AM – 11:00 AM)."
+      answer: "The hackathon will be held on 17th – 18th October 2025 (24 hrs, 11:00 AM – 11:00 AM)."
     },
     {
       question: "Where is the venue?",
@@ -38,7 +38,7 @@ const FAQComponent = () => {
     },
     {
       question: "What is the team size?",
-      answer: "Each team must consist of 2 to 4 members."
+      answer: "Each team must consist of 2 to 3 members."
     },
     {
       question: "What is the registration fee?",

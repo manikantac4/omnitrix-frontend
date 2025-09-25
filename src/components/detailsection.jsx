@@ -237,7 +237,7 @@ const OmnitrixRegistration = () => {
     },
     {
       icon: <UsersIcon />,
-      title: '2-4 Member Teams',
+      title: '2-3 Member Teams',
       subtitle: 'Collaborative innovation',
       delay: 1.0
     },
