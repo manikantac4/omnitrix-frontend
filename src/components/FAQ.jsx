@@ -42,7 +42,7 @@ const FAQComponent = () => {
     },
     {
       question: "What is the registration fee?",
-      answer: "₹500 per team for non-IEEE members and ₹400 per team for IEEE members."
+      answer: "₹600 per team for Team and ₹500 per team for IEEE & ACM members ."
     },
     {
       question: "How many tracks are there?",
@@ -50,11 +50,11 @@ const FAQComponent = () => {
     },
     {
       question: "What are the tracks available?",
-      answer: "Web Development, Mobile App Development, AI/ML, Web3 & Blockchain, Quantum Computing, Cybersecurity, and Open Innovation."
+      answer: "Web Development, Mobile App Development, AI/ML, Web3 & Blockchain, AI Agents, Cybersecurity, and Open Innovation."
     },
     {
       question: "Is there any prize pool?",
-      answer: "Yes! The total prize pool is ₹20,000+."
+      answer: "Yes! The total prize pool is ₹30,000+."
     },
     {
       question: "Will food be provided?",
@@ -66,7 +66,7 @@ const FAQComponent = () => {
     },
     {
       question: "Who can I contact for queries?",
-      answer: "Faculty: Dr. Ch. Subba Reddy (IEEE-SMC), Dr. M. Gargi (IEEE-CIS). Students: Manoj (6281466686), Pandu (9618223350), Sahith (8341999296)."
+      answer: "Faculty: Dr.G.Jayalakshmi(ACM), Dr. Ch. Subba Reddy (IEEE-SMC), Dr. M. Gargi (IEEE-CIS). Students: Manoj (6281466686),Prabhas() Pandu (9618223350), Sahith (8341999296)."
     },
     {
       question: "Who is the convener of the event?",

@@ -40,6 +40,22 @@ const GiftIcon = () => (
   </svg>
 );
 
+const MoneyIcon = () => (
+  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
+    <path d="M9.09 9a3 3 0 0 1 5.83 1c0 2-3 3-3 3" stroke="currentColor" strokeWidth="2"/>
+    <line x1="12" y1="17" x2="12.01" y2="17" stroke="currentColor" strokeWidth="2"/>
+  </svg>
+);
+
+const TrackIcon = () => (
+  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+    <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" strokeWidth="2"/>
+    <path d="m2 17 10 5 10-5" stroke="currentColor" strokeWidth="2"/>
+    <path d="m2 12 10 5 10-5" stroke="currentColor" strokeWidth="2"/>
+  </svg>
+);
+
 // RegisterButton component
 const RegisterButton = ({ isVisible }) => {
   const handleClick = () => {
@@ -116,7 +132,7 @@ const RegisterButton = ({ isVisible }) => {
 
         {/* Button Text */}
         <span className="relative z-10 text-green-300 group-hover:text-white transition-colors duration-300 drop-shadow-[0_0_10px_rgba(34,197,94,0.8)]">
-          Register for Omnitrix ⚡
+          Register for Omnitrix 
         </span>
       </button>
       <img 
@@ -139,7 +155,7 @@ const CountdownTimer = ({ isVisible }) => {
   });
 
   useEffect(() => {
-    // Set target date to October 24, 2025 11:00 AM (next year)
+    // Set target date to October 17, 2025 11:00 AM
     const targetDate = new Date('2025-10-17T11:00:00').getTime();
 
     // Initial calculation
@@ -242,16 +258,28 @@ const OmnitrixRegistration = () => {
       delay: 1.0
     },
     {
+      icon: <TrackIcon />,
+      title: '7 Different Tracks',
+      subtitle: 'Multiple problem domains',
+      delay: 1.2
+    },
+    {
+      icon: <MoneyIcon />,
+      title: 'Registration Fee',
+      subtitle: '₹600 per team (₹500 for IEEE/ACM - at least 1 member)',
+      delay: 1.4
+    },
+    {
       icon: <FoodIcon />,
       title: 'Meals Provided',
       subtitle: 'Breakfast, lunch & snacks',
-      delay: 1.2
+      delay: 1.6
     },
     {
       icon: <GiftIcon />,
       title: 'Certificates & Swags',
-      subtitle: 'Recognition for participation',
-      delay: 1.4
+      subtitle: 'Recognition & goodies',
+      delay: 1.8
     }
   ];
 
@@ -299,14 +327,14 @@ const OmnitrixRegistration = () => {
           <RegisterButton isVisible={isVisible} />
         </div>
 
-        {/* Event Details - 2+2 Layout */}
-        <div className="max-w-5xl mx-auto mb-12">
+        {/* Event Details - 3+3 Layout */}
+        <div className="max-w-6xl mx-auto mb-12">
           
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
             
-            {/* Left Side - First Two Items */}
+            {/* Left Side - First Three Items */}
             <div className="space-y-6">
-              {eventDetails.slice(0, 2).map((detail, index) => (
+              {eventDetails.slice(0, 3).map((detail, index) => (
                 <div 
                   key={index}
                   className={`group relative transform transition-all duration-1000 ${
@@ -314,7 +342,7 @@ const OmnitrixRegistration = () => {
                   }`} 
                   style={{ transitionDelay: `${detail.delay}s` }}
                 >
-                  <div className="p-6 bg-transparent backdrop-blur-sm border border-green-400/30 rounded-xl hover:border-green-400/60 transition-all duration-500 hover:bg-green-400/5"
+                  <div className="p-5 bg-transparent backdrop-blur-sm border border-green-400/30 rounded-xl hover:border-green-400/60 transition-all duration-500 hover:bg-green-400/5 min-h-[120px]"
                        onMouseEnter={(e) => {
                          e.target.style.transform = 'translateY(-5px)';
                          e.target.style.boxShadow = '0 10px 40px rgba(34, 197, 94, 0.15)';
@@ -323,13 +351,15 @@ const OmnitrixRegistration = () => {
                          e.target.style.transform = 'translateY(0px)';
                          e.target.style.boxShadow = 'none';
                        }}>
-                    <div className="flex items-center space-x-4">
-                      <div className="text-green-400 group-hover:text-green-300 transition-colors duration-300">{detail.icon}</div>
-                      <div>
-                        <h3 className="text-xl font-bold text-green-300 mb-1" style={{ fontFamily: '"Orbitron", monospace' }}>
+                    <div className="flex items-start space-x-4 h-full">
+                      <div className="text-green-400 group-hover:text-green-300 transition-colors duration-300 flex-shrink-0 mt-1">{detail.icon}</div>
+                      <div className="flex-grow flex flex-col justify-center">
+                        <h3 className="text-lg font-bold text-green-300 mb-2 leading-tight" style={{ fontFamily: '"Orbitron", monospace' }}>
                           {detail.title}
                         </h3>
-                        <p className="text-white/80 text-sm">{detail.subtitle}</p>
+                        <p className="text-white/80 text-sm leading-relaxed" style={{ fontFamily: '"Orbitron", monospace', fontWeight: '400' }}>
+                          {detail.subtitle}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -337,17 +367,17 @@ const OmnitrixRegistration = () => {
               ))}
             </div>
 
-            {/* Right Side - Last Two Items */}
+            {/* Right Side - Last Three Items */}
             <div className="space-y-6">
-              {eventDetails.slice(2, 4).map((detail, index) => (
+              {eventDetails.slice(3, 6).map((detail, index) => (
                 <div 
-                  key={index + 2}
+                  key={index + 3}
                   className={`group relative transform transition-all duration-1000 ${
                     isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
                   }`} 
                   style={{ transitionDelay: `${detail.delay}s` }}
                 >
-                  <div className="p-6 bg-transparent backdrop-blur-sm border border-green-400/30 rounded-xl hover:border-green-400/60 transition-all duration-500 hover:bg-green-400/5"
+                  <div className="p-5 bg-transparent backdrop-blur-sm border border-green-400/30 rounded-xl hover:border-green-400/60 transition-all duration-500 hover:bg-green-400/5 min-h-[120px]"
                        onMouseEnter={(e) => {
                          e.target.style.transform = 'translateY(-5px)';
                          e.target.style.boxShadow = '0 10px 40px rgba(34, 197, 94, 0.15)';
@@ -356,13 +386,15 @@ const OmnitrixRegistration = () => {
                          e.target.style.transform = 'translateY(0px)';
                          e.target.style.boxShadow = 'none';
                        }}>
-                    <div className="flex items-center space-x-4">
-                      <div className="text-green-400 group-hover:text-green-300 transition-colors duration-300">{detail.icon}</div>
-                      <div>
-                        <h3 className="text-xl font-bold text-green-300 mb-1" style={{ fontFamily: '"Orbitron", monospace' }}>
+                    <div className="flex items-start space-x-4 h-full">
+                      <div className="text-green-400 group-hover:text-green-300 transition-colors duration-300 flex-shrink-0 mt-1">{detail.icon}</div>
+                      <div className="flex-grow flex flex-col justify-center">
+                        <h3 className="text-lg font-bold text-green-300 mb-2 leading-tight" style={{ fontFamily: '"Orbitron", monospace' }}>
                           {detail.title}
                         </h3>
-                        <p className="text-white/80 text-sm">{detail.subtitle}</p>
+                        <p className="text-white/80 text-sm leading-relaxed" style={{ fontFamily: '"Orbitron", monospace', fontWeight: '400' }}>
+                          {detail.subtitle}
+                        </p>
                       </div>
                     </div>
                   </div>
@@ -373,18 +405,28 @@ const OmnitrixRegistration = () => {
           </div>
         </div>
 
-        {/* Bottom CTA */}
-        <div className="text-center mt-12">
-          <div>
-            
-          <div className={`inline-block px-8 py-4 bg-green-900/20 backdrop-blur-sm rounded-full border border-green-400/30 transform transition-all duration-1000 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-          }`} style={{ transitionDelay: '1.5s' }}>
-            
-            <p className="text-green-300 font-medium text-lg">
-              Ready to transform your ideas into reality? Join the ultimate coding experience! 🚀
+        {/* Prize Pool Section */}
+        <div className={`text-center mb-12 transform transition-all duration-1000 ${
+          isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+        }`} style={{ transitionDelay: '2.0s' }}>
+          <div className="inline-block px-8 py-4 bg-green-900/20 backdrop-blur-sm rounded-full border border-green-400/30">
+            <h3 className="text-2xl font-bold text-green-300 mb-2" style={{ fontFamily: '"Orbitron", monospace' }}>
+              Prize Pool: ₹30,000
+            </h3>
+            <p className="text-green-400/80 text-sm" style={{ fontFamily: '"Orbitron", monospace', fontWeight: '400' }}>
+              Exciting rewards for winning teams
             </p>
           </div>
+        </div>
+
+        {/* Bottom CTA */}
+        <div className="text-center mt-12">
+          <div className={`inline-block px-8 py-4 bg-green-900/20 backdrop-blur-sm rounded-full border border-green-400/30 transform transition-all duration-1000 ${
+            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+          }`} style={{ transitionDelay: '2.2s' }}>
+            <p className="text-green-300 font-medium text-lg" style={{ fontFamily: '"Orbitron", monospace', fontWeight: '500' }}>
+              Ready to transform your ideas into reality? Join the ultimate coding experience! 
+            </p>
           </div>
         </div>
       </div>
@@ -442,7 +484,7 @@ const OmnitrixRegistration = () => {
           50% { opacity: 1; transform: scale(1.5); }
         }
 
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700;900&family=Exo+2:wght@400;700;900&family=Rajdhani:wght@400;700&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@400;700;900&family=Rajdhani:wght@400;700&display=swap');
       `}</style>
     </div>
   );

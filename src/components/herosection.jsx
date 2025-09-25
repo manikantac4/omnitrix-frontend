@@ -252,7 +252,7 @@ const OmnitrixWebsite = () => {
           {/* Presenter Line */}
           <div className="mb-4 sm:mb-6">
   <p className="text-green-500 sm:text-lg lg:text-xl font-bold tracking-widest uppercase text-center drop-shadow-[0_0_8px_rgba(34,197,94,0.8)]">
-    SAHE IEEE STUDENT CHAPTERS PRESENTS
+    SAHE IEEE & ACM STUDENT CHAPTERS PRESENTS
   </p>
 </div>
 

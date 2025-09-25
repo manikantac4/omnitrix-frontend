@@ -1,7 +1,7 @@
 import React, { useState, useRef, useEffect } from 'react';
 import webImg from "../assets/fourarms.png";
 import Blockimg from "../assets/block.jpg";
-import Quantumimg from "../assets/quantum.png";
+import AgentsImg from "../assets/quantum.png"; // Updated image for AI agents
 import Appimg from "../assets/app.png";
 import Openimg from "../assets/open.png";
 import Cybimg from "../assets/cyber.jpg";
@@ -11,7 +11,7 @@ import Footer from './Footer'; // Import the new Footer component
 const TRACKS = [
     { id: 'aiml', title: 'Artificial Intelligence & Machine Learning', tag: 'Intelligent systems & automation', description: 'Develop AI-powered solutions using cutting-edge machine learning algorithms, neural networks, and deep learning frameworks. Create intelligent systems that can learn, adapt, and provide meaningful insights from complex data patterns.', imageAlt: 'AI and Machine Learning', imageSrc: Aimlimg},
     { id: 'cybersecurity', title: 'Cybersecurity & Digital Defense', tag: 'Protecting digital infrastructure', description: 'Create robust security solutions to protect digital assets, networks, and sensitive information. Build innovative tools for threat detection, vulnerability assessment, and cyber defense mechanisms.', imageAlt: 'Cybersecurity and digital protection', imageSrc: Cybimg },
-    { id: 'quantum', title: 'Quantum Computing Solutions', tag: 'Next-generation computational power', description: 'Harness quantum computing principles to solve complex computational problems. Explore quantum algorithms, quantum machine learning, and quantum cryptography applications.', imageAlt: 'Quantum computing visualization', imageSrc: Quantumimg },
+    { id: 'aiagents', title: 'AI Agents & Autonomous Systems', tag: 'Intelligent autonomous agents', description: 'Build sophisticated AI agents that can operate autonomously, make decisions, and interact with environments. Develop multi-agent systems, conversational agents, task automation bots, and intelligent assistants that can collaborate, learn from interactions, and execute complex workflows without human intervention.', imageAlt: 'AI agents and autonomous systems', imageSrc: AgentsImg },
     { id: 'webdev', title: 'Full-Stack Web Development', tag: 'Building the future of web', description: 'Create innovative web applications using modern frameworks and technologies. Build responsive, scalable, and user-friendly web solutions that address real-world problems.', imageAlt: 'Modern web development interface', imageSrc: webImg },
     { id: 'web3', title: 'Web3 & Blockchain Innovation', tag: 'Decentralized future technologies', description: 'Build decentralized applications using blockchain technology, smart contracts, and cryptocurrency protocols. Create solutions for DeFi, NFTs, and decentralized governance systems.', imageAlt: 'Blockchain and web3 technology', imageSrc: Blockimg },
     { id: 'appdev', title: 'Mobile Application Development', tag: 'Native & cross-platform excellence', description: 'Develop high-performance mobile applications for iOS and Android platforms. Create engaging user experiences with native functionality and cross-platform compatibility.', imageAlt: 'Mobile app development', imageSrc: Appimg},

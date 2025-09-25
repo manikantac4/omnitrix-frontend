@@ -8,7 +8,15 @@ import manoj from "../assets/manoj.jpg";
 import poojitha from "../assets/poojitha.jpg";
 import subbhu from "../assets/subbhu.jpg";
 import hodImage from "../assets/Hod.jpg"; 
-import  iEEE from "../assets/ieee.webp";// Add your HOD image path
+import  iEEE from "../assets/ieee.webp";
+import prabhas from "../assets/prabhas.jpg";
+import charan from "../assets/charan.jpg";
+import likitha from "../assets/likitha.jpg";
+import acm from "../assets/acm.jpg";
+import mam from "../assets/jaya lakshmi.jpg"; 
+import gargi from "../assets/gargi.jpg";
+// Add ACM logo import - you'll need to add this image
+// import acmLogo from "../assets/acm.jpg"; // Add your ACM logo path
 
 const SponsorsComponent = () => {
   const [ setTitleVisible] = useState(false);
@@ -21,16 +29,22 @@ const SponsorsComponent = () => {
   // Conveyor - HOD
   const conveyor = {
     name: "Dr. M. Suneetha",
-    role: "Dean of R&D,IQAC \n Professor & HOD of IT, SAHE",
+    role: "Dean Research Development & Technology,IQAC,\n Professor & HOD of IT, SAHE",
     image: hodImage,
     linkedin: "https://www.linkedin.com/in/dr-suneetha-manne-1a26b635?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" // Placeholder for LinkedIn URL
   };
 
   const facultyCoordinators = [
     {
+      name: "Dr. G. Jaya Lakshmi",
+      role: "ACM Chapter Incharge",
+      image: mam,
+      linkedin: "" // Add LinkedIn URL when available
+    },
+    {
       name: "Dr. M. Gargi",
       role: "IEEE-CIS Chapter Incharge",
-      image: null,
+      image: gargi,
       linkedin: "https://www.linkedin.com/in/dr-gargi-madala-209ab02b7?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" // Placeholder for LinkedIn URL
     },
     {
@@ -63,17 +77,40 @@ const SponsorsComponent = () => {
     }
   ];
 
-  // Second row: Vice Chair, Secretary, Publisher
+  // Second row: ACM Chair, Vice Chair, Secretary
   const secondaryCoordinators = [
-    // Add more coordinators here as needed
+    {
+      name: "Prabhas",
+      role: "ACM CHAIR",
+      image: prabhas,
+      linkedin: "https://www.linkedin.com/in/prabhasmekala/" // Add LinkedIn URL when available
+    },
+    {
+      name: "Charan",
+      role: "ACM VICE-CHAIR",
+      image: charan,
+      linkedin: "https://www.linkedin.com/in/sri-hari-charan-geddada-4068352a3/" // Add LinkedIn URL when available
+    },
+    {
+      name: "Likhitha",
+      role: "ACM SIM SPT SECRETARY",
+      image: likitha,
+      linkedin: "https://www.linkedin.com/in/likhitha-inturi-458867282/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" // Add LinkedIn URL when available
+    }
   ];
 
   const organizers = [
+    { 
+      name: "ACM", 
+      image: acm, // Add ACM logo here: acmLogo
+      linkedin: "https://www.acm.org/" // ACM official website
+    },
     { 
       name: "IEEE", 
       image: iEEE, // Add IEEE main logo
       linkedin: "https://www.ieee.org/" // Placeholder for LinkedIn URL
     },
+    
     { 
       name: "IEEE CIS", 
       image: cis,
@@ -198,7 +235,7 @@ const SponsorsComponent = () => {
               <h3 className="text-lg md:text-xl font-semibold text-green-400 mb-4 md:mb-6 text-center">
                 Faculty Coordinators
               </h3>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 md:gap-8 justify-items-center max-w-2xl mx-auto">
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 justify-items-center max-w-4xl mx-auto">
                 {facultyCoordinators.map((person, index) => (
                   <PersonCard key={index} person={person} />
                 ))}
@@ -211,21 +248,19 @@ const SponsorsComponent = () => {
                 Student Coordinators
               </h3>
               <div className="space-y-6 md:space-y-8">
-                {/* First row: Chair, Web Master, Vice Chair */}
+                {/* First row: Manoj, Pandu, Poojitha */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 justify-items-center max-w-4xl mx-auto">
                   {primaryCoordinators.map((person, index) => (
                     <PersonCard key={index} person={person} />
                   ))}
                 </div>
                 
-                {/* Second row: Vice Chair, Secretary, Publisher */}
-                {secondaryCoordinators.length > 0 && (
-                  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 justify-items-center max-w-4xl mx-auto">
-                    {secondaryCoordinators.map((person, index) => (
-                      <PersonCard key={index} person={person} />
-                    ))}
-                  </div>
-                )}
+                {/* Second row: Prabhas, Charan, Likitha */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 justify-items-center max-w-4xl mx-auto">
+                  {secondaryCoordinators.map((person, index) => (
+                    <PersonCard key={index} person={person} />
+                  ))}
+                </div>
               </div>
             </div>
           </div>
@@ -236,7 +271,7 @@ const SponsorsComponent = () => {
           <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-6 md:mb-8 tracking-wider text-center">
             ORGANIZERS
           </h2>
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6 lg:gap-8 justify-items-center max-w-4xl mx-auto">
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4 md:gap-6 lg:gap-8 justify-items-center max-w-5xl mx-auto">
             {organizers.map((org, index) => (
               <OrganizerCard key={index} org={org} />
             ))}

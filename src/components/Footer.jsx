@@ -13,6 +13,10 @@ import anandImg from "../assets/anand.jpg";
 import ratnakarImg from "../assets/ratna.jpg";
 import yagneshImg from "../assets/yagnesh.jpg";
 import praveenImg from "../assets/praveen.jpg";
+import prabhas from "../assets/prabhas.jpg";
+import charan from "../assets/charan.jpg";
+import likitha from "../assets/likitha.jpg";
+
 
 // Social Media Icons Components
 const LinkedInIcon = () => (
@@ -46,7 +50,9 @@ export default function Footer() {
     { img: yagneshImg, name: "Yagnesh" },
     { img: praveenImg, name: "Praveen" },
     // Adding one more to make it 10 members as in the original grid
-    { img: humoungImg, name: "Team Lead" }
+    { img: prabhas, name: "Prabhas" },
+    { img: charan, name: "Charan" },
+    { img: likitha, name: "Likitha" },
   ];
 
   return (
