@@ -3,7 +3,7 @@ import cis from "../assets/ieecis.jpg";
 import sahe from "..//assets/sahe.png"
 import smc from "../assets/ieeesmc.png";
 import it from "../assets/it.jpg";
-import pandu from "../assets/pandu.jpg";
+import pandu from "../assets/sahith.jpg";
 import manoj from "../assets/manoj.jpg";
 import poojitha from "../assets/poojitha.jpg";
 import subbhu from "../assets/subbhu.jpg";
@@ -64,8 +64,8 @@ const SponsorsComponent = () => {
       linkedin: "https://www.linkedin.com/in/manojkumar-allu-1537b6242?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" // Placeholder for LinkedIn URL
     },
     {
-      name: "Pandu Ranga",
-      role: "WEB MASTER",
+      name: "Sahith",
+      role: "Student coordinator",
       image: pandu,
       linkedin: "https://www.linkedin.com/in/pandu-ranga-tummuri-1b1b772a2?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" // Placeholder for LinkedIn URL
     },
