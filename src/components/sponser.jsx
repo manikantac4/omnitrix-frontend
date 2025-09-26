@@ -216,7 +216,7 @@ const SponsorsComponent = () => {
         {/* Conveyor Section */}
         <section className="px-4">
           <h2 className="text-xl md:text-2xl lg:text-3xl font-bold text-white mb-6 md:mb-8 tracking-wider text-center">
-            CONVEYOR
+            CONVEYO
           </h2>
           <div className="flex justify-center">
             <ConveyorCard person={conveyor} />
