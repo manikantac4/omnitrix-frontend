@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Trophy, Award, Medal, Gift } from 'lucide-react';
 import Footer from './Footer';
+import prize1 from '../assets/prize1.png';
+import prize2 from '../assets/prize2.png';
+import prize3 from '../assets/prize3.png';
 
 const PrizesComponent = () => {
   const [titleVisible, setTitleVisible] = useState(false);
@@ -102,6 +105,7 @@ const PrizesComponent = () => {
       amount: "₹15,000",
       badge: "winner-badge",
       icon: Trophy,
+      image: prize1,
       description: "Grand prize winner receives cash reward, certificate of excellence, exclusive merchandise, and recognition as the champion of Omnitrix Hackathon 2025.",
       benefits: ["Cash Prize", "Certificate", "Merchandise", "Trophy", "LinkedIn Badge"]
     },
@@ -111,6 +115,7 @@ const PrizesComponent = () => {
       amount: "₹10,000",
       badge: "runner-up-badge-1",
       icon: Award,
+      image: prize2,
       description: "First runner-up receives substantial cash reward, certificate of achievement, and exclusive merchandise package.",
       benefits: ["Cash Prize", "Certificate", "Merchandise", "Medal", "LinkedIn Badge"]
     },
@@ -120,6 +125,7 @@ const PrizesComponent = () => {
       amount: "₹5,000",
       badge: "runner-up-badge-2",
       icon: Medal,
+      image: prize3,
       description: "Second runner-up receives cash reward, certificate of participation, and branded merchandise.",
       benefits: ["Cash Prize", "Certificate", "Merchandise", "Recognition"]
     }
@@ -180,10 +186,14 @@ const PrizesComponent = () => {
                 }`}
                 style={{ transitionDelay: `${index * 200}ms` }}
               >
-                {/* Position Badge */}
+                {/* Prize Image Frame */}
                 <div className="mb-6 flex justify-center">
-                  <div className={`${prize.badge} flex h-12 w-12 sm:h-14 sm:w-14 items-center justify-center rounded-xl text-white shadow-lg`}>
-                    <span className="text-lg sm:text-xl font-bold">{prize.position}</span>
+                  <div className="h-24 w-24 sm:h-30 sm:w-30 rounded-lg overflow-hidden border-2 border-emerald-400/30 shadow-lg hover:border-emerald-400/60 transition-all duration-300">
+                    <img 
+                      src={prize.image} 
+                      alt={`${prize.title} Prize`}
+                      className="w-full h-full object-cover"
+                    />
                   </div>
                 </div>
 
