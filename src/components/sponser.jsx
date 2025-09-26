@@ -35,12 +35,7 @@ const SponsorsComponent = () => {
   };
 
   const facultyCoordinators = [
-    {
-      name: "Dr. G. Jaya Lakshmi",
-      role: "ACM Chapter Incharge",
-      image: mam,
-      linkedin: "" // Add LinkedIn URL when available
-    },
+    
     {
       name: "Dr. M. Gargi",
       role: "IEEE-CIS Chapter Incharge",
@@ -52,6 +47,12 @@ const SponsorsComponent = () => {
       role: "IEEE-SMC Chapter Incharge", 
       image: subbhu,
       linkedin: "https://www.linkedin.com/in/dr-chavva-subba-reddy-5280113b?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" // Placeholder for LinkedIn URL
+    },
+    {
+      name: "Dr. G. Jaya Lakshmi",
+      role: "ACM Chapter Incharge",
+      image: mam,
+      linkedin: "" // Add LinkedIn URL when available
     }
   ];
 
