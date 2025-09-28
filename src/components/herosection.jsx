@@ -236,9 +236,9 @@ const OmnitrixWebsite = () => {
               <span className="hidden sm:inline text-gray-400">•</span>
               <span className="text-gray-300 hidden sm:inline">Transform ideas into reality</span>
               <span className="text-gray-400">•</span>
-              <a href="https://chat.whatsapp.com/JgbMinWTnaRG30yGSJP5f0?mode=ems_share_t" className="text-blue-400 underline hover:text-blue-300">Follow Instagram</a>
+              <a href="https://chat.whatsapp.com/JgbMinWTnaRG30yGSJP5f0?mode=ems_share_t" className="text-blue-400 underline hover:text-blue-300">Join Whatsapp</a>
               <span className="text-gray-400 hidden md:inline">•</span>
-              <a href="https://www.instagram.com/omnitrix_2025?igsh=MXVtejZzODQ5NDhwYw==" className="text-blue-400 underline hover:text-blue-300 hidden md:inline">WhatsApp</a>
+              <a href="https://www.instagram.com/omnitrix_2025?igsh=MXVtejZzODQ5NDhwYw==" className="text-blue-400 underline hover:text-blue-300 hidden md:inline">Follow Our Page</a>
             </div>
           </div>
         </div>
