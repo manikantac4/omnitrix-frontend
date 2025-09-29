@@ -94,7 +94,7 @@ const SponsorsComponent = () => {
     },
     {
       name: "Likhitha",
-      role: "ACM SIM SPT SECRETARY",
+      role: "ACM SIG SPT SECRETARY",
       image: likitha,
       linkedin: "https://www.linkedin.com/in/likhitha-inturi-458867282/?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" // Add LinkedIn URL when available
     }

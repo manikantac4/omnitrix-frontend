@@ -120,7 +120,7 @@ const RegistrationComponent = () => {
       }));
       
       setValidationErrors(prevErrors => {
-        const { teamMember2Name, teamMember3Name, ...rest } = prevErrors;
+        const {  ...rest } = prevErrors;
         return rest;
       });
       return;
