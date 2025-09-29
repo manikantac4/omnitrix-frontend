@@ -1,11 +1,11 @@
 import React, { useState, useEffect } from 'react';
-import omnitrix from '../assets/omnitrix.png'
+import omnitrix from '../assets/omnitrix.png';
 
 const RegistrationComponent = () => {
   const [titleVisible, setTitleVisible] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [showMessage, setShowMessage] = useState(false);
-  const [messageType, setMessageType] = useState('success'); // 'success' or 'error'
+  const [messageType, setMessageType] = useState('success');
   const [messageContent, setMessageContent] = useState('');
   const [validationErrors, setValidationErrors] = useState({});
   const [formData, setFormData] = useState({
@@ -46,61 +46,61 @@ const RegistrationComponent = () => {
   const teamSizes = ['2', '3'];
   const yearsOfStudy = ['1st Year', '2nd Year', '3rd Year', '4th Year'];
 
-  // Validation functions
   const validateForm = () => {
     const errors = {};
 
-    // Team Leader Name validation
     if (!formData.teamLeaderName.trim()) {
       errors.teamLeaderName = 'Team leader name is required';
     } else if (formData.teamLeaderName.trim().length < 2) {
       errors.teamLeaderName = 'Name must be at least 2 characters';
     }
 
-    // Team Name validation
     if (!formData.teamName.trim()) {
       errors.teamName = 'Team name is required';
     } else if (formData.teamName.trim().length < 2) {
       errors.teamName = 'Team name must be at least 2 characters';
     }
 
-    // Phone Number validation
     if (!formData.phoneNumber.trim()) {
       errors.phoneNumber = 'Phone number is required';
     } else if (!/^\d{10}$/.test(formData.phoneNumber.trim())) {
       errors.phoneNumber = 'Please enter a valid 10-digit phone number';
     }
 
-    // Email validation
     if (!formData.email.trim()) {
       errors.email = 'Email address is required';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
       errors.email = 'Please enter a valid email address';
     }
 
-    // College validation
     if (!formData.college) {
       errors.college = 'Please select your college';
     } else if (formData.college === 'Other' && !formData.otherCollege.trim()) {
       errors.otherCollege = 'Please enter your college name';
     }
 
-    // Team Size validation
     if (!formData.teamSize) {
       errors.teamSize = 'Please select team size';
     }
 
-    // Year of Study validation
     if (!formData.yearOfStudy) {
       errors.yearOfStudy = 'Please select year of study';
     }
 
-    // Team Member 2 validation (Required for both team sizes)
     if (formData.teamSize && parseInt(formData.teamSize) >= 2) {
       if (!formData.teamMember2Name.trim()) {
         errors.teamMember2Name = 'Second team member name is required';
       } else if (formData.teamMember2Name.trim().length < 2) {
         errors.teamMember2Name = 'Name must be at least 2 characters';
+      }
+    }
+
+    // Team Member 3 validation - REQUIRED for team size 3
+    if (formData.teamSize && parseInt(formData.teamSize) === 3) {
+      if (!formData.teamMember3Name.trim()) {
+        errors.teamMember3Name = 'Third team member name is required';
+      } else if (formData.teamMember3Name.trim().length < 2) {
+        errors.teamMember3Name = 'Name must be at least 2 characters';
       }
     }
 
@@ -111,7 +111,6 @@ const RegistrationComponent = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     
-    // Check for team size change first to handle clearing fields
     if (name === 'teamSize') {
       setFormData(prev => ({
         ...prev,
@@ -120,12 +119,11 @@ const RegistrationComponent = () => {
         teamMember3Name: ''
       }));
       
-      // Clear team member validation errors
       setValidationErrors(prevErrors => {
         const { teamMember2Name, teamMember3Name, ...rest } = prevErrors;
         return rest;
       });
-      return; // Exit early to avoid subsequent logic
+      return;
     }
 
     setFormData(prev => ({
@@ -133,7 +131,6 @@ const RegistrationComponent = () => {
       [name]: value
     }));
 
-    // Clear validation error for this field when user starts typing
     if (validationErrors[name]) {
       setValidationErrors(prev => ({
         ...prev,
@@ -141,14 +138,12 @@ const RegistrationComponent = () => {
       }));
     }
 
-    // Clear otherCollege field if college selection is not "Other"
     if (name === 'college' && value !== 'Other') {
       setFormData(prev => ({
         ...prev,
         college: value,
         otherCollege: ''
       }));
-      // Also clear otherCollege validation error
       if (validationErrors.otherCollege) {
         setValidationErrors(prev => ({
           ...prev,
@@ -161,7 +156,6 @@ const RegistrationComponent = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     
-    // Validate form before submission
     if (!validateForm()) {
       setMessageType('error');
       setMessageContent({
@@ -174,7 +168,6 @@ const RegistrationComponent = () => {
 
     setIsLoading(true);
 
-    // Prepare final data in the format expected by backend
     const finalFormData = {
       teamLeaderName: formData.teamLeaderName.trim(),
       teamName: formData.teamName.trim(),
@@ -183,8 +176,8 @@ const RegistrationComponent = () => {
       college: formData.college === 'Other' ? formData.otherCollege.trim() : formData.college,
       teamSize: formData.teamSize,
       yearOfStudy: formData.yearOfStudy,
-      teammate1: formData.teamMember2Name.trim(), // Second member becomes teammate1
-      teammate2: formData.teamMember3Name.trim() || null // Third member becomes teammate2, null if empty
+      teammate1: formData.teamMember2Name.trim(),
+      teammate2: formData.teamMember3Name.trim() || null
     };
 
     console.log('Posting data:', finalFormData);
@@ -209,7 +202,6 @@ const RegistrationComponent = () => {
         });
         setShowMessage(true);
         
-        // Reset form on successful submission
         setFormData({
           teamLeaderName: '',
           teamName: '',
@@ -246,7 +238,6 @@ const RegistrationComponent = () => {
   };
 
   const handleBackClick = () => {
-    // Navigate back to home
     window.location.href = '/';
   };
 
@@ -254,9 +245,7 @@ const RegistrationComponent = () => {
     setShowMessage(false);
   };
 
-  // Check if form is valid for submit button state
   const isFormValid = () => {
-    // This is a simplified check for UI purposes, the full validation is in validateForm()
     const baseValid = formData.teamLeaderName.trim() &&
                       formData.teamName.trim() &&
                       formData.phoneNumber.trim() &&
@@ -268,9 +257,15 @@ const RegistrationComponent = () => {
 
     if (!baseValid) return false;
 
-    // Check team member 2 (required for both team sizes)
     if (parseInt(formData.teamSize) >= 2) {
       if (!formData.teamMember2Name.trim()) {
+        return false;
+      }
+    }
+
+    // Check team member 3 for team size 3
+    if (parseInt(formData.teamSize) === 3) {
+      if (!formData.teamMember3Name.trim()) {
         return false;
       }
     }
@@ -278,7 +273,6 @@ const RegistrationComponent = () => {
     return true;
   };
 
-  // Ben 10 Watch Loading Component
   const Ben10Loading = () => (
     <div className="flex flex-col items-center justify-center space-y-6">
       <div className="relative">
@@ -310,7 +304,6 @@ const RegistrationComponent = () => {
 
   return (
     <div className="min-h-screen bg-transparent text-white p-4 sm:p-8">
-      {/* Loading Overlay */}
       {isLoading && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="bg-transparent border-2 border-green-400/60 rounded-xl p-8 shadow-2xl shadow-green-400/20">
@@ -319,7 +312,6 @@ const RegistrationComponent = () => {
         </div>
       )}
 
-      {/* Success/Error Message Modal */}
       {showMessage && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className={`bg-transparent border-2 rounded-xl p-8 shadow-2xl max-w-md w-full ${
@@ -328,7 +320,6 @@ const RegistrationComponent = () => {
               : 'border-red-400/60 shadow-red-400/20'
           }`}>
             <div className="text-center space-y-4">
-              {/* Icon */}
               <div className={`w-16 h-16 mx-auto rounded-full flex items-center justify-center ${
                 messageType === 'success' ? 'bg-green-400/20' : 'bg-red-400/20'
               }`}>
@@ -343,19 +334,16 @@ const RegistrationComponent = () => {
                 )}
               </div>
 
-              {/* Title */}
               <h3 className={`text-2xl font-bold ${
                 messageType === 'success' ? 'text-green-400' : 'text-red-400'
               }`}>
                 {messageContent.title}
               </h3>
 
-              {/* Description */}
               <p className="text-gray-300 text-lg leading-relaxed">
                 {messageContent.description}
               </p>
 
-              {/* Close Button */}
               <button
                 onClick={closeMessage}
                 className={`w-full font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-[1.02] ${
@@ -371,7 +359,6 @@ const RegistrationComponent = () => {
         </div>
       )}
 
-      {/* Back Button */}
       <div className="mb-8">
         <button
           onClick={handleBackClick}
@@ -384,7 +371,6 @@ const RegistrationComponent = () => {
         </button>
       </div>
 
-      {/* Header */}
       <div className={`text-center mb-16 transition-all duration-1000 ${
         titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'
       }`}>
@@ -393,14 +379,10 @@ const RegistrationComponent = () => {
       </div>
 
       <div className="max-w-4xl mx-auto">
-        
         <div className="bg-transparent border-2 border-green-400/30 rounded-xl p-8 hover:border-green-400/60 hover:shadow-lg hover:shadow-green-400/20 transition-all duration-300">
-          
           <div className="space-y-8">
             
-            {/* Team Leader Section */}
             <div className="space-y-6">
-              {/* Team Leader Name */}
               <div className="space-y-2">
                 <label className="block text-white font-semibold text-lg">
                   Team Leader Name <span className="text-red-400">*</span>
@@ -424,7 +406,6 @@ const RegistrationComponent = () => {
               </div>
             </div>
 
-            {/* Team Name */}
             <div className="space-y-2">
               <label className="block text-white font-semibold text-lg">
                 Team Name <span className="text-red-400">*</span>
@@ -447,7 +428,6 @@ const RegistrationComponent = () => {
               )}
             </div>
 
-            {/* Phone Number */}
             <div className="space-y-2">
               <label className="block text-white font-semibold text-lg">
                 Phone Number <span className="text-red-400">*</span>
@@ -471,7 +451,6 @@ const RegistrationComponent = () => {
               )}
             </div>
 
-            {/* Email */}
             <div className="space-y-2">
               <label className="block text-white font-semibold text-lg">
                 Email Address <span className="text-red-400">*</span>
@@ -494,7 +473,6 @@ const RegistrationComponent = () => {
               )}
             </div>
 
-            {/* College */}
             <div className="space-y-2">
               <label className="block text-white font-semibold text-lg">
                 College <span className="text-red-400">*</span>
@@ -523,7 +501,6 @@ const RegistrationComponent = () => {
               )}
             </div>
 
-            {/* Other College Input - Shows only when "Other" is selected */}
             {formData.college === 'Other' && (
               <div className="space-y-2">
                 <label className="block text-white font-semibold text-lg">
@@ -548,10 +525,7 @@ const RegistrationComponent = () => {
               </div>
             )}
 
-            {/* Team Size and Year of Study - Two columns */}
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-              
-              {/* Team Size */}
               <div className="space-y-2">
                 <label className="block text-white font-semibold text-lg">
                   Team Size <span className="text-red-400">*</span>
@@ -579,7 +553,6 @@ const RegistrationComponent = () => {
                 )}
               </div>
 
-              {/* Year of Study */}
               <div className="space-y-2">
                 <label className="block text-white font-semibold text-lg">
                   Year of Study <span className="text-red-400">*</span>
@@ -606,15 +579,12 @@ const RegistrationComponent = () => {
                   <p className="text-red-400 text-sm mt-1">{validationErrors.yearOfStudy}</p>
                 )}
               </div>
-
             </div>
 
-            {/* Team Members Section - Shows when team size is selected */}
             {formData.teamSize && parseInt(formData.teamSize) >= 2 && (
               <div className="space-y-8 pt-4 border-t border-green-400/20">
                 <h2 className="text-2xl font-bold text-green-400 mb-4">Team Members</h2>
                 
-                {/* Team Member 2 - Required */}
                 <div className="bg-green-400/5 border border-green-400/20 rounded-lg p-6">
                   <h3 className="text-xl font-semibold text-white mb-4">
                     Team Member 2 <span className="text-red-400">*</span>
@@ -642,31 +612,37 @@ const RegistrationComponent = () => {
                   </div>
                 </div>
 
-                {/* Team Member 3 - Optional (only for 3-member teams) */}
                 {parseInt(formData.teamSize) === 3 && (
                   <div className="bg-green-400/5 border border-green-400/20 rounded-lg p-6">
                     <h3 className="text-xl font-semibold text-white mb-4">
-                      Team Member 3 <span className="text-green-400">(Optional)</span>
+                      Team Member 3 <span className="text-red-400">*</span>
                     </h3>
                     <div className="space-y-2">
                       <label className="block text-white font-semibold">
-                        Full Name
+                        Full Name <span className="text-red-400">*</span>
                       </label>
                       <input
                         type="text"
                         name="teamMember3Name"
                         value={formData.teamMember3Name}
                         onChange={handleInputChange}
-                        className="w-full bg-transparent border-2 border-green-400/30 focus:border-green-400/60 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none transition-all duration-300"
-                        placeholder="Enter team member's full name (optional)"
+                        required
+                        className={`w-full bg-transparent border-2 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none transition-all duration-300 ${
+                          validationErrors.teamMember3Name 
+                            ? 'border-red-400/60 focus:border-red-400' 
+                            : 'border-green-400/30 focus:border-green-400/60'
+                        }`}
+                        placeholder="Enter team member's full name"
                       />
+                      {validationErrors.teamMember3Name && (
+                        <p className="text-red-400 text-sm mt-1">{validationErrors.teamMember3Name}</p>
+                      )}
                     </div>
                   </div>
                 )}
               </div>
             )}
 
-            {/* Submit Button */}
             <div className="pt-6">
               <button
                 onClick={handleSubmit}
@@ -688,12 +664,9 @@ const RegistrationComponent = () => {
             </div>
 
           </div>
-
         </div>
-
       </div>
 
-      {/* Floating dots background effect */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
         <div className="absolute top-20 left-10 w-2 h-2 bg-green-400/30 rounded-full animate-pulse"></div>
         <div className="absolute top-1/3 right-20 w-3 h-3 bg-green-300/20 rounded-full animate-bounce"></div>
@@ -706,4 +679,3 @@ const RegistrationComponent = () => {
 };
 
 export default RegistrationComponent;
-              
