@@ -423,7 +423,7 @@ const RegistrationComponent = () => {
             <div className="flex-1">
               <h3 className="text-2xl font-bold text-red-500 mb-3">⚠️ CRITICAL: JOIN WHATSAPP GROUP!</h3>
               <p className="text-red-300 text-lg font-semibold leading-relaxed mb-3">
-                After successful registration, you will receive a popup. <span className="text-red-400 underline">You MUST click the red button to join our official WhatsApp group.</span>
+                After successful registration, you will receive a popup with an option to join our official WhatsApp group. <span className="text-red-400 underline">Click that button to join immediately!</span>
               </p>
               <p className="text-red-200 font-medium">
                 All important updates, announcements, and event details will be shared ONLY through WhatsApp. Missing the group means missing critical information!
