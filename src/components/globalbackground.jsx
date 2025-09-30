@@ -37,11 +37,9 @@ const GlobalBackground = () => {
   );
 
   const travelingTexts = React.useMemo(() => [
-    { id: 1, direction: 'horizontal', y: 15, speed: 18, delay: 0 },
-    { id: 2, direction: 'diagonal-down', startY: 10, endY: 90, speed: 20, delay: 7 },
-    { id: 3, direction: 'horizontal', y: 45, speed: 16, delay: 4 },
-    { id: 4, direction: 'diagonal-up', startY: 85, endY: 10, speed: 22, delay: 10 },
-    { id: 5, direction: 'horizontal', y: 75, speed: 19, delay: 2 },
+    { id: 1, direction: 'horizontal', y: 20, speed: 20, delay: 0 },
+    { id: 2, direction: 'diagonal-down', speed: 22, delay: 8 },
+    { id: 3, direction: 'horizontal', y: 80, speed: 18, delay: 4 },
   ], []);
 
   return (
@@ -117,22 +115,20 @@ const GlobalBackground = () => {
       </div>
 
       {/* Traveling registration text */}
-      <div className="absolute inset-0 pointer-events-none">
+      <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {travelingTexts.map((text) => (
           <div
             key={text.id}
-            className="absolute whitespace-nowrap text-green-400 font-semibold tracking-wide"
+            className="absolute whitespace-nowrap text-green-400 font-semibold tracking-wide will-change-transform"
             style={{
               left: '-20%',
-              top: text.direction === 'horizontal' ? `${text.y}%` : `${text.startY}%`,
-              fontSize: '11px',
+              top: text.direction === 'horizontal' ? `${text.y}%` : '10%',
+              fontSize: '10px',
               opacity: 0,
-              textShadow: '0 0 8px rgba(74, 222, 128, 0.6), 0 0 4px rgba(34, 197, 94, 0.8)',
+              textShadow: '0 0 6px rgba(74, 222, 128, 0.5)',
               animation: text.direction === 'horizontal' 
                 ? `travelHorizontal ${text.speed}s linear infinite`
-                : text.direction === 'diagonal-down'
-                ? `travelDiagonalDown ${text.speed}s linear infinite`
-                : `travelDiagonalUp ${text.speed}s linear infinite`,
+                : `travelDiagonalDown ${text.speed}s linear infinite`,
               animationDelay: `${text.delay}s`,
             }}
           >
@@ -147,9 +143,8 @@ const GlobalBackground = () => {
         @keyframes fastFullScreen {0%{left:-3%;opacity:0}10%{opacity:0.7}90%{opacity:0.7}100%{left:103%;opacity:0}}
         @keyframes pulseAndMove {0%,100%{transform:scale(1);filter:brightness(1)}50%{transform:scale(1.2);filter:brightness(1.3)}}
         @keyframes randomMove {0%{transform:translate(0,0)}25%{transform:translate(${Math.random()*40-20}px,${Math.random()*40-20}px)}50%{transform:translate(${Math.random()*60-30}px,${Math.random()*60-30}px)}75%{transform:translate(${Math.random()*40-20}px,${Math.random()*40-20}px)}100%{transform:translate(0,0)}}
-        @keyframes travelHorizontal {0%{left:-20%;opacity:0}5%{opacity:0.85}95%{opacity:0.85}100%{left:120%;opacity:0}}
-        @keyframes travelDiagonalDown {0%{left:-20%;top:10%;opacity:0}5%{opacity:0.85}95%{opacity:0.85}100%{left:120%;top:90%;opacity:0}}
-        @keyframes travelDiagonalUp {0%{left:-20%;top:85%;opacity:0}5%{opacity:0.85}95%{opacity:0.85}100%{left:120%;top:10%;opacity:0}}
+        @keyframes travelHorizontal {0%{transform:translateX(0);opacity:0}5%{opacity:0.7}95%{opacity:0.7}100%{transform:translateX(140vw);opacity:0}}
+        @keyframes travelDiagonalDown {0%{transform:translate(0,0);opacity:0}5%{opacity:0.7}95%{opacity:0.7}100%{transform:translate(140vw,70vh);opacity:0}}
       `}</style>
     </div>
   );
