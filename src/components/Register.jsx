@@ -95,7 +95,6 @@ const RegistrationComponent = () => {
       }
     }
 
-    // Team Member 3 validation - REQUIRED for team size 3
     if (formData.teamSize && parseInt(formData.teamSize) === 3) {
       if (!formData.teamMember3Name.trim()) {
         errors.teamMember3Name = 'Third team member name is required';
@@ -245,6 +244,11 @@ const RegistrationComponent = () => {
     setShowMessage(false);
   };
 
+  const handleJoinWhatsApp = () => {
+    window.open('YOUR_WHATSAPP_GROUP_LINK_HERE', '_blank');
+    closeMessage();
+  };
+
   const isFormValid = () => {
     const baseValid = formData.teamLeaderName.trim() &&
                       formData.teamName.trim() &&
@@ -263,7 +267,6 @@ const RegistrationComponent = () => {
       }
     }
 
-    // Check team member 3 for team size 3
     if (parseInt(formData.teamSize) === 3) {
       if (!formData.teamMember3Name.trim()) {
         return false;
@@ -313,7 +316,7 @@ const RegistrationComponent = () => {
       )}
 
       {showMessage && (
-        <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50 p-4">
+        <div className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-50 p-4">
           <div className={`bg-transparent border-2 rounded-xl p-8 shadow-2xl max-w-md w-full ${
             messageType === 'success' 
               ? 'border-green-400/60 shadow-green-400/20' 
@@ -344,16 +347,46 @@ const RegistrationComponent = () => {
                 {messageContent.description}
               </p>
 
-              <button
-                onClick={closeMessage}
-                className={`w-full font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-[1.02] ${
-                  messageType === 'success' 
-                    ? 'bg-transparent border-2 border-green-400/60 text-green-400 hover:bg-green-400/10 hover:border-green-400 hover:text-green-300 shadow-lg hover:shadow-green-400/30' 
-                    : 'bg-transparent border-2 border-red-400/60 text-red-400 hover:bg-red-400/10 hover:border-red-400 hover:text-red-300 shadow-lg hover:shadow-red-400/30'
-                }`}
-              >
-                Close
-              </button>
+              {messageType === 'success' && (
+                <div className="bg-red-500/10 border-2 border-red-500 rounded-lg p-4 animate-pulse">
+                  <div className="flex items-start space-x-3">
+                    <svg className="w-6 h-6 text-red-500 flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+                    </svg>
+                    <div className="text-left">
+                      <p className="text-red-400 font-bold text-lg mb-1">⚠️ IMPORTANT!</p>
+                      <p className="text-red-300 font-semibold text-sm">
+                        You MUST join our WhatsApp group immediately to receive all updates and announcements!
+                      </p>
+                    </div>
+                  </div>
+                </div>
+              )}
+
+              <div className="space-y-3 pt-2">
+                {messageType === 'success' && (
+                  <button
+                    onClick={handleJoinWhatsApp}
+                    className="w-full bg-red-500 hover:bg-red-600 text-white font-bold py-4 px-6 rounded-lg transition-all duration-300 transform hover:scale-[1.02] shadow-lg hover:shadow-red-500/50 flex items-center justify-center space-x-2 animate-bounce"
+                  >
+                    <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24">
+                      <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                    </svg>
+                    <span>JOIN WHATSAPP GROUP NOW!</span>
+                  </button>
+                )}
+                
+                <button
+                  onClick={closeMessage}
+                  className={`w-full font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-[1.02] ${
+                    messageType === 'success' 
+                      ? 'bg-transparent border-2 border-green-400/60 text-green-400 hover:bg-green-400/10 hover:border-green-400 hover:text-green-300 shadow-lg hover:shadow-green-400/30' 
+                      : 'bg-transparent border-2 border-red-400/60 text-red-400 hover:bg-red-400/10 hover:border-red-400 hover:text-red-300 shadow-lg hover:shadow-red-400/30'
+                  }`}
+                >
+                  {messageType === 'success' ? 'Close (I\'ll Join Later)' : 'Close'}
+                </button>
+              </div>
             </div>
           </div>
         </div>
@@ -371,11 +404,33 @@ const RegistrationComponent = () => {
         </button>
       </div>
 
-      <div className={`text-center mb-16 transition-all duration-1000 ${
+      <div className={`text-center mb-8 transition-all duration-1000 ${
         titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'
       }`}>
         <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6">Team Registration</h1>
         <p className="text-green-400/80 text-lg">Register your team for Omnitrix Hackathon 2025</p>
+      </div>
+
+      {/* Critical WhatsApp Warning Banner */}
+      <div className="max-w-4xl mx-auto mb-8">
+        <div className="bg-red-500/10 border-4 border-red-500 rounded-xl p-6 shadow-2xl shadow-red-500/30 animate-pulse">
+          <div className="flex items-start space-x-4">
+            <div className="flex-shrink-0">
+              <svg className="w-12 h-12 text-red-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={3} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
+              </svg>
+            </div>
+            <div className="flex-1">
+              <h3 className="text-2xl font-bold text-red-500 mb-3">⚠️ CRITICAL: JOIN WHATSAPP GROUP!</h3>
+              <p className="text-red-300 text-lg font-semibold leading-relaxed mb-3">
+                After successful registration, you will receive a popup. <span className="text-red-400 underline">You MUST click the red button to join our official WhatsApp group.</span>
+              </p>
+              <p className="text-red-200 font-medium">
+                All important updates, announcements, and event details will be shared ONLY through WhatsApp. Missing the group means missing critical information!
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
 
       <div className="max-w-4xl mx-auto">
