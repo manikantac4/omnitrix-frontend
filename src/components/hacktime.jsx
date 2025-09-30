@@ -15,10 +15,7 @@ const HackTime = () => {
 
   // Back button handler
   const handleBackClick = () => {
-    // You can replace this with your actual navigation logic
-    // For example: navigate('/') or window.history.back()
-    console.log('Back to Home clicked');
-    // window.history.back(); // Uncomment if you want browser back functionality
+    window.location.href = '/';
   };
 
   // Check screen size
