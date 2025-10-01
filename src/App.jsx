@@ -11,6 +11,8 @@ import Sponsor from "./components/sponser";
 import Contact from "./components/contact";
 import Prize from "./components/prizes";
 import Hacktime from "./components/hacktime";
+import Count from "./components/Timer";
+import Admin from "./components/admin";
 // ScrollToTop component - must be inside Router
 function ScrollToTop() {
   const location = useLocation();
@@ -50,6 +52,8 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/prize" element={<Prize />} />
           <Route path="/hacktime" element={<Hacktime />} />
+          <Route path="/timer" element={< Count/>} />
+          <Route path="/Alarm" element={< Admin/>} />
                   </Routes>
       </div>
     </Router>
