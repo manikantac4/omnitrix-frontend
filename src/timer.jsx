@@ -31,8 +31,8 @@ const Timer = () => {
 
   const alarms = React.useMemo(() => [
     { time: "09:46", message: "Breakfast Time! Fuel up for the hackathon!", alien: 1 },
-    { time: "14:10", message: "Lunch Time! Take a break and recharge!", alien: 2 },
-    { time: "16:00", message: "Snack Break! Keep the energy flowing!", alien: 3 },
+    { time: "19:18", message: "Lunch Time! Take a break and recharge!", alien: 2 },
+    { time: "19:19", message: "Snack Break! Keep the energy flowing!", alien: 3 },
     { time: "20:00", message: "Dinner Time! Almost there, champion!", alien: 4 },
     { time: "23:00", message: "Midnight Snack! Push through the final stretch!", alien: 5 }
   ], []);
