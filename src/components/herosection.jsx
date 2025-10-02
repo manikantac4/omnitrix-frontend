@@ -84,6 +84,10 @@ const OmnitrixWebsite = () => {
         navigate('/hacktime');
         setMobileMenuOpen(false);
         break;
+      case 'Timer':
+        navigate('/login');
+        setMobileMenuOpen(false);
+        break;
       case 'Lobby':
         window.scrollTo({ top: 0, behavior: 'smooth' });
         setMobileMenuOpen(false);
@@ -93,7 +97,7 @@ const OmnitrixWebsite = () => {
     }
   };
 
-  const navigationItems = ['Lobby', 'ABOUT', 'Themes', 'HackTime', 'Prizes', 'Our Team', 'FAQs', 'Contact'];
+  const navigationItems = ['Lobby', 'ABOUT', 'Themes', 'HackTime', 'Prizes', 'Our Team', 'FAQs', 'Contact','Timer'];
 
   // Opening Video Component
   if (showVideo && !videoEnded) {
