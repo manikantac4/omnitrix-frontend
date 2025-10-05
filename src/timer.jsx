@@ -11,11 +11,18 @@ const Timer = () => {
   const alienImages = [null, alien1, alien2, alien3, alien4, alien5];
 
   const [time, setTime] = useState(() => {
-    const savedTime = window.timerState?.time;
-    return savedTime !== undefined ? savedTime : 24 * 60 * 60;
+    const savedState = localStorage.getItem('omnitrixTimerState');
+    if (savedState) {
+      return JSON.parse(savedState).time;
+    }
+    return 24 * 60 * 60;
   });
   const [isRunning, setIsRunning] = useState(() => {
-    return window.timerState?.isRunning || false;
+    const savedState = localStorage.getItem('omnitrixTimerState');
+    if (savedState) {
+      return JSON.parse(savedState).isRunning;
+    }
+    return false;
   });
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [transitionType, setTransitionType] = useState('');
@@ -64,11 +71,9 @@ const Timer = () => {
     };
   }, [audioEnabled]);
 
+  // Save state to localStorage on every change
   useEffect(() => {
-    window.timerState = {
-      time,
-      isRunning
-    };
+    localStorage.setItem('omnitrixTimerState', JSON.stringify({ time, isRunning }));
   }, [time, isRunning]);
 
   useEffect(() => {
@@ -192,6 +197,8 @@ const Timer = () => {
   const handleReset = () => {
     setIsRunning(false);
     setTime(24 * 60 * 60);
+    // Clear the state from localStorage on reset
+    localStorage.removeItem('omnitrixTimerState');
   };
 
   const toggleFullscreen = async () => {
@@ -336,7 +343,7 @@ const Timer = () => {
             }}
           />
         ))}
-        
+
         {/* Success Message */}
         <div className="success-message">
           <div className="success-icon">✓</div>
@@ -378,18 +385,18 @@ const Timer = () => {
               </div>
             </div>
           </div>
-          
+
           <div className="alien-right-section">
             <div className="notification-header">
               <div className="notification-icon">🔔</div>
               <h2 className="notification-title">MEAL TIME NOTIFICATION</h2>
             </div>
-            
+
             <div className="notification-body">
               <div className="time-display">{currentAlarm.time}</div>
               <p className="notification-message">{currentAlarm.message}</p>
             </div>
-            
+
             {!audioEnabled && (
               <div className="audio-tip">Click anywhere to enable sound notifications</div>
             )}
@@ -501,27 +508,23 @@ const Timer = () => {
           <button onClick={handleReset} disabled={isTransitioning} className="control-button-small">
             Reset
           </button>
-          <button onClick={toggleFullscreen} className="control-button-small fullscreen-button">
-            {isFullscreen ? (
-              <span className="flex items-center gap-2">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
-                </svg>
-                Exit Fullscreen
-              </span>
-            ) : (
-              <span className="flex items-center gap-2">
-                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
-                  <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
-                </svg>
-                Fullscreen
-              </span>
-            )}
-          </button>
         </div>
       </div>
+
+      <button onClick={toggleFullscreen} className="fullscreen-button">
+        {isFullscreen ? (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M8 3v3a2 2 0 0 1-2 2H3m18 0h-3a2 2 0 0 1-2-2V3m0 18v-3a2 2 0 0 1 2-2h3M3 16h3a2 2 0 0 1 2 2v3" />
+          </svg>
+        ) : (
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2">
+            <path d="M8 3H5a2 2 0 0 0-2 2v3m18 0V5a2 2 0 0 0-2-2h-3m0 18h3a2 2 0 0 0 2-2v-3M3 16v3a2 2 0 0 0 2 2h3" />
+          </svg>
+        )}
+      </button>
+
       <style jsx>{`
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;600;700;900&family=Roboto:wght@400;500;700&display=swap');
         @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap');
 
         .min-h-screen {
@@ -959,13 +962,29 @@ const Timer = () => {
         }
 
         .fullscreen-button {
+          position: fixed;
+          bottom: 1.5rem;
+          right: 1.5rem;
+          width: 50px;
+          height: 50px;
+          border-radius: 50%;
           display: flex;
           align-items: center;
           justify-content: center;
+          background: rgba(255, 255, 255, 0.1);
+          border: 2px solid rgba(255, 255, 255, 0.3);
+          color: #ffffff;
+          cursor: pointer;
+          backdrop-filter: blur(5px);
+          box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
+          transition: all 0.3s ease;
+          z-index: 50;
         }
-
-        .fullscreen-button svg {
-          flex-shrink: 0;
+        
+        .fullscreen-button:hover {
+          transform: scale(1.1);
+          background: rgba(255, 255, 255, 0.2);
+          border-color: rgba(255, 255, 255, 0.6);
         }
 
         .honeycomb-container {
@@ -1205,32 +1224,32 @@ const Timer = () => {
         }
 
         .notification-title {
-          font-family: 'Orbitron', monospace;
-          font-size: 3rem;
+          font-family: 'Roboto', sans-serif;
+          font-size: 2.5rem;
           font-weight: 700;
           color: #4ade80;
           line-height: 1.2;
-          letter-spacing: 0.05em;
+          letter-spacing: 0.02em;
           margin: 0;
-          text-shadow: 0 0 30px rgba(74, 222, 128, 0.6);
+          text-shadow: 0 0 20px rgba(74, 222, 128, 0.6);
         }
 
         @media (max-width: 1024px) {
           .notification-title {
-            font-size: 2.25rem;
+            font-size: 2rem;
           }
         }
 
         @media (max-width: 640px) {
           .notification-title {
-            font-size: 1.75rem;
+            font-size: 1.5rem;
           }
         }
 
         .notification-body {
           display: flex;
           flex-direction: column;
-          gap: 2rem;
+          gap: 1.5rem;
           align-items: flex-start;
         }
 
@@ -1262,9 +1281,9 @@ const Timer = () => {
         }
 
         .notification-message {
-          font-family: 'Inter', sans-serif;
-          font-size: 1.75rem;
-          font-weight: 500;
+          font-family: 'Roboto', sans-serif;
+          font-size: 1.25rem;
+          font-weight: 400;
           color: rgba(255, 255, 255, 0.95);
           line-height: 1.6;
           margin: 0;
@@ -1272,13 +1291,13 @@ const Timer = () => {
 
         @media (max-width: 1024px) {
           .notification-message {
-            font-size: 1.5rem;
+            font-size: 1.125rem;
           }
         }
 
         @media (max-width: 640px) {
           .notification-message {
-            font-size: 1.25rem;
+            font-size: 1rem;
           }
         }
 
