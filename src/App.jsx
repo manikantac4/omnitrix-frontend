@@ -11,8 +11,6 @@ import Sponsor from "./components/sponser";
 import Contact from "./components/contact";
 import Prize from "./components/prizes";
 import Hacktime from "./components/hacktime";
-import Timer from "./timer";
-import LoginComponent from "./login";
 import Payment from "./components/payment";
 // Import other components as needed
 
@@ -54,8 +52,7 @@ function App() {
           <Route path="/sponsor" element={<Sponsor />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/prize" element={<Prize />} />
-          <Route path="/hacktime" element={<Hacktime />} />          <Route path="/timer" element={<Timer />} />
-          <Route path="/login" element={<LoginComponent />} />
+          <Route path="/hacktime" element={<Hacktime />} />      
           <Route path="/payment" element={<Payment />} />
                   </Routes>
       </div>
