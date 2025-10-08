@@ -11,7 +11,7 @@ import Sponsor from "./components/sponser";
 import Contact from "./components/contact";
 import Prize from "./components/prizes";
 import Hacktime from "./components/hacktime";
-import Timer from "./timer";
+// import Timer from "./timer";
 import LoginComponent from "./login";
 import QuizApp from './components/QuizApp';
 import AdminLeaderboard from './components/AdminLeaderboard';
@@ -56,7 +56,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/prize" element={<Prize />} />
           <Route path="/hacktime" element={<Hacktime />} />
-          <Route path="/timer" element={<Timer />} />
+          {/* <Route path="/timer" element={<Timer />} /> */}
           <Route path="/login" element={<LoginComponent />} />
           <Route path="/quiz" element={<QuizApp />} />
         <Route path="/admin/leaderboard" element={<AdminLeaderboard />} />
