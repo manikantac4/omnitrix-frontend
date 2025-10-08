@@ -12,7 +12,7 @@ import Contact from "./components/contact";
 import Prize from "./components/prizes";
 import Hacktime from "./components/hacktime";
 // import Timer from "./timer";
-import LoginComponent from "./login";
+// import LoginComponent from "./login";
 import QuizApp from './components/QuizApp';
 import AdminLeaderboard from './components/AdminLeaderboard';
 // Import other components as needed
