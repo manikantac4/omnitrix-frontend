@@ -21,9 +21,9 @@ const PaymentComponent = () => {
   const [formData, setFormData] = useState({
     teamId: '',
     teamLeaderName: '',
-    teamSize: '',
+   /* teamSize: '',
     teamMember2Name: '',
-    teamMember3Name: '',
+    teamMember3Name: '',*/
     couponCode: '',
     transactionId: '',
     screenshot: null
@@ -34,7 +34,7 @@ const PaymentComponent = () => {
     return () => clearTimeout(titleTimer);
   }, []);
 
-  const teamSizes = ['2', '3'];
+  //const teamSizes = ['2', '3'];
 
   const validateForm = () => {
     const errors = {};
@@ -49,7 +49,7 @@ const PaymentComponent = () => {
       errors.teamLeaderName = 'Name must be at least 2 characters';
     }
 
-    if (!formData.teamSize) {
+   /* if (!formData.teamSize) {
       errors.teamSize = 'Please select team size';
     }
 
@@ -67,7 +67,7 @@ const PaymentComponent = () => {
       } else if (formData.teamMember3Name.trim().length < 2) {
         errors.teamMember3Name = 'Name must be at least 2 characters';
       }
-    }
+    }*/
 
     if (!formData.transactionId.trim()) {
       errors.transactionId = 'Transaction ID is required';
@@ -86,7 +86,7 @@ const PaymentComponent = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     
-    if (name === 'teamSize') {
+  /*  if (name === 'teamSize') {
       setFormData(prev => ({
         ...prev,
         [name]: value,
@@ -99,7 +99,7 @@ const PaymentComponent = () => {
         return rest;
       });
       return;
-    }
+    }*/
 
     setFormData(prev => ({
       ...prev,
@@ -241,9 +241,6 @@ const PaymentComponent = () => {
     const paymentData = new FormData();
     paymentData.append('teamId', formData.teamId.trim());
     paymentData.append('teamLeaderName', formData.teamLeaderName.trim());
-    paymentData.append('teamSize', formData.teamSize);
-    paymentData.append('teammate1', formData.teamMember2Name.trim());
-    paymentData.append('teammate2', formData.teamMember3Name.trim() || null);
     paymentData.append('transactionId', formData.transactionId.trim());
     paymentData.append('paymentAmount', paymentAmount);
     paymentData.append('couponApplied', couponApplied);
@@ -274,9 +271,6 @@ const PaymentComponent = () => {
         setFormData({
           teamId: '',
           teamLeaderName: '',
-          teamSize: '',
-          teamMember2Name: '',
-          teamMember3Name: '',
           couponCode: '',
           transactionId: '',
           screenshot: null
@@ -319,13 +313,12 @@ const PaymentComponent = () => {
   const isFormValid = () => {
     const baseValid = formData.teamId.trim() &&
                       formData.teamLeaderName.trim() &&
-                      formData.teamSize &&
                       formData.transactionId.trim() &&
                       screenshot;
 
     if (!baseValid) return false;
 
-    if (parseInt(formData.teamSize) >= 2) {
+  /*  if (parseInt(formData.teamSize) >= 2) {
       if (!formData.teamMember2Name.trim()) {
         return false;
       }
@@ -335,7 +328,7 @@ const PaymentComponent = () => {
       if (!formData.teamMember3Name.trim()) {
         return false;
       }
-    }
+    }*/
 
     return true;
   };
@@ -488,85 +481,6 @@ const PaymentComponent = () => {
                 <p className="text-red-400 text-sm mt-1">{validationErrors.teamLeaderName}</p>
               )}
             </div>
-
-            <div className="space-y-2">
-              <label className="block text-white font-semibold text-lg">
-                Team Size <span className="text-green-400">*</span>
-              </label>
-              <select
-                name="teamSize"
-                value={formData.teamSize}
-                onChange={handleInputChange}
-                required
-                className={`w-full bg-transparent border-2 rounded-lg px-4 py-3 text-white focus:outline-none transition-all duration-300 ${
-                  validationErrors.teamSize 
-                    ? 'border-red-400/60 focus:border-red-400' 
-                    : 'border-green-400/30 focus:border-green-400/60'
-                }`}
-              >
-                <option value="" className="bg-slate-800 text-gray-300">Select team size</option>
-                {teamSizes.map((size, index) => (
-                  <option key={index} value={size} className="bg-slate-800 text-white">
-                    {size} Members
-                  </option>
-                ))}
-              </select>
-              {validationErrors.teamSize && (
-                <p className="text-red-400 text-sm mt-1">{validationErrors.teamSize}</p>
-              )}
-            </div>
-
-            {formData.teamSize && parseInt(formData.teamSize) >= 2 && (
-              <div className="space-y-6 pt-4 border-t border-green-400/20">
-                <h2 className="text-2xl font-bold text-green-400">Team Members</h2>
-                
-                <div className="space-y-2">
-                  <label className="block text-white font-semibold text-lg">
-                    Team Member 2 Name <span className="text-green-400">*</span>
-                  </label>
-                  <input
-                    type="text"
-                    name="teamMember2Name"
-                    value={formData.teamMember2Name}
-                    onChange={handleInputChange}
-                    required
-                    className={`w-full bg-transparent border-2 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none transition-all duration-300 ${
-                      validationErrors.teamMember2Name 
-                        ? 'border-red-400/60 focus:border-red-400' 
-                        : 'border-green-400/30 focus:border-green-400/60'
-                    }`}
-                    placeholder="Enter team member's full name"
-                  />
-                  {validationErrors.teamMember2Name && (
-                    <p className="text-red-400 text-sm mt-1">{validationErrors.teamMember2Name}</p>
-                  )}
-                </div>
-
-                {parseInt(formData.teamSize) === 3 && (
-                  <div className="space-y-2">
-                    <label className="block text-white font-semibold text-lg">
-                      Team Member 3 Name <span className="text-green-400">*</span>
-                    </label>
-                    <input
-                      type="text"
-                      name="teamMember3Name"
-                      value={formData.teamMember3Name}
-                      onChange={handleInputChange}
-                      required
-                      className={`w-full bg-transparent border-2 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none transition-all duration-300 ${
-                        validationErrors.teamMember3Name 
-                          ? 'border-red-400/60 focus:border-red-400' 
-                          : 'border-green-400/30 focus:border-green-400/60'
-                      }`}
-                      placeholder="Enter team member's full name"
-                    />
-                    {validationErrors.teamMember3Name && (
-                      <p className="text-red-400 text-sm mt-1">{validationErrors.teamMember3Name}</p>
-                    )}
-                  </div>
-                )}
-              </div>
-            )}
 
             {/* IEEE/ACM Membership Question */}
             <div className="bg-green-400/5 border-2 border-green-400/30 rounded-xl p-6">
