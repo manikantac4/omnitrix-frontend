@@ -317,20 +317,11 @@ const QuizApp = () => {
   // Quiz Question Component
   const QuizQuestion = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
-    const [isAnimating, setIsAnimating] = useState(false);
-    const [animationKey, setAnimationKey] = useState(0);
     const currentQuestion = questions[currentQuestionIndex];
     
     useEffect(() => {
-      setAnimationKey(prev => prev + 1);
       hasAutoProgressedRef.current = false;
       setIsTimerActive(true);
-    }, [currentQuestionIndex]);
-
-    useEffect(() => {
-      setIsAnimating(true);
-      const timer = setTimeout(() => setIsAnimating(false), 500);
-      return () => clearTimeout(timer);
     }, [currentQuestionIndex]);
 
     // Timer countdown
@@ -452,9 +443,7 @@ const QuizApp = () => {
             </div>
           </div>
 
-          <div className={`bg-transparent border-2 border-green-400/30 rounded-xl p-6 sm:p-8 transition-all duration-500 ${
-            isAnimating ? 'animate-door-open' : ''
-          }`}>
+          <div className="bg-transparent border-2 border-green-400/30 rounded-xl p-6 sm:p-8 transition-all duration-500">
             <h2 className="text-xl sm:text-2xl font-bold mb-6 sm:mb-8 break-words">{currentQuestion.questionText}</h2>
 
             <div className="space-y-3 sm:space-y-4">
@@ -504,23 +493,6 @@ const QuizApp = () => {
             </div>
           </div>
         </div>
-
-        <style jsx>{`
-          @keyframes doorOpen {
-            0% {
-              transform: perspective(1000px) rotateY(-90deg);
-              opacity: 0;
-            }
-            100% {
-              transform: perspective(1000px) rotateY(0deg);
-              opacity: 1;
-            }
-          }
-          .animate-door-open {
-            animation: doorOpen 0.5s ease-out forwards;
-            transform-origin: left center;
-          }
-        `}</style>
       </div>
     );
   };

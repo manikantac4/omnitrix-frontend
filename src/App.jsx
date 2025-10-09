@@ -59,9 +59,9 @@ function App() {
           <Route path="/hacktime" element={<Hacktime />} />
           {/* <Route path="/timer" element={<Timer />} /> */}
           {/* <Route path="/login" element={<LoginComponent />} /> */}
-          <Route path="/test" element={<QuizApp />} />
+          {/* <Route path="/test" element={<QuizApp />} /> */}
           <Route path="/quiz" element={<QuizCountdown/>}/>
-        <Route path="/admin/leaderboard" element={<AdminLeaderboard />} />
+        {/* <Route path="/admin/leaderboard" element={<AdminLeaderboard />} /> */}
                   </Routes>
       </div>
     </Router>
