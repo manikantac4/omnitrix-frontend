@@ -11,7 +11,10 @@ import Sponsor from "./components/sponser";
 import Contact from "./components/contact";
 import Prize from "./components/prizes";
 import Hacktime from "./components/hacktime";
-import Payment from "./components/payment";
+// import Timer from "./timer";
+// import LoginComponent from "./login";
+import QuizApp from './components/QuizApp';
+import AdminLeaderboard from './components/AdminLeaderboard';
 // Import other components as needed
 
 // ScrollToTop component - must be inside Router
@@ -52,8 +55,11 @@ function App() {
           <Route path="/sponsor" element={<Sponsor />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/prize" element={<Prize />} />
-          <Route path="/hacktime" element={<Hacktime />} />      
-          <Route path="/payment" element={<Payment />} />
+          <Route path="/hacktime" element={<Hacktime />} />
+          {/* <Route path="/timer" element={<Timer />} /> */}
+          {/* <Route path="/login" element={<LoginComponent />} /> */}
+          {/* <Route path="/quiz" element={<QuizApp />} />
+        <Route path="/admin/leaderboard" element={<AdminLeaderboard />} /> */}
                   </Routes>
       </div>
     </Router>
