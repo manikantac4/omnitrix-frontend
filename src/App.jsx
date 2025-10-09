@@ -58,8 +58,8 @@ function App() {
           <Route path="/hacktime" element={<Hacktime />} />
           {/* <Route path="/timer" element={<Timer />} /> */}
           {/* <Route path="/login" element={<LoginComponent />} /> */}
-          {/* <Route path="/quiz" element={<QuizApp />} />
-        <Route path="/admin/leaderboard" element={<AdminLeaderboard />} /> */}
+          <Route path="/quiz" element={<QuizApp />} />
+        <Route path="/admin/leaderboard" element={<AdminLeaderboard />} />
                   </Routes>
       </div>
     </Router>
