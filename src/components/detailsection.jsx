@@ -30,16 +30,6 @@ const FoodIcon = () => (
   </svg>
 );
 
-const GiftIcon = () => (
-  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <polyline points="20,12 20,22 4,22 4,12" stroke="currentColor" strokeWidth="2"/>
-    <rect x="2" y="7" width="20" height="5" stroke="currentColor" strokeWidth="2"/>
-    <line x1="12" y1="22" x2="12" y2="7" stroke="currentColor" strokeWidth="2"/>
-    <path d="M12 7H7.5a2.5 2.5 0 0 1 0-5C11 2 12 7 12 7z" stroke="currentColor" strokeWidth="2"/>
-    <path d="M12 7h4.5a2.5 2.5 0 0 0 0-5C13 2 12 7 12 7z" stroke="currentColor" strokeWidth="2"/>
-  </svg>
-);
-
 const MoneyIcon = () => (
   <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
     <circle cx="12" cy="12" r="10" stroke="currentColor" strokeWidth="2"/>
@@ -48,24 +38,15 @@ const MoneyIcon = () => (
   </svg>
 );
 
-const TrackIcon = () => (
-  <svg width="48" height="48" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-    <path d="M12 2L2 7l10 5 10-5-10-5z" stroke="currentColor" strokeWidth="2"/>
-    <path d="m2 17 10 5 10-5" stroke="currentColor" strokeWidth="2"/>
-    <path d="m2 12 10 5 10-5" stroke="currentColor" strokeWidth="2"/>
-  </svg>
-);
-
 // RegisterButton component
 const RegisterButton = ({ isVisible }) => {
   const handleClick = () => {
-    // Navigate to registration form - replace with your actual routing logic
     window.location.href = '/quiz';
   };
 
   return (
-    <div className="flex justify-center items-center ">
-    <button
+    <div className="flex justify-center items-center">
+      <button
         onClick={handleClick}
         className={`group relative px-8 py-4 text-lg md:text-xl font-black tracking-wider uppercase bg-transparent border-3 border-green-400 rounded-full overflow-hidden cursor-pointer transition-all duration-700 hover:scale-105 hover:border-green-300 transform ${
           isVisible ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"
@@ -82,7 +63,7 @@ const RegisterButton = ({ isVisible }) => {
           transitionDelay: "0.3s",
         }}
         onMouseEnter={(e) => {
-          e.target.style.boxShadow = `
+          e.currentTarget.style.boxShadow = `
             0 0 30px rgba(34, 197, 94, 0.9),
             0 0 60px rgba(34, 197, 94, 0.7),
             0 0 90px rgba(34, 197, 94, 0.5),
@@ -90,7 +71,7 @@ const RegisterButton = ({ isVisible }) => {
           `;
         }}
         onMouseLeave={(e) => {
-          e.target.style.boxShadow = `
+          e.currentTarget.style.boxShadow = `
             0 0 20px rgba(34, 197, 94, 0.6),
             0 0 40px rgba(34, 197, 94, 0.4),
             0 0 60px rgba(34, 197, 94, 0.2),
@@ -98,14 +79,12 @@ const RegisterButton = ({ isVisible }) => {
           `;
         }}
       >
-        {/* Animated Background Waves */}
         <div className="absolute inset-0 bg-gradient-to-r from-green-500/0 via-green-400/20 to-green-500/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
         <div
           className="absolute inset-0 bg-gradient-to-l from-green-300/0 via-green-500/10 to-green-300/0 opacity-0 group-hover:opacity-100 transition-opacity duration-700"
           style={{ animationDelay: "0.2s" }}
         ></div>
 
-        {/* Energy Rings */}
         <div
           className="absolute inset-0 rounded-full border-2 border-green-300/30 group-hover:border-green-200/50 transition-colors duration-500"
           style={{ animation: "energyRing 3s linear infinite" }}
@@ -115,7 +94,6 @@ const RegisterButton = ({ isVisible }) => {
           style={{ animation: "energyRing 3s linear infinite reverse" }}
         ></div>
 
-        {/* Scanning Lines */}
         <div className="absolute inset-0 overflow-hidden rounded-full">
           <div
             className="absolute top-0 left-0 w-full h-0.5 bg-gradient-to-r from-transparent via-green-300/60 to-transparent"
@@ -130,18 +108,16 @@ const RegisterButton = ({ isVisible }) => {
           ></div>
         </div>
 
-        {/* Button Text */}
         <span className="relative z-10 text-green-300 group-hover:text-white transition-colors duration-300 drop-shadow-[0_0_10px_rgba(34,197,94,0.8)]">
           Join the Quiz
         </span>
       </button>
       <img 
-    src={Heat} 
-    alt="Omnitrix" 
-    className="w-40 h-40 object-contain"
-  />
-    
-</div>
+        src={Heat} 
+        alt="Omnitrix" 
+        className="w-40 h-40 object-contain"
+      />
+    </div>
   );
 };
 
@@ -155,10 +131,8 @@ const CountdownTimer = ({ isVisible }) => {
   });
 
   useEffect(() => {
-    // Set target date to October 17, 2025 11:00 AM
     const targetDate = new Date('2025-10-17T11:00:00').getTime();
 
-    // Initial calculation
     const calculateTimeLeft = () => {
       const now = new Date().getTime();
       const distance = targetDate - now;
@@ -175,7 +149,6 @@ const CountdownTimer = ({ isVisible }) => {
       }
     };
 
-    // Set initial time
     setTimeLeft(calculateTimeLeft());
 
     const timer = setInterval(() => {
@@ -223,7 +196,6 @@ const CountdownTimer = ({ isVisible }) => {
                 </div>
               </div>
               
-              {/* Animated corner accents */}
               <div className="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-green-300/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-green-300/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-green-300/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -261,13 +233,13 @@ const OmnitrixRegistration = () => {
       icon: <MoneyIcon />,
       title: 'Registration Fee',
       subtitle: '₹600 per team (₹500 for IEEE/ACM - at least 1 member)',
-      delay: 1.4
+      delay: 1.2
     },
     {
       icon: <FoodIcon />,
       title: 'Meals Provided',
       subtitle: 'Breakfast, lunch & snacks',
-      delay: 1.6
+      delay: 1.4
     }
   ];
 
@@ -315,91 +287,48 @@ const OmnitrixRegistration = () => {
           <RegisterButton isVisible={isVisible} />
         </div>
 
-        {/* Event Details - 3+3 Layout */}
-        <div className="max-w-6xl mx-auto mb-12">
-          
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            
-            {/* Left Side - First Three Items */}
-            <div className="space-y-6">
-              {eventDetails.slice(0, 3).map((detail, index) => (
-                <div 
-                  key={index}
-                  className={`group relative transform transition-all duration-1000 ${
-                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-                  }`} 
-                  style={{ transitionDelay: `${detail.delay}s` }}
-                >
-                  <div className="p-5 bg-transparent backdrop-blur-sm border border-green-400/30 rounded-xl hover:border-green-400/60 transition-all duration-500 hover:bg-green-400/5 min-h-[120px]"
-                       onMouseEnter={(e) => {
-                         e.target.style.transform = 'translateY(-5px)';
-                         e.target.style.boxShadow = '0 10px 40px rgba(34, 197, 94, 0.15)';
-                       }}
-                       onMouseLeave={(e) => {
-                         e.target.style.transform = 'translateY(0px)';
-                         e.target.style.boxShadow = 'none';
-                       }}>
-                    <div className="flex items-start space-x-4 h-full">
-                      <div className="text-green-400 group-hover:text-green-300 transition-colors duration-300 flex-shrink-0 mt-1">{detail.icon}</div>
-                      <div className="flex-grow flex flex-col justify-center">
-                        <h3 className="text-lg font-bold text-green-300 mb-2 leading-tight" style={{ fontFamily: '"Orbitron", monospace' }}>
-                          {detail.title}
-                        </h3>
-                        <p className="text-white/80 text-sm leading-relaxed" style={{ fontFamily: '"Orbitron", monospace', fontWeight: '400' }}>
-                          {detail.subtitle}
-                        </p>
-                      </div>
+        {/* Event Details - 2x2 Grid */}
+        <div className="max-w-4xl mx-auto mb-12">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+            {eventDetails.map((detail, index) => (
+              <div 
+                key={index}
+                className={`group relative transform transition-all duration-1000 ${
+                  isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
+                }`} 
+                style={{ transitionDelay: `${detail.delay}s` }}
+              >
+                <div className="p-6 bg-transparent backdrop-blur-sm border border-green-400/30 rounded-xl hover:border-green-400/60 transition-all duration-500 hover:bg-green-400/5 h-full"
+                     onMouseEnter={(e) => {
+                       e.currentTarget.style.transform = 'translateY(-5px)';
+                       e.currentTarget.style.boxShadow = '0 10px 40px rgba(34, 197, 94, 0.15)';
+                     }}
+                     onMouseLeave={(e) => {
+                       e.currentTarget.style.transform = 'translateY(0px)';
+                       e.currentTarget.style.boxShadow = 'none';
+                     }}>
+                  <div className="flex items-start space-x-4 h-full">
+                    <div className="text-green-400 group-hover:text-green-300 transition-colors duration-300 flex-shrink-0 mt-1">{detail.icon}</div>
+                    <div className="flex-grow flex flex-col justify-center">
+                      <h3 className="text-lg font-bold text-green-300 mb-2 leading-tight" style={{ fontFamily: '"Orbitron", monospace' }}>
+                        {detail.title}
+                      </h3>
+                      <p className="text-white/80 text-sm leading-relaxed" style={{ fontFamily: '"Orbitron", monospace', fontWeight: '400' }}>
+                        {detail.subtitle}
+                      </p>
                     </div>
                   </div>
                 </div>
-              ))}
-            </div>
-
-            {/* Right Side - Last Three Items */}
-            <div className="space-y-6">
-              {eventDetails.slice(3, 6).map((detail, index) => (
-                <div 
-                  key={index + 3}
-                  className={`group relative transform transition-all duration-1000 ${
-                    isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-                  }`} 
-                  style={{ transitionDelay: `${detail.delay}s` }}
-                >
-                  <div className="p-5 bg-transparent backdrop-blur-sm border border-green-400/30 rounded-xl hover:border-green-400/60 transition-all duration-500 hover:bg-green-400/5 min-h-[120px]"
-                       onMouseEnter={(e) => {
-                         e.target.style.transform = 'translateY(-5px)';
-                         e.target.style.boxShadow = '0 10px 40px rgba(34, 197, 94, 0.15)';
-                       }}
-                       onMouseLeave={(e) => {
-                         e.target.style.transform = 'translateY(0px)';
-                         e.target.style.boxShadow = 'none';
-                       }}>
-                    <div className="flex items-start space-x-4 h-full">
-                      <div className="text-green-400 group-hover:text-green-300 transition-colors duration-300 flex-shrink-0 mt-1">{detail.icon}</div>
-                      <div className="flex-grow flex flex-col justify-center">
-                        <h3 className="text-lg font-bold text-green-300 mb-2 leading-tight" style={{ fontFamily: '"Orbitron", monospace' }}>
-                          {detail.title}
-                        </h3>
-                        <p className="text-white/80 text-sm leading-relaxed" style={{ fontFamily: '"Orbitron", monospace', fontWeight: '400' }}>
-                          {detail.subtitle}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              ))}
-            </div>
-
+              </div>
+            ))}
           </div>
         </div>
-
-        
 
         {/* Bottom CTA */}
         <div className="text-center mt-12">
           <div className={`inline-block px-8 py-4 bg-green-900/20 backdrop-blur-sm rounded-full border border-green-400/30 transform transition-all duration-1000 ${
             isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-          }`} style={{ transitionDelay: '2.2s' }}>
+          }`} style={{ transitionDelay: '1.8s' }}>
             <p className="text-green-300 font-medium text-lg" style={{ fontFamily: '"Orbitron", monospace', fontWeight: '500' }}>
               Ready to transform your ideas into reality? Join the ultimate coding experience! 
             </p>
@@ -408,7 +337,9 @@ const OmnitrixRegistration = () => {
       </div>
 
       {/* Custom Styles */}
-      <style jsx>{`
+      <style>{`
+        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@400;700;900&family=Rajdhani:wght@400;700&display=swap');
+
         @keyframes powerCorePulse {
           0%, 100% { 
             box-shadow: 
@@ -459,8 +390,6 @@ const OmnitrixRegistration = () => {
           0%, 100% { opacity: 0.3; transform: scale(1); }
           50% { opacity: 1; transform: scale(1.5); }
         }
-
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@400;700;900&family=Rajdhani:wght@400;700&display=swap');
       `}</style>
     </div>
   );
