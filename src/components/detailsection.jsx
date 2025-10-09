@@ -132,7 +132,7 @@ const RegisterButton = ({ isVisible }) => {
 
         {/* Button Text */}
         <span className="relative z-10 text-green-300 group-hover:text-white transition-colors duration-300 drop-shadow-[0_0_10px_rgba(34,197,94,0.8)]">
-          Register for Omnitrix 
+          Join the Quiz
         </span>
       </button>
       <img 
@@ -258,12 +258,6 @@ const OmnitrixRegistration = () => {
       delay: 1.0
     },
     {
-      icon: <TrackIcon />,
-      title: '7 Different Tracks',
-      subtitle: 'Multiple problem domains',
-      delay: 1.2
-    },
-    {
       icon: <MoneyIcon />,
       title: 'Registration Fee',
       subtitle: '₹600 per team (₹500 for IEEE/ACM - at least 1 member)',
@@ -274,12 +268,6 @@ const OmnitrixRegistration = () => {
       title: 'Meals Provided',
       subtitle: 'Breakfast, lunch & snacks',
       delay: 1.6
-    },
-    {
-      icon: <GiftIcon />,
-      title: 'Certificates & Swags',
-      subtitle: 'Recognition & goodies',
-      delay: 1.8
     }
   ];
 
@@ -405,19 +393,7 @@ const OmnitrixRegistration = () => {
           </div>
         </div>
 
-        {/* Prize Pool Section */}
-        <div className={`text-center mb-12 transform transition-all duration-1000 ${
-          isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-        }`} style={{ transitionDelay: '2.0s' }}>
-          <div className="inline-block px-8 py-4 bg-green-900/20 backdrop-blur-sm rounded-full border border-green-400/30">
-            <h3 className="text-2xl font-bold text-green-300 mb-2" style={{ fontFamily: '"Orbitron", monospace' }}>
-              Prize Pool: ₹30,000
-            </h3>
-            <p className="text-green-400/80 text-sm" style={{ fontFamily: '"Orbitron", monospace', fontWeight: '400' }}>
-              Exciting rewards for winning teams
-            </p>
-          </div>
-        </div>
+        
 
         {/* Bottom CTA */}
         <div className="text-center mt-12">
