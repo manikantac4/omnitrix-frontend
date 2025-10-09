@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import omnitrix from '../assets/omnitrix.png';
-
 const Timeline = () => {
   const [visibleItems, setVisibleItems] = useState(new Set());
   const [titleVisible, setTitleVisible] = useState(false);
@@ -9,39 +8,37 @@ const Timeline = () => {
   const observerRef = useRef();
   const timelineRef = useRef();
 
+  // Current date is October 9, 2025
+  const currentDate = new Date('2025-10-09');
+
   useEffect(() => {
-    // Page load animation
     const pageTimer = setTimeout(() => {
       setPageLoaded(true);
       setTitleVisible(true);
     }, 200);
 
-    // Staggered card animation on page load
     const cardTimers = [];
     for (let i = 0; i < 10; i++) {
       const timer = setTimeout(() => {
         setVisibleItems(prev => new Set(prev).add(i));
-      }, 800 + i * 150); // Staggered delay
+      }, 800 + i * 150);
       cardTimers.push(timer);
     }
 
-    // Intersection Observer for scroll-based animations (only add, don't remove)
     observerRef.current = new IntersectionObserver(
       (entries) => {
         entries.forEach((entry) => {
           const index = parseInt(entry.target.dataset.index);
           if (entry.isIntersecting) {
-            // Add a small delay for entry animation
             setTimeout(() => {
               setVisibleItems(prev => new Set(prev).add(index));
             }, 100);
           }
-          // Removed the else clause to prevent items from disappearing
         });
       },
       { 
         threshold: 0.2, 
-        rootMargin: '50px 0px 50px 0px' // More generous margins
+        rootMargin: '50px 0px 50px 0px'
       }
     );
 
@@ -87,7 +84,8 @@ const Timeline = () => {
         </svg>
       ),
       date: "25 Sep, 12:00 AM",
-      title: "Registration Opens"
+      title: "Registration Opens",
+      eventDate: new Date('2025-09-25')
     },
     {
       icon: (
@@ -96,9 +94,9 @@ const Timeline = () => {
         </svg>
       ),
       date: "9 Oct, 11:59 PM",
-      title: "Registration Closes"
+      title: "Registration Closes",
+      eventDate: new Date('2025-10-09T23:59:59')
     },
-   
     {
       icon: (
         <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -106,7 +104,8 @@ const Timeline = () => {
         </svg>
       ),
       date: "11 Oct, 6:00 PM",
-      title: "Shortlisting Round"
+      title: "Shortlisting Round",
+      eventDate: new Date('2025-10-11T18:00:00')
     },
     {
       icon: (
@@ -115,7 +114,8 @@ const Timeline = () => {
         </svg>
       ),
       date: "12 Oct, 9:00 AM",
-      title: "Results of Shortlisting"
+      title: "Results of Shortlisting",
+      eventDate: new Date('2025-10-12T09:00:00')
     },
     {
       icon: (
@@ -124,7 +124,8 @@ const Timeline = () => {
         </svg>
       ),
       date: "12 Oct, 9:00 AM",
-      title: "Payment Opens for Selected Teams"
+      title: "Payment Opens for Selected Teams",
+      eventDate: new Date('2025-10-12T09:00:00')
     },
     {
       icon: (
@@ -133,7 +134,8 @@ const Timeline = () => {
         </svg>
       ),
       date: "13 Oct, 11:59 PM",
-      title: "Payment Closes"
+      title: "Payment Closes",
+      eventDate: new Date('2025-10-13T23:59:59')
     },
     {
       icon: (
@@ -142,7 +144,8 @@ const Timeline = () => {
         </svg>
       ),
       date: "17 Oct, 11:00 AM",
-      title: "Hackathon Starts"
+      title: "Hackathon Starts",
+      eventDate: new Date('2025-10-17T11:00:00')
     },
     {
       icon: (
@@ -151,9 +154,14 @@ const Timeline = () => {
         </svg>
       ),
       date: "18 Oct, 11:00 AM",
-      title: "Hackathon Ends"
+      title: "Hackathon Ends",
+      eventDate: new Date('2025-10-18T11:00:00')
     }
   ];
+
+  const isCompleted = (eventDate) => {
+    return eventDate <= currentDate;
+  };
 
   return (
     <div className="min-h-screen bg-transparent flex items-center justify-center p-4 sm:p-8 overflow-hidden">
@@ -174,6 +182,16 @@ const Timeline = () => {
         @keyframes omnitrix-spin-reverse {
           from { transform: rotate(360deg); }
           to { transform: rotate(0deg); }
+        }
+
+        .checkmark-animation {
+          animation: checkmark-pop 0.6s ease-out;
+        }
+
+        @keyframes checkmark-pop {
+          0% { transform: scale(0) rotate(-45deg); opacity: 0; }
+          50% { transform: scale(1.2) rotate(0deg); opacity: 1; }
+          100% { transform: scale(1) rotate(0deg); opacity: 1; }
         }
       `}</style>
       
@@ -217,79 +235,142 @@ const Timeline = () => {
 
           {/* Timeline Events */}
           <div className="space-y-6 sm:space-y-8">
-            {events.map((event, index) => (
-              <div key={index} className="relative">
-                {/* Event Card */}
-                <div 
-                  data-index={index}
-                  onMouseEnter={() => handleMouseEnter(index)}
-                  onMouseLeave={handleMouseLeave}
-                  className={`relative w-64 sm:w-72 bg-slate-900/40 backdrop-blur-md border border-green-400/30 rounded-lg p-3 sm:p-4 shadow-lg shadow-green-400/10 cursor-pointer transition-all duration-700 ease-out group ${
-                    index % 2 === 0 ? 'mr-auto' : 'ml-auto'
-                  } ${
-                    visibleItems.has(index) 
-                      ? 'opacity-100 translate-x-0 scale-100' 
-                      : `opacity-0 scale-95 ${index % 2 === 0 ? '-translate-x-96' : 'translate-x-96'}`
-                  } ${
-                    hoveredItem === index 
-                      ? 'shadow-green-400/40 -translate-y-2 scale-105 border-green-400/60' 
-                      : 'hover:shadow-green-400/30 hover:-translate-y-1 hover:scale-102 hover:border-green-400/50'
-                  }`}
-                  style={{
-                    transitionDelay: visibleItems.has(index) ? '0ms' : `${index * 50}ms`
-                  }}
-                >
-                  
-                  {/* Connector Line - Hidden on mobile */}
-                  <div className={`hidden sm:block absolute top-1/2 transform -translate-y-1/2 h-0.5 w-6 sm:w-8 bg-gradient-to-r from-green-400 to-transparent shadow-sm shadow-green-400/50 transition-all duration-500 ${
-                    index % 2 === 0 ? '-right-6 sm:-right-8' : '-left-6 sm:-left-8 rotate-180'
-                  } ${
-                    hoveredItem === index ? 'w-8 sm:w-12 shadow-green-400/70' : ''
-                  }`}></div>
+            {events.map((event, index) => {
+              const completed = isCompleted(event.eventDate);
+              const colorScheme = completed ? {
+                primary: 'red-500',
+                secondary: 'red-400',
+                tertiary: 'red-300',
+                glow: 'red-400/50'
+              } : {
+                primary: 'green-400',
+                secondary: 'emerald-500',
+                tertiary: 'green-400',
+                glow: 'green-400/50'
+              };
 
-                  {/* Icon */}
-                  <div className={`flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 bg-green-400/10 border border-green-400/30 rounded-lg mb-2 sm:mb-3 text-green-400 transition-all duration-500 ${
-                    hoveredItem === index 
-                      ? 'bg-green-400/30 border-green-400/60 scale-110 rotate-12 text-white' 
-                      : 'group-hover:bg-green-400/20 group-hover:border-green-400/50 group-hover:scale-105'
-                  }`}>
-                    <div className={`transition-transform duration-300 ${
-                      hoveredItem === index ? 'scale-110' : ''
-                    }`}>
-                      {event.icon}
+              return (
+                <div key={index} className="relative">
+                  {/* Event Card */}
+                  <div 
+                    data-index={index}
+                    onMouseEnter={() => handleMouseEnter(index)}
+                    onMouseLeave={handleMouseLeave}
+                    className={`relative w-64 sm:w-72 bg-slate-900/40 backdrop-blur-md border border-${colorScheme.primary}/30 rounded-lg p-3 sm:p-4 shadow-lg shadow-${colorScheme.glow} cursor-pointer transition-all duration-700 ease-out group ${
+                      index % 2 === 0 ? 'mr-auto' : 'ml-auto'
+                    } ${
+                      visibleItems.has(index) 
+                        ? 'opacity-100 translate-x-0 scale-100' 
+                        : `opacity-0 scale-95 ${index % 2 === 0 ? '-translate-x-96' : 'translate-x-96'}`
+                    } ${
+                      hoveredItem === index 
+                        ? `shadow-${colorScheme.primary}/40 -translate-y-2 scale-105 border-${colorScheme.primary}/60` 
+                        : `hover:shadow-${colorScheme.primary}/30 hover:-translate-y-1 hover:scale-102 hover:border-${colorScheme.primary}/50`
+                    }`}
+                    style={{
+                      transitionDelay: visibleItems.has(index) ? '0ms' : `${index * 50}ms`,
+                      borderColor: completed ? 'rgba(239, 68, 68, 0.3)' : 'rgba(74, 222, 128, 0.3)',
+                      boxShadow: completed 
+                        ? '0 10px 15px -3px rgba(239, 68, 68, 0.5), 0 4px 6px -2px rgba(239, 68, 68, 0.3)' 
+                        : '0 10px 15px -3px rgba(74, 222, 128, 0.1), 0 4px 6px -2px rgba(74, 222, 128, 0.05)'
+                    }}
+                  >
+                    {/* Completed Badge */}
+                    {completed && (
+                      <div className="absolute -top-2 -right-2 bg-red-500 text-white text-xs font-bold px-2 py-1 rounded-full shadow-lg shadow-red-500/50 flex items-center gap-1 checkmark-animation">
+                        <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
+                          <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
+                        </svg>
+                        <span>DONE</span>
+                      </div>
+                    )}
+                    
+                    {/* Connector Line - Hidden on mobile */}
+                    <div 
+                      className={`hidden sm:block absolute top-1/2 transform -translate-y-1/2 h-0.5 w-6 sm:w-8 bg-gradient-to-r from-${colorScheme.primary} to-transparent shadow-sm shadow-${colorScheme.glow} transition-all duration-500 ${
+                        index % 2 === 0 ? '-right-6 sm:-right-8' : '-left-6 sm:-left-8 rotate-180'
+                      } ${
+                        hoveredItem === index ? 'w-8 sm:w-12 shadow-${colorScheme.primary}/70' : ''
+                      }`}
+                      style={{
+                        background: completed 
+                          ? 'linear-gradient(to right, rgb(239, 68, 68), transparent)'
+                          : 'linear-gradient(to right, rgb(74, 222, 128), transparent)'
+                      }}
+                    ></div>
+
+                    {/* Icon */}
+                    <div 
+                      className={`flex items-center justify-center w-8 h-8 sm:w-10 sm:h-10 bg-${colorScheme.primary}/10 border border-${colorScheme.primary}/30 rounded-lg mb-2 sm:mb-3 text-${colorScheme.primary} transition-all duration-500 ${
+                        hoveredItem === index 
+                          ? `bg-${colorScheme.primary}/30 border-${colorScheme.primary}/60 scale-110 rotate-12 text-white` 
+                          : `group-hover:bg-${colorScheme.primary}/20 group-hover:border-${colorScheme.primary}/50 group-hover:scale-105`
+                      }`}
+                      style={{
+                        backgroundColor: completed ? 'rgba(239, 68, 68, 0.1)' : 'rgba(74, 222, 128, 0.1)',
+                        borderColor: completed ? 'rgba(239, 68, 68, 0.3)' : 'rgba(74, 222, 128, 0.3)',
+                        color: completed ? 'rgb(248, 113, 113)' : 'rgb(74, 222, 128)'
+                      }}
+                    >
+                      <div className={`transition-transform duration-300 ${
+                        hoveredItem === index ? 'scale-110' : ''
+                      }`}>
+                        {event.icon}
+                      </div>
                     </div>
+
+                    {/* Content */}
+                    <div className="space-y-1 sm:space-y-2">
+                      <div 
+                        className={`text-${colorScheme.primary} text-xs sm:text-sm font-semibold tracking-wide transition-all duration-300 ${
+                          hoveredItem === index ? `text-${colorScheme.tertiary} scale-105` : ''
+                        }`}
+                        style={{
+                          color: completed ? 'rgb(248, 113, 113)' : 'rgb(74, 222, 128)'
+                        }}
+                      >
+                        {event.date}
+                      </div>
+                      <div className={`text-white text-xs sm:text-sm font-medium leading-relaxed transition-all duration-300 ${
+                        hoveredItem === index ? 'text-gray-100 scale-105' : ''
+                      }`}>
+                        {event.title}
+                      </div>
+                    </div>
+
+                    {/* Glow Effect */}
+                    <div 
+                      className={`absolute inset-0 rounded-lg bg-gradient-to-r from-${colorScheme.primary}/5 to-${colorScheme.secondary}/5 transition-all duration-500 pointer-events-none ${
+                        hoveredItem === index 
+                          ? `opacity-100 from-${colorScheme.primary}/20 to-${colorScheme.secondary}/20` 
+                          : 'opacity-0 group-hover:opacity-100'
+                      }`}
+                      style={{
+                        background: completed
+                          ? hoveredItem === index 
+                            ? 'linear-gradient(to right, rgba(239, 68, 68, 0.2), rgba(220, 38, 38, 0.2))'
+                            : 'linear-gradient(to right, rgba(239, 68, 68, 0.05), rgba(220, 38, 38, 0.05))'
+                          : hoveredItem === index
+                            ? 'linear-gradient(to right, rgba(74, 222, 128, 0.2), rgba(16, 185, 129, 0.2))'
+                            : 'linear-gradient(to right, rgba(74, 222, 128, 0.05), rgba(16, 185, 129, 0.05))'
+                      }}
+                    ></div>
+
+                    {/* Pulse Effect on Hover */}
+                    <div 
+                      className={`absolute inset-0 rounded-lg border border-${colorScheme.primary}/30 transition-all duration-500 pointer-events-none ${
+                        hoveredItem === index 
+                          ? `animate-pulse border-${colorScheme.primary}/60 scale-105` 
+                          : ''
+                      }`}
+                      style={{
+                        borderColor: completed ? 'rgba(239, 68, 68, 0.3)' : 'rgba(74, 222, 128, 0.3)'
+                      }}
+                    ></div>
                   </div>
-
-                  {/* Content */}
-                  <div className="space-y-1 sm:space-y-2">
-                    <div className={`text-green-400 text-xs sm:text-sm font-semibold tracking-wide transition-all duration-300 ${
-                      hoveredItem === index ? 'text-emerald-300 scale-105' : ''
-                    }`}>
-                      {event.date}
-                    </div>
-                    <div className={`text-white text-xs sm:text-sm font-medium leading-relaxed transition-all duration-300 ${
-                      hoveredItem === index ? 'text-gray-100 scale-105' : ''
-                    }`}>
-                      {event.title}
-                    </div>
-                  </div>
-
-                  {/* Glow Effect */}
-                  <div className={`absolute inset-0 rounded-lg bg-gradient-to-r from-green-400/5 to-emerald-500/5 transition-all duration-500 pointer-events-none ${
-                    hoveredItem === index 
-                      ? 'opacity-100 from-green-400/20 to-emerald-500/20' 
-                      : 'opacity-0 group-hover:opacity-100'
-                  }`}></div>
-
-                  {/* Pulse Effect on Hover */}
-                  <div className={`absolute inset-0 rounded-lg border border-green-400/30 transition-all duration-500 pointer-events-none ${
-                    hoveredItem === index 
-                      ? 'animate-pulse border-green-400/60 scale-105' 
-                      : ''
-                  }`}></div>
                 </div>
-              </div>
-            ))}
+              );
+            })}
           </div>
         </div>
 
