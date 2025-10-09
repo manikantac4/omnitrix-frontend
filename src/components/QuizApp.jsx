@@ -1,12 +1,11 @@
 import React, { useState, useEffect } from 'react';
 
 const QuizApp = () => {
-  const [currentPage, setCurrentPage] = useState('verification'); // verification, rules, quiz, result
+  const [currentPage, setCurrentPage] = useState('verification');
   const [teamId, setTeamId] = useState('');
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [responses, setResponses] = useState([]);
-  const [score, setScore] = useState(null);
   const [timeLeft, setTimeLeft] = useState(30);
   const [isTimerActive, setIsTimerActive] = useState(false);
 
@@ -147,14 +146,16 @@ const QuizApp = () => {
         });
 
         const data = await response.json();
-
-        if (data.success) {
+        console.log(data);
+        if (data.success && data.questions && data.questions.length > 0) {
           setQuestions(data.questions);
           setResponses(data.questions.map(q => ({ questionId: q._id, selectedOption: null })));
+          setCurrentQuestionIndex(0);
+          setTimeLeft(30);
           setCurrentPage('quiz');
           setIsTimerActive(true);
         } else {
-          alert(data.message || 'Error starting quiz');
+          alert(data.message || 'Error starting quiz. No questions received.');
         }
       } catch (err) {
         alert('Connection error. Please try again.');
@@ -262,12 +263,12 @@ const QuizApp = () => {
       setResponses(newResponses);
     };
 
-    const handleNext = () => {
+    const handleNext = async () => {
       if (currentQuestionIndex < questions.length - 1) {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
         setTimeLeft(30);
       } else {
-        handleSubmit();
+        await handleSubmit();
       }
     };
 
@@ -285,7 +286,6 @@ const QuizApp = () => {
         const data = await response.json();
 
         if (data.success) {
-          setScore(data.score);
           setCurrentPage('result');
         } else {
           alert(data.message || 'Error submitting quiz');
@@ -305,11 +305,17 @@ const QuizApp = () => {
     return (
       <div className="min-h-screen bg-transparent text-white p-4 sm:p-8">
         {isSubmitting && (
-          <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50">
-            <div className="bg-transparent border-2 border-green-400/60 rounded-xl p-8">
-              <div className="flex flex-col items-center space-y-4">
-                <div className="w-16 h-16 border-4 border-green-400/30 border-t-green-400 rounded-full animate-spin"></div>
-                <div className="text-green-400 font-semibold animate-pulse">Submitting Quiz...</div>
+          <div className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-50">
+            <div className="bg-transparent border-2 border-green-400/60 rounded-xl p-12">
+              <div className="flex flex-col items-center space-y-6">
+                <div className="relative w-24 h-24">
+                  <div className="absolute inset-0 border-4 border-green-400/30 rounded-full"></div>
+                  <div className="absolute inset-0 border-4 border-transparent border-t-green-400 rounded-full animate-spin"></div>
+                  <div className="absolute inset-2 border-4 border-transparent border-t-green-300 rounded-full animate-spin" style={{ animationDuration: '1.5s' }}></div>
+                  <div className="absolute inset-4 border-4 border-transparent border-t-green-200 rounded-full animate-spin" style={{ animationDuration: '2s' }}></div>
+                </div>
+                <div className="text-green-400 font-bold text-xl animate-pulse">Submitting Your Answers...</div>
+                <div className="text-green-400/60 text-sm">Please wait, do not close this window</div>
               </div>
             </div>
           </div>
@@ -326,7 +332,7 @@ const QuizApp = () => {
           </div>
 
           <div className="bg-transparent border-2 border-green-400/30 rounded-xl p-8">
-            <h2 className="text-2xl font-bold mb-8">{currentQuestion.question}</h2>
+            <h2 className="text-2xl font-bold mb-8">{currentQuestion.questionText}</h2>
 
             <div className="space-y-4">
               {currentQuestion.options.map((option, index) => (
@@ -344,14 +350,18 @@ const QuizApp = () => {
               ))}
             </div>
 
-            <div className="mt-8 flex justify-between">
+            <div className="mt-8 flex justify-between items-center">
               <div className="text-gray-400 text-sm">
                 {currentResponse.selectedOption ? '✅ Answer selected' : '⚠️ No answer selected'}
               </div>
               <button
                 onClick={isLastQuestion ? handleSubmit : handleNext}
                 disabled={isSubmitting}
-                className="border-2 border-green-400/60 text-green-400 hover:bg-green-400/10 font-bold py-3 px-8 rounded-lg transition-all"
+                className={`border-2 font-bold py-3 px-8 rounded-lg transition-all ${
+                  isSubmitting 
+                    ? 'opacity-50 cursor-not-allowed border-gray-500/30 text-gray-500'
+                    : 'border-green-400/60 text-green-400 hover:bg-green-400/10 hover:scale-105'
+                }`}
               >
                 {isLastQuestion ? 'Submit Quiz' : 'Next Question →'}
               </button>
@@ -389,20 +399,35 @@ const QuizApp = () => {
               </div>
             </div>
 
-            <h1 className="text-4xl font-bold mb-4">Quiz Completed!</h1>
-            <p className="text-gray-300 mb-8">Team ID: {teamId}</p>
+            <h1 className="text-4xl font-bold mb-4">Quiz Submitted Successfully!</h1>
+            <p className="text-gray-300 mb-8">Team ID: <span className="font-bold text-green-400">{teamId}</span></p>
 
             <div className="bg-green-400/10 border-2 border-green-400 rounded-xl p-8 mb-8">
-              <div className="text-5xl font-bold text-green-400 mb-2">{score}</div>
-              <div className="text-xl text-gray-300">out of {questions.length}</div>
-              <div className="text-lg text-green-400 mt-2">{Math.round((score / questions.length) * 100)}% Correct</div>
+              <div className="text-2xl font-bold text-green-400 mb-4">🎉 Thank You for Participating!</div>
+              <p className="text-gray-300 text-lg leading-relaxed">
+                Your answers have been submitted successfully. We will evaluate all submissions and announce the winning teams soon.
+              </p>
             </div>
 
-            <p className="text-gray-300 mb-6">Your score has been recorded. Check the leaderboard to see your ranking!</p>
+            <div className="bg-green-400/5 border border-green-400/20 rounded-lg p-6 mb-6">
+              <div className="flex items-start space-x-3">
+                <svg className="w-6 h-6 text-green-400 flex-shrink-0 mt-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                </svg>
+                <div className="text-left">
+                  <p className="text-green-400 font-semibold mb-2">What's Next?</p>
+                  <ul className="text-gray-300 text-sm space-y-1">
+                    <li>• Results will be announced via email</li>
+                    <li>• Keep an eye on your inbox for updates</li>
+                    <li>• Winners will be contacted directly</li>
+                  </ul>
+                </div>
+              </div>
+            </div>
 
             <button
               onClick={() => window.location.href = '/'}
-              className="border-2 border-green-400/60 text-green-400 hover:bg-green-400/10 font-bold py-3 px-8 rounded-lg transition-all"
+              className="border-2 border-green-400/60 text-green-400 hover:bg-green-400/10 hover:scale-105 font-bold py-3 px-8 rounded-lg transition-all"
             >
               Back to Home
             </button>
@@ -412,7 +437,6 @@ const QuizApp = () => {
     );
   };
 
-  // Render current page
   return (
     <>
       {currentPage === 'verification' && <TeamVerification />}
