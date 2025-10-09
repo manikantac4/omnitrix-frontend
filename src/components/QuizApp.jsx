@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback, useRef } from 'react';
 
 const QuizApp = () => {
   const [currentPage, setCurrentPage] = useState('verification');
   const [teamId, setTeamId] = useState('');
+  const [email, setEmail] = useState('');
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [responses, setResponses] = useState([]);
@@ -10,18 +11,22 @@ const QuizApp = () => {
   const [isTimerActive, setIsTimerActive] = useState(false);
   const [isTransitioning, setIsTransitioning] = useState(false);
   const [customAlert, setCustomAlert] = useState({ show: false, message: '' });
+  
+  const timerRef = useRef(null);
+  const hasAutoProgressedRef = useRef(false);
 
-  const showCustomAlert = (message) => {
+  const showCustomAlert = useCallback((message) => {
     setCustomAlert({ show: true, message });
-  };
+  }, []);
 
-  const closeCustomAlert = () => {
+  const closeCustomAlert = useCallback(() => {
     setCustomAlert({ show: false, message: '' });
-  };
+  }, []);
 
   // Team Verification Component
   const TeamVerification = () => {
     const [inputTeamId, setInputTeamId] = useState('');
+    const [inputEmail, setInputEmail] = useState('');
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState('');
     const [titleVisible, setTitleVisible] = useState(false);
@@ -37,6 +42,17 @@ const QuizApp = () => {
         return;
       }
 
+      if (!inputEmail.trim()) {
+        setError('Please enter your registered email');
+        return;
+      }
+
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(inputEmail.trim())) {
+        setError('Please enter a valid email address');
+        return;
+      }
+
       setIsLoading(true);
       setError('');
 
@@ -44,20 +60,24 @@ const QuizApp = () => {
         const response = await fetch('https://omnitrix-backend-1.onrender.com/api/quiz/verifyTeam', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ teamId: inputTeamId.trim() })
+          body: JSON.stringify({ 
+            teamId: inputTeamId.trim(),
+            email: inputEmail.trim()
+          })
         });
 
         const data = await response.json();
 
         if (data.success) {
           setTeamId(inputTeamId.trim());
+          setEmail(inputEmail.trim());
           setIsTransitioning(true);
           setTimeout(() => {
             setCurrentPage('rules');
             setIsTransitioning(false);
           }, 800);
         } else {
-          setError(data.message || 'Invalid Team ID. Please check and try again.');
+          setError(data.message || 'Invalid Team ID or Email. Please check and try again.');
         }
       } catch {
         setError('Connection error. Please check your internet and try again.');
@@ -81,11 +101,11 @@ const QuizApp = () => {
 
         <div className={`text-center mb-8 sm:mb-12 transition-all duration-1000 ${titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-10'}`}>
           <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold mb-4 sm:mb-6">Join Quiz</h1>
-          <p className="text-green-400/80 text-base sm:text-lg px-4">Enter your Team ID to start the quiz</p>
+          <p className="text-green-400/80 text-base sm:text-lg px-4">Enter your Team ID and registered email to start the quiz</p>
         </div>
 
         <div className="max-w-2xl mx-auto px-4">
-          <div className="bg-transparent border-2 border-green-400/30 rounded-xl p-6 sm:p-8 hover:border-green-400/60 transition-all duration-300 hover:shadow-lg hover:shadow-green-400/20 cursor-default">
+          <div className="bg-transparent border-2 border-green-400/30 rounded-xl p-6 sm:p-8 hover:border-green-400/60 transition-all duration-300 hover:shadow-lg hover:shadow-green-400/20">
             <div className="space-y-6">
               <div className="space-y-2">
                 <label className="block text-white font-semibold text-base sm:text-lg">
@@ -95,21 +115,38 @@ const QuizApp = () => {
                   type="text"
                   value={inputTeamId}
                   onChange={(e) => { setInputTeamId(e.target.value); setError(''); }}
-                  onKeyPress={(e) => e.key === 'Enter' && inputTeamId.trim() && handleVerify()}
-                  className={`w-full bg-transparent border-2 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none transition-all cursor-text ${
+                  onKeyPress={(e) => e.key === 'Enter' && inputTeamId.trim() && inputEmail.trim() && handleVerify()}
+                  className={`w-full bg-transparent border-2 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none transition-all ${
                     error ? 'border-red-400/60' : 'border-green-400/30 focus:border-green-400/60 focus:shadow-lg focus:shadow-green-400/20'
                   }`}
                   placeholder="Enter your Team ID (e.g., TEAM001)"
                 />
-                {error && (
-                  <div className="flex items-center space-x-2 text-red-400 text-sm mt-2 animate-shake">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                    <span>{error}</span>
-                  </div>
-                )}
               </div>
+
+              <div className="space-y-2">
+                <label className="block text-white font-semibold text-base sm:text-lg">
+                  Registered Email <span className="text-red-400">*</span>
+                </label>
+                <input
+                  type="email"
+                  value={inputEmail}
+                  onChange={(e) => { setInputEmail(e.target.value); setError(''); }}
+                  onKeyPress={(e) => e.key === 'Enter' && inputTeamId.trim() && inputEmail.trim() && handleVerify()}
+                  className={`w-full bg-transparent border-2 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none transition-all ${
+                    error ? 'border-red-400/60' : 'border-green-400/30 focus:border-green-400/60 focus:shadow-lg focus:shadow-green-400/20'
+                  }`}
+                  placeholder="Enter your registered email"
+                />
+              </div>
+
+              {error && (
+                <div className="flex items-center space-x-2 text-red-400 text-sm animate-shake">
+                  <svg className="w-4 h-4 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                  </svg>
+                  <span>{error}</span>
+                </div>
+              )}
 
               <div className="bg-green-400/5 border border-green-400/20 rounded-lg p-4 hover:bg-green-400/10 transition-all duration-300">
                 <div className="flex items-start space-x-3">
@@ -120,6 +157,7 @@ const QuizApp = () => {
                     <p className="font-semibold text-green-400 mb-1">Important Information:</p>
                     <ul className="space-y-1 list-disc list-inside">
                       <li>Your Team ID was sent to the team leader's email</li>
+                      <li>Use the same email that received the Team ID</li>
                       <li>Check Spam/Promotions folder if not received</li>
                       <li>Each team can only attempt the quiz once</li>
                     </ul>
@@ -129,11 +167,11 @@ const QuizApp = () => {
 
               <button
                 onClick={handleVerify}
-                disabled={isLoading || !inputTeamId.trim()}
+                disabled={isLoading || !inputTeamId.trim() || !inputEmail.trim()}
                 className={`w-full border-2 font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-lg transition-all duration-300 ${
-                  isLoading || !inputTeamId.trim()
+                  isLoading || !inputTeamId.trim() || !inputEmail.trim()
                     ? 'opacity-50 cursor-not-allowed border-gray-500/30 text-gray-500' 
-                    : 'border-green-400/60 text-green-400 hover:scale-[1.02] hover:bg-green-400/10 hover:shadow-lg hover:shadow-green-400/30 cursor-pointer active:scale-95'
+                    : 'border-green-400/60 text-green-400 hover:scale-[1.02] hover:bg-green-400/10 hover:shadow-lg hover:shadow-green-400/30 active:scale-95'
                 }`}
               >
                 {isLoading ? 'Verifying...' : 'Join Quiz'}
@@ -172,7 +210,7 @@ const QuizApp = () => {
         const response = await fetch('https://omnitrix-backend-1.onrender.com/api/quiz/start', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ teamId })
+          body: JSON.stringify({ teamId, email })
         });
 
         const data = await response.json();
@@ -216,7 +254,7 @@ const QuizApp = () => {
         </div>
 
         <div className="max-w-3xl mx-auto px-4">
-          <div className="bg-transparent border-2 border-green-400/30 rounded-xl p-6 sm:p-8 space-y-6 hover:border-green-400/60 transition-all duration-300 cursor-default">
+          <div className="bg-transparent border-2 border-green-400/30 rounded-xl p-6 sm:p-8 space-y-6 hover:border-green-400/60 transition-all duration-300">
             <div className="bg-green-400/5 border border-green-400/20 rounded-lg p-4 sm:p-6 hover:bg-green-400/10 transition-all duration-300">
               <h2 className="text-xl sm:text-2xl font-bold text-green-400 mb-4">📋 Important Instructions</h2>
               <ul className="space-y-3 text-gray-300 text-sm sm:text-base">
@@ -265,7 +303,7 @@ const QuizApp = () => {
               className={`w-full border-2 font-bold py-3 sm:py-4 px-6 sm:px-8 rounded-lg transition-all duration-300 ${
                 isLoading
                   ? 'opacity-50 cursor-not-allowed border-gray-500/30 text-gray-500' 
-                  : 'border-green-400/60 text-green-400 hover:scale-[1.02] hover:bg-green-400/10 hover:shadow-lg hover:shadow-green-400/30 cursor-pointer active:scale-95'
+                  : 'border-green-400/60 text-green-400 hover:scale-[1.02] hover:bg-green-400/10 hover:shadow-lg hover:shadow-green-400/30 active:scale-95'
               }`}
             >
               {isLoading ? 'Loading...' : 'Start Quiz'}
@@ -280,24 +318,48 @@ const QuizApp = () => {
   const QuizQuestion = () => {
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [isAnimating, setIsAnimating] = useState(false);
+    const [animationKey, setAnimationKey] = useState(0);
     const currentQuestion = questions[currentQuestionIndex];
-
+    
     useEffect(() => {
-      setIsAnimating(true);
-      const timer = setTimeout(() => {
-        setIsAnimating(false);
-      }, 500); 
-      return () => clearTimeout(timer);
+      setAnimationKey(prev => prev + 1);
+      hasAutoProgressedRef.current = false;
+      setIsTimerActive(true);
     }, [currentQuestionIndex]);
 
     useEffect(() => {
-      if (isTimerActive && timeLeft > 0) {
-        const timer = setTimeout(() => setTimeLeft(timeLeft - 1), 1000);
-        return () => clearTimeout(timer);
-      } else if (timeLeft === 0 && isTimerActive) {
-        handleNext();
-      }
+      setIsAnimating(true);
+      const timer = setTimeout(() => setIsAnimating(false), 500);
+      return () => clearTimeout(timer);
+    }, [currentQuestionIndex]);
+
+    // Timer countdown
+    useEffect(() => {
+      if (!isTimerActive || timeLeft <= 0) return;
+
+      timerRef.current = setTimeout(() => {
+        setTimeLeft(prev => prev - 1);
+      }, 1000);
+
+      return () => {
+        if (timerRef.current) {
+          clearTimeout(timerRef.current);
+        }
+      };
     }, [timeLeft, isTimerActive]);
+
+    // Handle timer expiration
+    useEffect(() => {
+      if (timeLeft === 0 && isTimerActive && !hasAutoProgressedRef.current) {
+        hasAutoProgressedRef.current = true;
+        if (currentQuestionIndex < questions.length - 1) {
+          setCurrentQuestionIndex(currentQuestionIndex + 1);
+          setTimeLeft(30);
+        } else {
+          handleSubmit();
+        }
+      }
+    }, [timeLeft, isTimerActive, currentQuestionIndex, questions.length]);
 
     const handleOptionSelect = (option) => {
       const newResponses = [...responses];
@@ -305,12 +367,19 @@ const QuizApp = () => {
       setResponses(newResponses);
     };
 
-    const handleNext = async () => {
+    const handleNext = () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+      setIsTimerActive(false);
+
       if (currentQuestionIndex < questions.length - 1) {
         setCurrentQuestionIndex(currentQuestionIndex + 1);
         setTimeLeft(30);
+        hasAutoProgressedRef.current = false;
+        setTimeout(() => setIsTimerActive(true), 100);
       } else {
-        await handleSubmit();
+        handleSubmit();
       }
     };
 
@@ -318,11 +387,15 @@ const QuizApp = () => {
       setIsTimerActive(false);
       setIsSubmitting(true);
 
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+
       try {
         const response = await fetch('https://omnitrix-backend-1.onrender.com/api/quiz/submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ teamId, responses })
+          body: JSON.stringify({ teamId, email, responses })
         });
 
         const data = await response.json();
@@ -335,9 +408,11 @@ const QuizApp = () => {
           }, 800);
         } else {
           showCustomAlert(data.message || 'Error submitting quiz');
+          setIsTimerActive(true);
         }
       } catch {
         showCustomAlert('Connection error. Please try again.');
+        setIsTimerActive(true);
       } finally {
         setIsSubmitting(false);
       }
@@ -387,7 +462,7 @@ const QuizApp = () => {
                 <button
                   key={index}
                   onClick={() => handleOptionSelect(option)}
-                  className={`w-full text-left p-3 sm:p-4 rounded-lg border-2 transition-all duration-300 cursor-pointer hover:scale-[1.02] active:scale-95 ${
+                  className={`w-full text-left p-3 sm:p-4 rounded-lg border-2 transition-all duration-300 hover:scale-[1.02] active:scale-95 ${
                     currentResponse.selectedOption === option
                       ? 'border-green-400 bg-green-400/20 text-white shadow-lg shadow-green-400/30'
                       : 'border-green-400/30 hover:border-green-400/60 hover:bg-green-400/5'
@@ -408,7 +483,7 @@ const QuizApp = () => {
                 className={`w-full sm:w-auto border-2 font-bold py-3 px-6 sm:px-8 rounded-lg transition-all duration-300 ${
                   isSubmitting 
                     ? 'opacity-50 cursor-not-allowed border-gray-500/30 text-gray-500'
-                    : 'border-green-400/60 text-green-400 hover:bg-green-400/10 hover:scale-105 hover:shadow-lg hover:shadow-green-400/30 cursor-pointer active:scale-95'
+                    : 'border-green-400/60 text-green-400 hover:bg-green-400/10 hover:scale-105 hover:shadow-lg hover:shadow-green-400/30 active:scale-95'
                 }`}
               >
                 {isLastQuestion ? 'Submit Quiz' : 'Next Question →'}
@@ -498,7 +573,7 @@ const QuizApp = () => {
 
             <button
               onClick={() => window.location.href = '/'}
-              className="w-full sm:w-auto border-2 border-green-400/60 text-green-400 hover:bg-green-400/10 hover:scale-105 hover:shadow-lg hover:shadow-green-400/30 font-bold py-3 px-6 sm:px-8 rounded-lg transition-all duration-300 cursor-pointer active:scale-95"
+              className="w-full sm:w-auto border-2 border-green-400/60 text-green-400 hover:bg-green-400/10 hover:scale-105 hover:shadow-lg hover:shadow-green-400/30 font-bold py-3 px-6 sm:px-8 rounded-lg transition-all duration-300 active:scale-95"
             >
               Back to Home
             </button>
@@ -518,6 +593,15 @@ const QuizApp = () => {
     );
   };
 
+  // Cleanup timer on unmount
+  useEffect(() => {
+    return () => {
+      if (timerRef.current) {
+        clearTimeout(timerRef.current);
+      }
+    };
+  }, []);
+
   return (
     <>
       <style jsx global>{`
@@ -535,7 +619,6 @@ const QuizApp = () => {
         }
       `}</style>
       
-    
       {customAlert.show && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-[100] p-4">
           <div className="bg-transparent border-2 border-green-400/60 rounded-xl p-6 sm:p-8 max-w-md w-full animate-scale-in">
@@ -548,7 +631,7 @@ const QuizApp = () => {
               <p className="text-white text-center text-base sm:text-lg">{customAlert.message}</p>
               <button
                 onClick={closeCustomAlert}
-                className="w-full border-2 border-green-400/60 text-green-400 hover:bg-green-400/10 hover:scale-105 font-bold py-3 px-6 rounded-lg transition-all duration-300 cursor-pointer active:scale-95"
+                className="w-full border-2 border-green-400/60 text-green-400 hover:bg-green-400/10 hover:scale-105 font-bold py-3 px-6 rounded-lg transition-all duration-300 active:scale-95"
               >
                 OK
               </button>
