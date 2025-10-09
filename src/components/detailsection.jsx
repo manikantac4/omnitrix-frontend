@@ -60,7 +60,7 @@ const TrackIcon = () => (
 const RegisterButton = ({ isVisible }) => {
   const handleClick = () => {
     // Navigate to registration form - replace with your actual routing logic
-    window.location.href = '/quiz';
+    window.location.href = '/form';
   };
 
   return (
@@ -132,7 +132,7 @@ const RegisterButton = ({ isVisible }) => {
 
         {/* Button Text */}
         <span className="relative z-10 text-green-300 group-hover:text-white transition-colors duration-300 drop-shadow-[0_0_10px_rgba(34,197,94,0.8)]">
-          Join the Quiz
+          Register for Omnitrix
         </span>
       </button>
       <img 
