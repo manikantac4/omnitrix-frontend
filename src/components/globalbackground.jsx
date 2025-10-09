@@ -132,7 +132,7 @@ const GlobalBackground = () => {
               animationDelay: `${text.delay}s`,
             }}
           >
-            REGISTRATION ENDS: OCTOBER 9, 2025
+            
           </div>
         ))}
       </div>

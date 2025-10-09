@@ -236,7 +236,7 @@ const OmnitrixWebsite = () => {
           <div className="flex items-center justify-center text-center">
             <div className="flex items-center justify-center space-x-2 sm:space-x-4 text-xs sm:text-sm">
               <span className="text-green-400 font-semibold">📢 ANNOUNCEMENTS</span>
-              <span className="text-gray-300">Registration Open!</span>
+              <span className="text-gray-300">Registration Closed!</span>
               <span className="hidden sm:inline text-gray-400">•</span>
               <span className="text-gray-300 hidden sm:inline">Transform ideas into reality</span>
               <span className="text-gray-400">•</span>
