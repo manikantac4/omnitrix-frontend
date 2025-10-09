@@ -60,7 +60,7 @@ const TrackIcon = () => (
 const RegisterButton = ({ isVisible }) => {
   const handleClick = () => {
     // Navigate to registration form - replace with your actual routing logic
-    window.location.href = '/form';
+    window.location.href = '/quiz';
   };
 
   return (
