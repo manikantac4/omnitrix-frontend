@@ -14,6 +14,7 @@ import Hacktime from "./components/hacktime";
 // import Timer from "./timer";
 // import LoginComponent from "./login";
 import QuizApp from './components/QuizApp';
+import QuizCountdown from "./components/QuizCountdown";
 import AdminLeaderboard from './components/AdminLeaderboard';
 // Import other components as needed
 
@@ -58,8 +59,9 @@ function App() {
           <Route path="/hacktime" element={<Hacktime />} />
           {/* <Route path="/timer" element={<Timer />} /> */}
           {/* <Route path="/login" element={<LoginComponent />} /> */}
-          <Route path="/quiz" element={<QuizApp />} />
-        <Route path="/admin/leaderboard" element={<AdminLeaderboard />} />
+          {/* <Route path="/test" element={<QuizApp />} /> */}
+          <Route path="/quiz" element={<QuizCountdown/>}/>
+        {/* <Route path="/admin/leaderboard" element={<AdminLeaderboard />} /> */}
                   </Routes>
       </div>
     </Router>
