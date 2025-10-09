@@ -99,7 +99,7 @@ const Timeline = () => {
       title: "Registration Opens",
       eventDate: new Date('2025-09-25')
     },
-    {
+   {
       icon: (
         <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -107,7 +107,7 @@ const Timeline = () => {
       ),
       date: "9 Oct, 11:59 PM",
       title: "Registration Closes",
-      eventDate: new Date('2025-10-09T23:59:59')
+      eventDate: new Date('2025-10-09T00:00:00')
     },
     {
       icon: (

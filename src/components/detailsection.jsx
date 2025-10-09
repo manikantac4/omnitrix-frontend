@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Heat from "../assets/heat.png";
+import Heat from "../assets/heat1.png";
 
 // SVG Icons Components
 const ClockIcon = () => (
