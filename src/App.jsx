@@ -15,7 +15,7 @@ import Prize from "./components/prizes";
 import Hacktime from "./components/hacktime";
 import QuizApp from "./components/QuizApp";
 import AdminLeaderboard from "./components/AdminLeaderboard";
-
+import QuizCountdown from "./components/QuizCountdown";
 // ScrollToTop component - must be inside Router
 function ScrollToTop() {
   const location = useLocation();
@@ -55,10 +55,9 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/prize" element={<Prize />} />
           <Route path="/hacktime" element={<Hacktime />} />
-          <Route path="/quiz" element={<QuizApp />} />
+          <Route path="/quiz" element={<QuizCountdown />} />
           <Route path="/admin/leaderboard" element={<AdminLeaderboard />} />
-  
-          
+         <Route path="/test" element={<QuizApp/>}/>
           {/* Optional: 404 Fallback Route */}
           <Route path="*" element={<h1>404 - Page Not Found</h1>} />
         </Routes>
