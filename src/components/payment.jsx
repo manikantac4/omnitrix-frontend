@@ -21,9 +21,9 @@ const PaymentComponent = () => {
   const [formData, setFormData] = useState({
     teamId: '',
     teamLeaderName: '',
-   /* teamSize: '',
+    teamSize: '',
     teamMember2Name: '',
-    teamMember3Name: '',*/
+    teamMember3Name: '',
     couponCode: '',
     transactionId: '',
     screenshot: null
@@ -33,8 +33,6 @@ const PaymentComponent = () => {
     const titleTimer = setTimeout(() => setTitleVisible(true), 300);
     return () => clearTimeout(titleTimer);
   }, []);
-
-  //const teamSizes = ['2', '3'];
 
   const validateForm = () => {
     const errors = {};
@@ -182,6 +180,7 @@ const PaymentComponent = () => {
     }, 1000);
 
     // Original API call - commented out for now
+    /*
     try {
       const response = await fetch('https://omnitrix-backend-1.onrender.com/api/coupon/validate', {
         method: 'POST',
@@ -220,7 +219,7 @@ const PaymentComponent = () => {
     } finally {
       setCouponChecking(false);
     }
-    
+    */
   };
 
   const handleSubmit = async (e) => {
@@ -241,9 +240,17 @@ const PaymentComponent = () => {
     const paymentData = new FormData();
     paymentData.append('teamId', formData.teamId.trim());
     paymentData.append('teamLeaderName', formData.teamLeaderName.trim());
+    paymentData.append('teamSize', formData.teamSize);
     paymentData.append('transactionId', formData.transactionId.trim());
     paymentData.append('paymentAmount', paymentAmount);
     paymentData.append('couponApplied', couponApplied);
+    
+    if (parseInt(formData.teamSize) >= 2) {
+      paymentData.append('teamMember2Name', formData.teamMember2Name.trim());
+    }
+    if (parseInt(formData.teamSize) === 3) {
+      paymentData.append('teamMember3Name', formData.teamMember3Name.trim());
+    }
     if (couponApplied) {
       paymentData.append('couponCode', formData.couponCode.trim());
     }
@@ -271,6 +278,9 @@ const PaymentComponent = () => {
         setFormData({
           teamId: '',
           teamLeaderName: '',
+          teamSize: '',
+          teamMember2Name: '',
+          teamMember3Name: '',
           couponCode: '',
           transactionId: '',
           screenshot: null
@@ -280,6 +290,7 @@ const PaymentComponent = () => {
         setCouponApplied(false);
         setPaymentAmount(600);
         setValidationErrors({});
+        setHasIEEEACM('');
       } else {
         console.error('❌ Payment submission failed:', data.error);
         setMessageType('error');
@@ -313,12 +324,13 @@ const PaymentComponent = () => {
   const isFormValid = () => {
     const baseValid = formData.teamId.trim() &&
                       formData.teamLeaderName.trim() &&
+                      formData.teamSize &&
                       formData.transactionId.trim() &&
                       screenshot;
 
     if (!baseValid) return false;
 
-   if (parseInt(formData.teamSize) >= 2) {
+    if (parseInt(formData.teamSize) >= 2) {
       if (!formData.teamMember2Name.trim()) {
         return false;
       }
@@ -481,6 +493,87 @@ const PaymentComponent = () => {
                 <p className="text-red-400 text-sm mt-1">{validationErrors.teamLeaderName}</p>
               )}
             </div>
+
+            <div className="space-y-2">
+              <label className="block text-white font-semibold text-lg">
+                Team Size <span className="text-green-400">*</span>
+              </label>
+              <div className="flex space-x-4">
+                <button
+                  type="button"
+                  onClick={() => handleInputChange({ target: { name: 'teamSize', value: '2' } })}
+                  className={`flex-1 py-3 px-6 rounded-lg font-bold transition-all duration-300 ${
+                    formData.teamSize === '2'
+                      ? 'bg-green-400/20 border-2 border-green-400 text-green-400'
+                      : 'bg-transparent border-2 border-green-400/30 text-gray-400 hover:border-green-400/60 hover:text-green-400'
+                  }`}
+                >
+                  2 Members
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleInputChange({ target: { name: 'teamSize', value: '3' } })}
+                  className={`flex-1 py-3 px-6 rounded-lg font-bold transition-all duration-300 ${
+                    formData.teamSize === '3'
+                      ? 'bg-green-400/20 border-2 border-green-400 text-green-400'
+                      : 'bg-transparent border-2 border-green-400/30 text-gray-400 hover:border-green-400/60 hover:text-green-400'
+                  }`}
+                >
+                  3 Members
+                </button>
+              </div>
+              {validationErrors.teamSize && (
+                <p className="text-red-400 text-sm mt-1">{validationErrors.teamSize}</p>
+              )}
+            </div>
+
+            {formData.teamSize && parseInt(formData.teamSize) >= 2 && (
+              <div className="space-y-2 animate-fadeIn">
+                <label className="block text-white font-semibold text-lg">
+                  Team Member 2 Name <span className="text-green-400">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="teamMember2Name"
+                  value={formData.teamMember2Name}
+                  onChange={handleInputChange}
+                  required
+                  className={`w-full bg-transparent border-2 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none transition-all duration-300 ${
+                    validationErrors.teamMember2Name 
+                      ? 'border-red-400/60 focus:border-red-400' 
+                      : 'border-green-400/30 focus:border-green-400/60'
+                  }`}
+                  placeholder="Enter second team member's full name"
+                />
+                {validationErrors.teamMember2Name && (
+                  <p className="text-red-400 text-sm mt-1">{validationErrors.teamMember2Name}</p>
+                )}
+              </div>
+            )}
+
+            {formData.teamSize && parseInt(formData.teamSize) === 3 && (
+              <div className="space-y-2 animate-fadeIn">
+                <label className="block text-white font-semibold text-lg">
+                  Team Member 3 Name <span className="text-green-400">*</span>
+                </label>
+                <input
+                  type="text"
+                  name="teamMember3Name"
+                  value={formData.teamMember3Name}
+                  onChange={handleInputChange}
+                  required
+                  className={`w-full bg-transparent border-2 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none transition-all duration-300 ${
+                    validationErrors.teamMember3Name 
+                      ? 'border-red-400/60 focus:border-red-400' 
+                      : 'border-green-400/30 focus:border-green-400/60'
+                  }`}
+                  placeholder="Enter third team member's full name"
+                />
+                {validationErrors.teamMember3Name && (
+                  <p className="text-red-400 text-sm mt-1">{validationErrors.teamMember3Name}</p>
+                )}
+              </div>
+            )}
 
             {/* IEEE/ACM Membership Question */}
             <div className="bg-green-400/5 border-2 border-green-400/30 rounded-xl p-6">
