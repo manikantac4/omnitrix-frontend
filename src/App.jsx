@@ -5,7 +5,6 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from "react-route
 // Component imports
 import Hero from "./components/herosection";
 import GlobalBackground from "./components/globalbackground";
-import Form from "./components/Register";
 import Detail from "./components/detailsection";
 import FAQ from "./components/FAQ";
 import Theme from "./components/Themes";
@@ -16,6 +15,7 @@ import Hacktime from "./components/hacktime";
 import QuizApp from "./components/QuizApp";
 import AdminLeaderboard from "./components/AdminLeaderboard";
 import QuizCountdown from "./components/QuizCountdown";
+import Form from "./components/Register";
 // ScrollToTop component - must be inside Router
 function ScrollToTop() {
   const location = useLocation();
