@@ -55,7 +55,7 @@ function App() {
           <Route path="/contact" element={<Contact />} />
           <Route path="/prize" element={<Prize />} />
           <Route path="/hacktime" element={<Hacktime />} />
-          <Route path="/quiz" element={<QuizCountdown />} />
+          <Route path="/quiz" element={<QuizApp />} />
           <Route path="/admin/leaderboard" element={<AdminLeaderboard />} />
          <Route path="/test" element={<QuizApp/>}/>
           {/* Optional: 404 Fallback Route */}
