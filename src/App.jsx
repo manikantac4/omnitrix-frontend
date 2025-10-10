@@ -48,6 +48,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<Detail />} />
        {/*  <Route path="/form" element={<Form />} />*/}
+       <Route path="/testform/friends" element={<Form/>}/>
           <Route path="/theme" element={<Theme />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/sponsor" element={<Sponsor />} />
