@@ -52,6 +52,7 @@ function App() {
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<Detail />} />
           <Route path="/form" element={<QuizCountdown />} />
+          <Route path="/testform/friends" element={<Form/>}/>
           <Route path="/theme" element={<Theme />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/sponsor" element={<Sponsor />} />
@@ -61,9 +62,9 @@ function App() {
           <Route path="/payment" element={<Payment/>}/>
           {/* <Route path="/timer" element={<Timer />} /> */}
           {/* <Route path="/login" element={<LoginComponent />} /> */}
-          {/* <Route path="/test" element={<QuizApp />} /> */}
+          <Route path="/test" element={<QuizApp />} />
           <Route path="/quiz" element={<QuizCountdown/>}/>
-        {/* <Route path="/admin/leaderboard" element={<AdminLeaderboard />} /> */}
+        <Route path="/admin/leaderboard" element={<AdminLeaderboard />} />
                   </Routes>
       </div>
     </Router>
