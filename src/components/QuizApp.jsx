@@ -57,7 +57,7 @@ const QuizApp = () => {
       setError('');
 
       try {
-        const response = await fetch('https://omnitrix-backend-1.onrender.com/api/quiz/verifyTeam', {
+        const response = await fetch('https://omnitrix-backend-epg5.onrender.com/api/quiz/verifyTeam', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ 
@@ -207,7 +207,7 @@ const QuizApp = () => {
       setIsLoading(true);
 
       try {
-        const response = await fetch('https://omnitrix-backend-1.onrender.com/api/quiz/start', {
+        const response = await fetch('https://omnitrix-backend-epg5.onrender.com/api/quiz/start', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ teamId, email })
@@ -383,7 +383,7 @@ const QuizApp = () => {
       }
 
       try {
-        const response = await fetch('https://omnitrix-backend-1.onrender.com/api/quiz/submit', {
+        const response = await fetch('https://omnitrix-backend-epg5.onrender.com/api/quiz/submit', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ teamId, email, responses })

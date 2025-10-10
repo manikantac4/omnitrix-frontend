@@ -34,7 +34,7 @@ const AdminLeaderboard = () => {
   const fetchLeaderboard = async () => {
     setIsLoading(true);
     try {
-      const response = await fetch('https://omnitrix-backend-1.onrender.com/api/quiz/leaderboard');
+      const response = await fetch('https://omnitrix-backend-epg5.onrender.com/api/quiz/leaderboard');
       const data = await response.json();
       
       if (Array.isArray(data)) {
