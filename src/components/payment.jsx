@@ -49,7 +49,7 @@ const PaymentComponent = () => {
       errors.teamLeaderName = 'Name must be at least 2 characters';
     }
 
-   /* if (!formData.teamSize) {
+    if (!formData.teamSize) {
       errors.teamSize = 'Please select team size';
     }
 
@@ -67,7 +67,7 @@ const PaymentComponent = () => {
       } else if (formData.teamMember3Name.trim().length < 2) {
         errors.teamMember3Name = 'Name must be at least 2 characters';
       }
-    }*/
+    }
 
     if (!formData.transactionId.trim()) {
       errors.transactionId = 'Transaction ID is required';
@@ -86,7 +86,7 @@ const PaymentComponent = () => {
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     
-  /*  if (name === 'teamSize') {
+    if (name === 'teamSize') {
       setFormData(prev => ({
         ...prev,
         [name]: value,
@@ -99,7 +99,7 @@ const PaymentComponent = () => {
         return rest;
       });
       return;
-    }*/
+    }
 
     setFormData(prev => ({
       ...prev,
@@ -181,7 +181,7 @@ const PaymentComponent = () => {
       }
     }, 1000);
 
-    /* Original API call - commented out for now
+    // Original API call - commented out for now
     try {
       const response = await fetch('https://omnitrix-backend-1.onrender.com/api/coupon/validate', {
         method: 'POST',
@@ -220,7 +220,7 @@ const PaymentComponent = () => {
     } finally {
       setCouponChecking(false);
     }
-    */
+    
   };
 
   const handleSubmit = async (e) => {
@@ -318,7 +318,7 @@ const PaymentComponent = () => {
 
     if (!baseValid) return false;
 
-  /*  if (parseInt(formData.teamSize) >= 2) {
+   if (parseInt(formData.teamSize) >= 2) {
       if (!formData.teamMember2Name.trim()) {
         return false;
       }
@@ -328,7 +328,7 @@ const PaymentComponent = () => {
       if (!formData.teamMember3Name.trim()) {
         return false;
       }
-    }*/
+    }
 
     return true;
   };
