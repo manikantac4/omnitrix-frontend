@@ -15,6 +15,7 @@ import Hacktime from "./components/hacktime";
 import QuizApp from "./components/QuizApp";
 import AdminLeaderboard from "./components/AdminLeaderboard";
 import QuizCountdown from "./components/QuizCountdown";
+import Form from "./components/Register";
 // ScrollToTop component - must be inside Router
 function ScrollToTop() {
   const location = useLocation();
