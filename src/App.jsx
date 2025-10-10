@@ -1,7 +1,9 @@
 // App.jsx
 import React, { useEffect } from "react";
 import { BrowserRouter as Router, Routes, Route, useLocation } from "react-router-dom";
-import Hero from "./components/herosection"
+
+// Component imports
+import Hero from "./components/herosection";
 import GlobalBackground from "./components/globalbackground";
 import Form from "./components/Register";
 import Detail from "./components/detailsection";
@@ -11,28 +13,22 @@ import Sponsor from "./components/sponser";
 import Contact from "./components/contact";
 import Prize from "./components/prizes";
 import Hacktime from "./components/hacktime";
-// import Timer from "./timer";
-// import LoginComponent from "./login";
-import QuizApp from './components/QuizApp';
-import QuizCountdown from "./components/QuizCountdown";
-import AdminLeaderboard from './components/AdminLeaderboard';
-import Payment from "./components/payment";
-// Import other components as needed
+import QuizApp from "./components/QuizApp";
+import AdminLeaderboard from "./components/AdminLeaderboard";
 
 // ScrollToTop component - must be inside Router
 function ScrollToTop() {
   const location = useLocation();
 
   useEffect(() => {
-    // Scroll to top on route change and page refresh
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   }, [location.pathname]);
 
   return null;
 }
 
 function App() {
-  // Additional scroll to top on initial app load
+  // Scroll to top on first load
   useEffect(() => {
     window.scrollTo(0, 0);
   }, []);
@@ -51,21 +47,20 @@ function App() {
         <Routes>
           <Route path="/" element={<HomePage />} />
           <Route path="/about" element={<Detail />} />
-          <Route path="/form" element={<QuizCountdown />} />
-          <Route path="/testform/friends" element={<Form/>}/>
+       {/*  <Route path="/form" element={<Form />} />*/}
           <Route path="/theme" element={<Theme />} />
           <Route path="/faq" element={<FAQ />} />
           <Route path="/sponsor" element={<Sponsor />} />
           <Route path="/contact" element={<Contact />} />
           <Route path="/prize" element={<Prize />} />
           <Route path="/hacktime" element={<Hacktime />} />
-          <Route path="/payment" element={<Payment/>}/>
-          {/* <Route path="/timer" element={<Timer />} /> */}
-          {/* <Route path="/login" element={<LoginComponent />} /> */}
-          <Route path="/test" element={<QuizApp />} />
-          <Route path="/quiz" element={<QuizCountdown/>}/>
-        <Route path="/admin/leaderboard" element={<AdminLeaderboard />} />
-                  </Routes>
+          <Route path="/quiz" element={<QuizApp />} />
+          <Route path="/admin/leaderboard" element={<AdminLeaderboard />} />
+  
+          
+          {/* Optional: 404 Fallback Route */}
+          <Route path="*" element={<h1>404 - Page Not Found</h1>} />
+        </Routes>
       </div>
     </Router>
   );
