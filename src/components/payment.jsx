@@ -26,7 +26,7 @@ export default function PaymentVerificationForm() {
 
   const [submissionResult, setSubmissionResult] = useState(null);
 
-  const API_BASE = 'http://localhost:5000/api/payment';
+  const API_BASE = 'https://omnitrix-backend-epg5.onrender.com/api/payment';
 
   // UPI Details
   const upiId = "9398742067@axl";
