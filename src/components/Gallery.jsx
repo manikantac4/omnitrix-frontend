@@ -6,7 +6,7 @@ import alien4 from '../assets/bharath.jpg';
 import alien5 from '../assets/pavan.jpg';
 import alien6 from '../assets/anand.jpg';
 import alien7 from '../assets/ratna.jpg';
-import alien8 from '../assets/praveen.jpg';
+import alien8 from '../assets/praveen..webp';
 import alien9 from '../assets/yagnesh.jpg'
 // import alien6 from '../assets/alien6.jpg';
 // import alien7 from '../assets/alien7.jpg';
@@ -48,38 +48,35 @@ const Gallery = () => {
   }, []);
 
   return (
-    <div className="min-h-screen bg-transparent py-12 px-4 sm:px-6 lg:px-8">
+    <div className="min-h-screen bg-transparent py-8 px-3 sm:px-4 lg:px-6">
       {/* Header */}
-      <div className="text-center mb-12 animate-fadeIn">
+      <div className="text-center mb-8 animate-fadeIn">
         <h1 
-          className="text-4xl sm:text-5xl md:text-6xl font-bold mb-4 bg-gradient-to-r from-green-400 via-emerald-400 to-teal-400 bg-clip-text text-transparent"
+          className="text-3xl sm:text-4xl md:text-5xl font-bold mb-3 bg-gradient-to-r from-green-400 via-emerald-400 to-teal-400 bg-clip-text text-transparent"
           style={{ fontFamily: '"Orbitron", monospace' }}
         >
           OMNITRIX 2025
         </h1>
-        <div className="h-1 w-32 mx-auto bg-gradient-to-r from-transparent via-green-400 to-transparent mb-6"></div>
-        <p className="text-lg md:text-xl text-gray-300">
+        <div className="h-1 w-24 mx-auto bg-gradient-to-r from-transparent via-green-400 to-transparent mb-4"></div>
+        <p className="text-base md:text-lg text-gray-300">
           Event Gallery & Memories
         </p>
       </div>
 
       {/* Gallery Grid - Masonry Layout */}
-      <div className="max-w-7xl mx-auto">
-        <div className="columns-1 sm:columns-2 lg:columns-3 gap-3">
+      <div className="max-w-6xl mx-auto">
+        <div className="columns-1 sm:columns-2 lg:columns-3 gap-2">
           {images.map((image, index) => (
             <div
               key={index}
-              className={`group relative transition-all duration-700 break-inside-avoid mb-3 ${
+              className={`group relative transition-all duration-700 break-inside-avoid mb-2 ${
                 loadedImages.has(index)
                   ? 'opacity-100 translate-y-0'
                   : 'opacity-0 translate-y-10'
               }`}
             >
               {/* Card Container */}
-              <div className="relative overflow-hidden rounded-2xl backdrop-blur-xl bg-slate-900/40 border border-green-400/30 shadow-lg transition-all duration-500 hover:scale-105 hover:border-green-400/60 hover:shadow-2xl hover:shadow-green-400/20">
-                {/* Glow effect on hover */}
-                <div className="absolute inset-0 bg-gradient-to-r from-green-400/10 to-emerald-400/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
-                
+              <div className="relative overflow-hidden rounded-xl backdrop-blur-xl bg-slate-900/40 border border-green-400/30 shadow-lg">
                 {/* Image */}
                 <div className="relative overflow-hidden">
                   <img
@@ -102,19 +99,6 @@ const Gallery = () => {
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" />
                     </svg>
                   </div>
-                </div>
-
-                {/* Image number badge */}
-                <div className="absolute top-3 right-3 bg-green-500/90 backdrop-blur-sm text-white text-xs font-bold px-3 py-1.5 rounded-full shadow-lg flex items-center gap-1.5">
-                  <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M4 3a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V5a2 2 0 00-2-2H4zm12 12H4l4-8 3 6 2-4 3 6z" clipRule="evenodd" />
-                  </svg>
-                  {index + 1}
-                </div>
-
-                {/* Animated border shimmer */}
-                <div className="absolute inset-0 rounded-2xl overflow-hidden pointer-events-none">
-                  <div className="absolute inset-[-2px] bg-gradient-to-r from-green-400/0 via-green-400/50 to-green-400/0 opacity-0 group-hover:opacity-100 transition-opacity duration-500" style={{ animation: 'shimmer 2s infinite' }}></div>
                 </div>
               </div>
             </div>
