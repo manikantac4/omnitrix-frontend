@@ -12,13 +12,12 @@ const Timeline = () => {
 
   // Update current date/time from server (simulated here)
   useEffect(() => {
-    // Fetch actual server time - replace with your backend endpoint if needed
     const updateCurrentTime = () => {
       setCurrentDate(new Date());
     };
 
     updateCurrentTime();
-    const interval = setInterval(updateCurrentTime, 1000); // Update every second
+    const interval = setInterval(updateCurrentTime, 1000);
 
     return () => clearInterval(interval);
   }, []);
@@ -99,7 +98,7 @@ const Timeline = () => {
       title: "Registration Opens",
       eventDate: new Date('2025-09-25')
     },
-   {
+    {
       icon: (
         <svg className="w-4 h-4 sm:w-5 sm:h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -107,7 +106,7 @@ const Timeline = () => {
       ),
       date: "9 Oct, 11:59 PM",
       title: "Registration Closes",
-      eventDate: new Date('2025-10-09T00:00:00')
+      eventDate: new Date('2025-10-09T23:59:59')
     },
     {
       icon: (
@@ -117,7 +116,7 @@ const Timeline = () => {
       ),
       date: "10 Oct 7:00 PM",
       title: "Shortlisting Round",
-      eventDate: new Date('2025-10-11T18:00:00')
+      eventDate: new Date('2025-10-10T19:00:00')
     },
     {
       icon: (
@@ -127,7 +126,8 @@ const Timeline = () => {
       ),
       date: "11 Oct, 8:00 AM",
       title: "Results of Shortlisting",
-      eventDate: new Date('2025-10-12T09:00:00')
+      eventDate: new Date('2025-10-11T08:00:00'),
+      alwaysGreen: true
     },
     {
       icon: (
@@ -137,7 +137,8 @@ const Timeline = () => {
       ),
       date: "11 Oct, 8:00 AM",
       title: "Payment Opens for Selected Teams",
-      eventDate: new Date('2025-10-12T09:00:00')
+      eventDate: new Date('2025-10-11T08:00:00'),
+      alwaysGreen: true
     },
     {
       icon: (
@@ -147,7 +148,8 @@ const Timeline = () => {
       ),
       date: "13 Oct, 11:59 PM",
       title: "Payment Closes",
-      eventDate: new Date('2025-10-13T23:59:59')
+      eventDate: new Date('2025-10-13T23:59:59'),
+      alwaysGreen: true
     },
     {
       icon: (
@@ -157,7 +159,8 @@ const Timeline = () => {
       ),
       date: "17 Oct, 11:00 AM",
       title: "Hackathon Starts",
-      eventDate: new Date('2025-10-17T11:00:00')
+      eventDate: new Date('2025-10-17T11:00:00'),
+      alwaysGreen: true
     },
     {
       icon: (
@@ -167,11 +170,13 @@ const Timeline = () => {
       ),
       date: "18 Oct, 11:00 AM",
       title: "Hackathon Ends",
-      eventDate: new Date('2025-10-18T11:00:00')
+      eventDate: new Date('2025-10-18T11:00:00'),
+      alwaysGreen: true
     }
   ];
 
-  const isCompleted = (eventDate) => {
+  const isCompleted = (eventDate, alwaysGreen) => {
+    if (alwaysGreen) return false;
     return eventDate <= currentDate;
   };
 
@@ -253,8 +258,7 @@ const Timeline = () => {
           {/* Timeline Events */}
           <div className="space-y-6 sm:space-y-8">
             {events.map((event, index) => {
-              const completed = isCompleted(event.eventDate);
-              // Removed unused colorScheme variable
+              const completed = isCompleted(event.eventDate, event.alwaysGreen);
 
               return (
                 <div key={index} className="relative">
@@ -288,7 +292,6 @@ const Timeline = () => {
                         <svg className="w-3 h-3" fill="currentColor" viewBox="0 0 20 20">
                           <path fillRule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clipRule="evenodd" />
                         </svg>
-                        <span></span>
                       </div>
                     )}
                     
