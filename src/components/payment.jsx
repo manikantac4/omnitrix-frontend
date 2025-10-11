@@ -1,114 +1,101 @@
-import React, { useState, useEffect } from 'react';
-import { Upload, Check, X } from 'lucide-react';
-import omnitrix from '../assets/omnitrix.png';
-import payment1 from '../assets/payment1.jpg';
-import payment2 from '../assets/payment2.jpg';
+import { useState } from 'react';
+import { CheckCircle, XCircle, Upload, Loader2, AlertCircle } from 'lucide-react';
+import QRCode from 'react-qr-code';
 
-const PaymentComponent = () => {
-  const [titleVisible, setTitleVisible] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
-  const [showMessage, setShowMessage] = useState(false);
-  const [messageType, setMessageType] = useState('success');
-  const [messageContent, setMessageContent] = useState('');
-  const [validationErrors, setValidationErrors] = useState({});
-  const [couponApplied, setCouponApplied] = useState(false);
-  const [couponChecking, setCouponChecking] = useState(false);
-  const [paymentAmount, setPaymentAmount] = useState(600);
-  const [screenshot, setScreenshot] = useState(null);
-  const [screenshotPreview, setScreenshotPreview] = useState(null);
+export default function PaymentVerificationForm() {
+  const [step, setStep] = useState(1);
+  const [teamId, setTeamId] = useState('');
+  const [couponCode, setCouponCode] = useState('');
+  const [isVerifying, setIsVerifying] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [verificationStatus, setVerificationStatus] = useState(null);
+  const [couponStatus, setCouponStatus] = useState(null);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [previewUrl, setPreviewUrl] = useState(null);
+  const [titleVisible, setTitleVisible] = useState(true);
   const [hasIEEEACM, setHasIEEEACM] = useState('');
   
   const [formData, setFormData] = useState({
-    teamId: '',
+    teamName: '',
     teamLeaderName: '',
     teamSize: '',
-    teamMember2Name: '',
-    teamMember3Name: '',
-    couponCode: '',
-    transactionId: '',
-    screenshot: null
+    teammate1: '',
+    teammate2: '',
+    UTR_ID: ''
   });
 
-  useEffect(() => {
-    const titleTimer = setTimeout(() => setTitleVisible(true), 300);
-    return () => clearTimeout(titleTimer);
-  }, []);
+  const [submissionResult, setSubmissionResult] = useState(null);
 
-  const validateForm = () => {
-    const errors = {};
+  const API_BASE = 'http://localhost:5000/api/payment';
 
-    if (!formData.teamId.trim()) {
-      errors.teamId = 'Team ID is required';
-    }
+  // UPI Details
+  const upiId = "9398742067@axl";
+  const payeeName = "Omnitrix Hackathon";
+  const currency = "INR";
+  const paymentAmount = hasIEEEACM === 'yes' ? 1 : 2;
+  
+  // Generate dynamic UPI link
+  const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${paymentAmount}&cu=${currency}`;
 
-    if (!formData.teamLeaderName.trim()) {
-      errors.teamLeaderName = 'Team leader name is required';
-    } else if (formData.teamLeaderName.trim().length < 2) {
-      errors.teamLeaderName = 'Name must be at least 2 characters';
-    }
-
-    if (!formData.teamSize) {
-      errors.teamSize = 'Please select team size';
-    }
-
-    if (formData.teamSize && parseInt(formData.teamSize) >= 2) {
-      if (!formData.teamMember2Name.trim()) {
-        errors.teamMember2Name = 'Second team member name is required';
-      } else if (formData.teamMember2Name.trim().length < 2) {
-        errors.teamMember2Name = 'Name must be at least 2 characters';
-      }
-    }
-
-    if (formData.teamSize && parseInt(formData.teamSize) === 3) {
-      if (!formData.teamMember3Name.trim()) {
-        errors.teamMember3Name = 'Third team member name is required';
-      } else if (formData.teamMember3Name.trim().length < 2) {
-        errors.teamMember3Name = 'Name must be at least 2 characters';
-      }
-    }
-
-    if (!formData.transactionId.trim()) {
-      errors.transactionId = 'Transaction ID is required';
-    } else if (formData.transactionId.trim().length < 6) {
-      errors.transactionId = 'Please enter a valid transaction ID';
-    }
-
-    if (!screenshot) {
-      errors.screenshot = 'Payment screenshot is required';
-    }
-
-    setValidationErrors(errors);
-    return Object.keys(errors).length === 0;
-  };
-
-  const handleInputChange = (e) => {
-    const { name, value } = e.target;
-    
-    if (name === 'teamSize') {
-      setFormData(prev => ({
-        ...prev,
-        [name]: value,
-        teamMember2Name: '',
-        teamMember3Name: ''
-      }));
-      
-      setValidationErrors(prevErrors => {
-        const { teamMember2Name, teamMember3Name, ...rest } = prevErrors;
-        return rest;
-      });
+  const handleVerifyTeam = async () => {
+    if (!teamId.trim()) {
+      setVerificationStatus({ success: false, message: 'Please enter a Team ID' });
       return;
     }
 
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
+    setIsVerifying(true);
+    setVerificationStatus(null);
 
-    if (validationErrors[name]) {
-      setValidationErrors(prev => ({
-        ...prev,
-        [name]: ''
-      }));
+    try {
+      const response = await fetch(`${API_BASE}/verify-shortlist`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ teamId })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setVerificationStatus({ success: true, message: data.message });
+        setTimeout(() => setStep(2), 1500);
+      } else {
+        setVerificationStatus({ success: false, message: data.message });
+      }
+    } catch (error) {
+      setVerificationStatus({ success: false, message: 'Error connecting to server' });
+    } finally {
+      setIsVerifying(false);
+    }
+  };
+
+  const handleVerifyCoupon = async () => {
+    if (!couponCode.trim()) {
+      setCouponStatus({ success: false, message: 'Please enter a Coupon Code' });
+      return;
+    }
+
+    setIsVerifying(true);
+    setCouponStatus(null);
+
+    try {
+      const response = await fetch(`${API_BASE}/verify-coupon`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ teamId, code: couponCode })
+      });
+
+      const data = await response.json();
+
+      if (data.success) {
+        setCouponStatus({ success: true, message: data.message });
+        setTimeout(() => setStep(3), 1500);
+      } else {
+        setCouponStatus({ success: false, message: data.message });
+      }
+    } catch (error) {
+      setCouponStatus({ success: false, message: 'Error verifying coupon' });
+    } finally {
+      setIsVerifying(false);
     }
   };
 
@@ -116,663 +103,485 @@ const PaymentComponent = () => {
     const file = e.target.files[0];
     if (file) {
       if (file.size > 5 * 1024 * 1024) {
-        setValidationErrors(prev => ({
-          ...prev,
-          screenshot: 'File size should be less than 5MB'
-        }));
+        alert('File size should be less than 5MB');
         return;
       }
-
       if (!file.type.startsWith('image/')) {
-        setValidationErrors(prev => ({
-          ...prev,
-          screenshot: 'Please upload an image file'
-        }));
+        alert('Please upload an image file');
         return;
       }
-
-      setScreenshot(file);
-      setScreenshotPreview(URL.createObjectURL(file));
-      
-      if (validationErrors.screenshot) {
-        setValidationErrors(prev => ({
-          ...prev,
-          screenshot: ''
-        }));
-      }
+      setSelectedFile(file);
+      setPreviewUrl(URL.createObjectURL(file));
     }
   };
 
-  const handleApplyCoupon = async () => {
-    if (!formData.couponCode.trim()) {
-      setValidationErrors(prev => ({
-        ...prev,
-        couponCode: 'Please enter a coupon code'
-      }));
+  const handleSubmitPayment = async () => {
+    if (!formData.teamName || !formData.teamLeaderName || !formData.teamSize || !formData.teammate1 || !formData.UTR_ID) {
+      alert('Please fill all required fields');
       return;
     }
 
-    setCouponChecking(true);
+    if (!selectedFile) {
+      alert('Please upload a payment screenshot');
+      return;
+    }
 
-    // Hardcoded valid coupons for testing
-    const validCoupons = ['IEEE2025', 'ACM2025', 'OMNITRIX100', 'MEMBER2025', 'HACKATHON25'];
-    const enteredCoupon = formData.couponCode.trim().toUpperCase();
+    setIsSubmitting(true);
 
-    // Simulate API delay
-    setTimeout(() => {
-      if (validCoupons.includes(enteredCoupon)) {
-        setCouponApplied(true);
-        setPaymentAmount(500);
-        setMessageType('success');
-        setMessageContent({
-          title: 'Coupon Applied Successfully!',
-          description: 'IEEE/ACM member discount applied! Your payment amount is now ₹500.'
-        });
-        setShowMessage(true);
-        setCouponChecking(false);
-      } else {
-        setValidationErrors(prev => ({
-          ...prev,
-          couponCode: 'Invalid or already used coupon code'
-        }));
-        setCouponChecking(false);
-      }
-    }, 1000);
-
-    // Original API call - commented out for now
-    /*
     try {
-      const response = await fetch('https://omnitrix-backend-1.onrender.com/api/coupon/validate', {
+      const formDataToSend = new FormData();
+      formDataToSend.append('teamId', teamId);
+      formDataToSend.append('teamName', formData.teamName);
+      formDataToSend.append('teamLeaderName', formData.teamLeaderName);
+      formDataToSend.append('teamSize', formData.teamSize);
+      formDataToSend.append('teammate1', formData.teammate1);
+      formDataToSend.append('teammate2', formData.teammate2);
+      formDataToSend.append('UTR_ID', formData.UTR_ID);
+      formDataToSend.append('paymentScreenshot', selectedFile);
+
+      const response = await fetch(`${API_BASE}/submit-payment`, {
         method: 'POST',
-        headers: {
-          'Content-Type': 'application/json'
-        },
-        body: JSON.stringify({
-          couponCode: formData.couponCode.trim(),
-          teamId: formData.teamId.trim()
-        })
+        body: formDataToSend
       });
 
       const data = await response.json();
 
       if (data.success) {
-        setCouponApplied(true);
-        setPaymentAmount(500);
-        setMessageType('success');
-        setMessageContent({
-          title: 'Coupon Applied Successfully!',
-          description: '🎉 IEEE/ACM member discount applied! Your payment amount is now ₹500.'
+        setSubmissionResult({
+          success: true,
+          newTeamId: data.newTeamId,
+          paymentScreenshot: data.paymentScreenshot
         });
-        setShowMessage(true);
+        setStep(4);
       } else {
-        setValidationErrors(prev => ({
-          ...prev,
-          couponCode: data.message || 'Invalid or already used coupon code'
-        }));
+        alert(data.error || 'Submission failed');
       }
-    } catch (err) {
-      console.error('Error validating coupon:', err);
-      setValidationErrors(prev => ({
-        ...prev,
-        couponCode: 'Error validating coupon. Please try again.'
-      }));
+    } catch (error) {
+      alert('Error submitting payment: ' + error.message);
     } finally {
-      setCouponChecking(false);
-    }
-    */
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    
-    if (!validateForm()) {
-      setMessageType('error');
-      setMessageContent({
-        title: 'Validation Error',
-        description: 'Please fill in all required fields correctly before submitting.'
-      });
-      setShowMessage(true);
-      return;
-    }
-
-    setIsLoading(true);
-
-    const paymentData = new FormData();
-    paymentData.append('teamId', formData.teamId.trim());
-    paymentData.append('teamLeaderName', formData.teamLeaderName.trim());
-    paymentData.append('teamSize', formData.teamSize);
-    paymentData.append('transactionId', formData.transactionId.trim());
-    paymentData.append('paymentAmount', paymentAmount);
-    paymentData.append('couponApplied', couponApplied);
-    
-    if (parseInt(formData.teamSize) >= 2) {
-      paymentData.append('teamMember2Name', formData.teamMember2Name.trim());
-    }
-    if (parseInt(formData.teamSize) === 3) {
-      paymentData.append('teamMember3Name', formData.teamMember3Name.trim());
-    }
-    if (couponApplied) {
-      paymentData.append('couponCode', formData.couponCode.trim());
-    }
-    paymentData.append('screenshot', screenshot);
-
-    console.log('Submitting payment data...');
-
-    try {
-      const response = await fetch('https://omnitrix-backend-1.onrender.com/api/payment/submit', {
-        method: 'POST',
-        body: paymentData
-      });
-
-      const data = await response.json();
-
-      if (data.success) {
-        console.log('✅ Payment submitted successfully:', data);
-        setMessageType('success');
-        setMessageContent({
-          title: 'Payment Submitted Successfully!',
-          description: 'Hey Alien 👽, your payment has been submitted! You will receive a confirmation email shortly. Check your Spam/Promotions folder if you don\'t see it.'
-        });
-        setShowMessage(true);
-        
-        setFormData({
-          teamId: '',
-          teamLeaderName: '',
-          teamSize: '',
-          teamMember2Name: '',
-          teamMember3Name: '',
-          couponCode: '',
-          transactionId: '',
-          screenshot: null
-        });
-        setScreenshot(null);
-        setScreenshotPreview(null);
-        setCouponApplied(false);
-        setPaymentAmount(600);
-        setValidationErrors({});
-        setHasIEEEACM('');
-      } else {
-        console.error('❌ Payment submission failed:', data.error);
-        setMessageType('error');
-        setMessageContent({
-          title: 'Submission Failed',
-          description: data.message || 'Please check your information and try again.'
-        });
-        setShowMessage(true);
-      }
-    } catch (err) {
-      console.error('❌ Error submitting payment:', err);
-      setMessageType('error');
-      setMessageContent({
-        title: 'Connection Error',
-        description: 'Please check your internet connection and try again later.'
-      });
-      setShowMessage(true);
-    } finally {
-      setIsLoading(false);
+      setIsSubmitting(false);
     }
   };
 
   const handleBackClick = () => {
-    window.location.href = '/';
-  };
-
-  const closeMessage = () => {
-    setShowMessage(false);
-  };
-
-  const isFormValid = () => {
-    const baseValid = formData.teamId.trim() &&
-                      formData.teamLeaderName.trim() &&
-                      formData.teamSize &&
-                      formData.transactionId.trim() &&
-                      screenshot;
-
-    if (!baseValid) return false;
-
-    if (parseInt(formData.teamSize) >= 2) {
-      if (!formData.teamMember2Name.trim()) {
-        return false;
-      }
+    if (step > 1) {
+      setStep(step - 1);
     }
-
-    if (parseInt(formData.teamSize) === 3) {
-      if (!formData.teamMember3Name.trim()) {
-        return false;
-      }
-    }
-
-    return true;
   };
-
-  const Ben10Loading = () => (
-    <div className="flex flex-col items-center justify-center space-y-6">
-      <div className="relative">
-        <img 
-          src={omnitrix}
-          alt="Ben 10 Omnitrix Watch" 
-          className="w-24 h-24 object-contain animate-spin"
-          style={{ animationDuration: '2s' }}
-        />
-        <div className="absolute inset-0 rounded-full border-2 border-green-400/50 animate-ping"></div>
-        <div className="absolute inset-2 rounded-full border border-green-300/30 animate-pulse"></div>
-      </div>
-      
-      <div className="text-green-400 font-semibold animate-pulse text-lg">
-        Processing Payment...
-      </div>
-      
-      <div className="text-green-300/60 text-sm">
-        Activating Omnitrix...
-      </div>
-      
-      <div className="flex space-x-2">
-        <div className="w-2 h-2 bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '0ms' }}></div>
-        <div className="w-2 h-2 bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '150ms' }}></div>
-        <div className="w-2 h-2 bg-green-400 rounded-full animate-bounce" style={{ animationDelay: '300ms' }}></div>
-      </div>
-    </div>
-  );
 
   return (
     <div className="min-h-screen bg-transparent text-white p-4 sm:p-8">
-      {isLoading && (
+      {isSubmitting && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="bg-transparent border-2 border-green-400/60 rounded-xl p-8 shadow-2xl shadow-green-400/20">
-            <Ben10Loading />
-          </div>
-        </div>
-      )}
-
-      {showMessage && (
-        <div className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className={`bg-transparent border-2 rounded-xl p-8 shadow-2xl max-w-md w-full ${
-            messageType === 'success' 
-              ? 'border-green-400/60 shadow-green-400/20' 
-              : 'border-red-400/60 shadow-red-400/20'
-          }`}>
-            <div className="text-center space-y-4">
-              <div className={`w-16 h-16 mx-auto rounded-full flex items-center justify-center ${
-                messageType === 'success' ? 'bg-green-400/20' : 'bg-red-400/20'
-              }`}>
-                {messageType === 'success' ? (
-                  <Check className="w-8 h-8 text-green-400" />
-                ) : (
-                  <X className="w-8 h-8 text-red-400" />
-                )}
-              </div>
-
-              <h3 className={`text-2xl font-bold ${
-                messageType === 'success' ? 'text-green-400' : 'text-red-400'
-              }`}>
-                {messageContent.title}
-              </h3>
-
-              <p className="text-gray-300 text-lg leading-relaxed">
-                {messageContent.description}
-              </p>
-
-              <button
-                onClick={closeMessage}
-                className={`w-full font-bold py-3 px-6 rounded-lg transition-all duration-300 transform hover:scale-[1.02] ${
-                  messageType === 'success' 
-                    ? 'bg-transparent border-2 border-green-400/60 text-green-400 hover:bg-green-400/10 hover:border-green-400 hover:text-green-300 shadow-lg hover:shadow-green-400/30' 
-                    : 'bg-transparent border-2 border-red-400/60 text-red-400 hover:bg-red-400/10 hover:border-red-400 hover:text-red-300 shadow-lg hover:shadow-red-400/30'
-                }`}
-              >
-                Close
-              </button>
+            <div className="flex flex-col items-center space-y-4">
+              <Loader2 className="w-16 h-16 text-green-400 animate-spin" />
+              <p className="text-green-400 font-semibold text-lg">Processing Payment...</p>
+              <p className="text-green-300/60 text-sm">Please wait...</p>
             </div>
           </div>
         </div>
       )}
 
-      <div className="mb-8">
-        <button
-          onClick={handleBackClick}
-          className="flex items-center space-x-2 bg-transparent border-2 border-green-400/30 text-green-400 hover:border-green-400/60 hover:text-green-300 transition-all duration-300 px-4 py-2 rounded-lg cursor-pointer"
-        >
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
-          <span className="font-medium">Back to Home</span>
-        </button>
-      </div>
+      {step > 1 && (
+        <div className="mb-8">
+          <button
+            onClick={handleBackClick}
+            className="flex items-center space-x-2 bg-transparent border-2 border-green-400/30 text-green-400 hover:border-green-400/60 hover:text-green-300 transition-all duration-300 px-4 py-2 rounded-lg"
+          >
+            <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+            </svg>
+            <span className="font-medium">Back</span>
+          </button>
+        </div>
+      )}
 
       <div className={`text-center mb-8 transition-all duration-1000 ${
         titleVisible ? 'opacity-100 translate-y-0' : 'opacity-0 -translate-y-8'
       }`}>
-        <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6">Payment for Omnitrix</h1>
-        <p className="text-green-400/80 text-lg">Complete your payment for Omnitrix Hackathon 2025</p>
+        <h1 className="text-4xl sm:text-5xl font-bold text-white mb-6">Payment Verification</h1>
+        <p className="text-green-400/80 text-lg">Complete verification to proceed with payment</p>
       </div>
 
-      <div className="max-w-4xl mx-auto">
-        <div className="bg-transparent border-2 border-green-400/30 rounded-xl p-8 hover:border-green-400/60 hover:shadow-lg hover:shadow-green-400/20 transition-all duration-300">
-          <div className="space-y-8">
-            
-            <div className="space-y-2">
-              <label className="block text-white font-semibold text-lg">
-                Team ID <span className="text-green-400">*</span>
-              </label>
-              <input
-                type="text"
-                name="teamId"
-                value={formData.teamId}
-                onChange={handleInputChange}
-                required
-                className={`w-full bg-transparent border-2 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none transition-all duration-300 ${
-                  validationErrors.teamId 
-                    ? 'border-red-400/60 focus:border-red-400' 
-                    : 'border-green-400/30 focus:border-green-400/60'
-                }`}
-                placeholder="Enter your team ID"
-              />
-              {validationErrors.teamId && (
-                <p className="text-red-400 text-sm mt-1">{validationErrors.teamId}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <label className="block text-white font-semibold text-lg">
-                Team Leader Name <span className="text-green-400">*</span>
-              </label>
-              <input
-                type="text"
-                name="teamLeaderName"
-                value={formData.teamLeaderName}
-                onChange={handleInputChange}
-                required
-                className={`w-full bg-transparent border-2 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none transition-all duration-300 ${
-                  validationErrors.teamLeaderName 
-                    ? 'border-red-400/60 focus:border-red-400' 
-                    : 'border-green-400/30 focus:border-green-400/60'
-                }`}
-                placeholder="Enter team leader's full name"
-              />
-              {validationErrors.teamLeaderName && (
-                <p className="text-red-400 text-sm mt-1">{validationErrors.teamLeaderName}</p>
-              )}
-            </div>
-
-            <div className="space-y-2">
-              <label className="block text-white font-semibold text-lg">
-                Team Size <span className="text-green-400">*</span>
-              </label>
-              <div className="flex space-x-4">
-                <button
-                  type="button"
-                  onClick={() => handleInputChange({ target: { name: 'teamSize', value: '2' } })}
-                  className={`flex-1 py-3 px-6 rounded-lg font-bold transition-all duration-300 ${
-                    formData.teamSize === '2'
-                      ? 'bg-green-400/20 border-2 border-green-400 text-green-400'
-                      : 'bg-transparent border-2 border-green-400/30 text-gray-400 hover:border-green-400/60 hover:text-green-400'
-                  }`}
-                >
-                  2 Members
-                </button>
-                <button
-                  type="button"
-                  onClick={() => handleInputChange({ target: { name: 'teamSize', value: '3' } })}
-                  className={`flex-1 py-3 px-6 rounded-lg font-bold transition-all duration-300 ${
-                    formData.teamSize === '3'
-                      ? 'bg-green-400/20 border-2 border-green-400 text-green-400'
-                      : 'bg-transparent border-2 border-green-400/30 text-gray-400 hover:border-green-400/60 hover:text-green-400'
-                  }`}
-                >
-                  3 Members
-                </button>
-              </div>
-              {validationErrors.teamSize && (
-                <p className="text-red-400 text-sm mt-1">{validationErrors.teamSize}</p>
-              )}
-            </div>
-
-            {formData.teamSize && parseInt(formData.teamSize) >= 2 && (
-              <div className="space-y-2 animate-fadeIn">
-                <label className="block text-white font-semibold text-lg">
-                  Team Member 2 Name <span className="text-green-400">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="teamMember2Name"
-                  value={formData.teamMember2Name}
-                  onChange={handleInputChange}
-                  required
-                  className={`w-full bg-transparent border-2 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none transition-all duration-300 ${
-                    validationErrors.teamMember2Name 
-                      ? 'border-red-400/60 focus:border-red-400' 
-                      : 'border-green-400/30 focus:border-green-400/60'
-                  }`}
-                  placeholder="Enter second team member's full name"
-                />
-                {validationErrors.teamMember2Name && (
-                  <p className="text-red-400 text-sm mt-1">{validationErrors.teamMember2Name}</p>
+      <div className="max-w-2xl mx-auto">
+        <div className="mb-8">
+          <div className="flex items-center justify-between mb-4">
+            {[1, 2, 3, 4].map((s) => (
+              <div key={s} className="flex items-center flex-1">
+                <div className={`w-10 h-10 rounded-full flex items-center justify-center font-bold transition-all duration-300 ${
+                  step >= s ? 'bg-green-400/20 border-2 border-green-400 text-green-400' : 'bg-transparent border-2 border-green-400/30 text-gray-400'
+                }`}>
+                  {s}
+                </div>
+                {s < 4 && (
+                  <div className={`flex-1 h-0.5 mx-2 transition-all duration-300 ${step > s ? 'bg-green-400' : 'bg-green-400/30'}`}></div>
                 )}
               </div>
-            )}
+            ))}
+          </div>
+          <div className="flex justify-between text-xs sm:text-sm">
+            <span className={step >= 1 ? 'text-green-400 font-medium' : 'text-gray-500'}>Verify Team</span>
+            <span className={step >= 2 ? 'text-green-400 font-medium' : 'text-gray-500'}>Membership</span>
+            <span className={step >= 3 ? 'text-green-400 font-medium' : 'text-gray-500'}>Payment</span>
+            <span className={step >= 4 ? 'text-green-400 font-medium' : 'text-gray-500'}>Complete</span>
+          </div>
+        </div>
 
-            {formData.teamSize && parseInt(formData.teamSize) === 3 && (
-              <div className="space-y-2 animate-fadeIn">
-                <label className="block text-white font-semibold text-lg">
-                  Team Member 3 Name <span className="text-green-400">*</span>
-                </label>
-                <input
-                  type="text"
-                  name="teamMember3Name"
-                  value={formData.teamMember3Name}
-                  onChange={handleInputChange}
-                  required
-                  className={`w-full bg-transparent border-2 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none transition-all duration-300 ${
-                    validationErrors.teamMember3Name 
-                      ? 'border-red-400/60 focus:border-red-400' 
-                      : 'border-green-400/30 focus:border-green-400/60'
-                  }`}
-                  placeholder="Enter third team member's full name"
-                />
-                {validationErrors.teamMember3Name && (
-                  <p className="text-red-400 text-sm mt-1">{validationErrors.teamMember3Name}</p>
-                )}
+        <div className="bg-transparent border-2 border-green-400/30 rounded-xl p-6 sm:p-8 hover:border-green-400/60 hover:shadow-lg hover:shadow-green-400/20 transition-all duration-300">
+          {step === 1 && (
+            <div className="space-y-6">
+              <div>
+                <h2 className="text-2xl font-bold text-white mb-2">Step 1: Verify Team ID</h2>
+                <p className="text-gray-400 text-sm mb-6">Enter your team ID to verify if you're shortlisted</p>
               </div>
-            )}
-
-            {/* IEEE/ACM Membership Question */}
-            <div className="bg-green-400/5 border-2 border-green-400/30 rounded-xl p-6">
-              <h3 className="text-xl font-bold text-green-400 mb-4">
-                IEEE/ACM Membership
-              </h3>
-              <p className="text-gray-300 mb-4">Does at least one member in your team have IEEE or ACM membership?</p>
               
-              <div className="flex space-x-4 mb-4">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setHasIEEEACM('yes');
-                    setFormData(prev => ({ ...prev, couponCode: '' }));
-                    setCouponApplied(false);
-                    setPaymentAmount(600);
-                  }}
-                  className={`flex-1 py-3 px-6 rounded-lg font-bold transition-all duration-300 ${
-                    hasIEEEACM === 'yes'
-                      ? 'bg-green-400/20 border-2 border-green-400 text-green-400'
-                      : 'bg-transparent border-2 border-green-400/30 text-gray-400 hover:border-green-400/60 hover:text-green-400'
-                  }`}
-                >
-                  Yes
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setHasIEEEACM('no');
-                    setFormData(prev => ({ ...prev, couponCode: '' }));
-                    setCouponApplied(false);
-                    setPaymentAmount(600);
-                  }}
-                  className={`flex-1 py-3 px-6 rounded-lg font-bold transition-all duration-300 ${
-                    hasIEEEACM === 'no'
-                      ? 'bg-green-400/20 border-2 border-green-400 text-green-400'
-                      : 'bg-transparent border-2 border-green-400/30 text-gray-400 hover:border-green-400/60 hover:text-green-400'
-                  }`}
-                >
-                  No
-                </button>
+              <div className="space-y-2">
+                <label className="block text-white font-semibold text-lg">
+                  Team ID <span className="text-green-400">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={teamId}
+                  onChange={(e) => setTeamId(e.target.value)}
+                  placeholder="e.g., TEAM001"
+                  className="w-full bg-transparent border-2 border-green-400/30 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-green-400/60 transition-all duration-300"
+                />
               </div>
 
-              {hasIEEEACM === 'yes' && (
-                <div className="space-y-2 mt-6 pt-6 border-t border-green-400/20">
-                  <p className="text-green-400 font-semibold mb-3">Great! Apply your coupon code to get ₹100 discount!</p>
-                  <label className="block text-white font-semibold">
-                    Coupon Code
-                  </label>
-                  <div className="flex space-x-2">
-                    <input
-                      type="text"
-                      name="couponCode"
-                      value={formData.couponCode}
-                      onChange={handleInputChange}
-                      disabled={couponApplied}
-                      className={`flex-1 bg-transparent border-2 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none transition-all duration-300 ${
-                        couponApplied 
-                          ? 'border-green-400/60 bg-green-400/5' 
-                          : validationErrors.couponCode 
-                          ? 'border-red-400/60 focus:border-red-400' 
-                          : 'border-green-400/30 focus:border-green-400/60'
-                      }`}
-                      placeholder="Enter coupon code"
-                    />
+              {verificationStatus && (
+                <div className={`flex items-center gap-3 p-4 rounded-lg border-2 ${
+                  verificationStatus.success 
+                    ? 'bg-green-400/10 border-green-400/60 text-green-400' 
+                    : 'bg-red-400/10 border-red-400/60 text-red-400'
+                }`}>
+                  {verificationStatus.success ? <CheckCircle className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
+                  <span className="font-medium">{verificationStatus.message}</span>
+                </div>
+              )}
+
+              <button
+                onClick={handleVerifyTeam}
+                disabled={isVerifying}
+                className={`w-full border-2 font-bold py-4 px-8 rounded-lg transition-all duration-300 transform shadow-lg ${
+                  isVerifying
+                    ? 'opacity-50 cursor-not-allowed bg-transparent border-gray-500/30 text-gray-500' 
+                    : 'bg-transparent border-green-400/60 text-green-400 hover:bg-green-400/10 hover:border-green-400 hover:text-green-300 hover:shadow-green-400/30'
+                }`}
+              >
+                {isVerifying ? (
+                  <span className="flex items-center justify-center gap-2">
+                    <Loader2 className="w-5 h-5 animate-spin" />
+                    Verifying...
+                  </span>
+                ) : (
+                  'Verify Team ID'
+                )}
+              </button>
+            </div>
+          )}
+
+          {step === 2 && (
+            <div className="space-y-6">
+              <div>
+                <h2 className="text-2xl font-bold text-white mb-2">Step 2: IEEE/ACM Membership</h2>
+                <p className="text-gray-400 text-sm mb-6">Verify your membership status to proceed</p>
+              </div>
+
+              {/* IEEE/ACM Membership Question */}
+              <div className="bg-green-400/5 border-2 border-green-400/30 rounded-xl p-6">
+                <h3 className="text-xl font-bold text-green-400 mb-4">
+                  IEEE/ACM Membership
+                </h3>
+                <p className="text-gray-300 mb-4">Does at least one member in your team have IEEE or ACM membership?</p>
+                
+                <div className="flex space-x-4 mb-4">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setHasIEEEACM('yes');
+                      setCouponCode('');
+                      setCouponStatus(null);
+                    }}
+                    className={`flex-1 py-3 px-6 rounded-lg font-bold transition-all duration-300 ${
+                      hasIEEEACM === 'yes'
+                        ? 'bg-green-400/20 border-2 border-green-400 text-green-400'
+                        : 'bg-transparent border-2 border-green-400/30 text-gray-400 hover:border-green-400/60 hover:text-green-400'
+                    }`}
+                  >
+                    Yes
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setHasIEEEACM('no');
+                      setCouponCode('');
+                      setCouponStatus(null);
+                    }}
+                    className={`flex-1 py-3 px-6 rounded-lg font-bold transition-all duration-300 ${
+                      hasIEEEACM === 'no'
+                        ? 'bg-green-400/20 border-2 border-green-400 text-green-400'
+                        : 'bg-transparent border-2 border-green-400/30 text-gray-400 hover:border-green-400/60 hover:text-green-400'
+                    }`}
+                  >
+                    No
+                  </button>
+                </div>
+
+                {hasIEEEACM === 'yes' && (
+                  <div className="space-y-4 mt-6 pt-6 border-t border-green-400/20">
+                    <p className="text-green-400 font-semibold mb-3">Great! Enter your coupon code to verify membership</p>
+                    
+                    <div className="space-y-2">
+                      <label className="block text-white font-semibold text-lg">
+                        Coupon Code <span className="text-green-400">*</span>
+                      </label>
+                      <input
+                        type="text"
+                        value={couponCode}
+                        onChange={(e) => setCouponCode(e.target.value)}
+                        placeholder="Enter your coupon code"
+                        className="w-full bg-transparent border-2 border-green-400/30 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-green-400/60 transition-all duration-300"
+                      />
+                    </div>
+
+                    {couponStatus && (
+                      <div className={`flex items-center gap-3 p-4 rounded-lg border-2 ${
+                        couponStatus.success 
+                          ? 'bg-green-400/10 border-green-400/60 text-green-400' 
+                          : 'bg-red-400/10 border-red-400/60 text-red-400'
+                      }`}>
+                        {couponStatus.success ? <CheckCircle className="w-5 h-5" /> : <XCircle className="w-5 h-5" />}
+                        <span className="font-medium">{couponStatus.message}</span>
+                      </div>
+                    )}
+
                     <button
-                      type="button"
-                      onClick={handleApplyCoupon}
-                      disabled={couponApplied || couponChecking || !formData.couponCode.trim()}
-                      className={`px-6 py-3 rounded-lg font-bold transition-all duration-300 whitespace-nowrap ${
-                        couponApplied 
-                          ? 'bg-green-400/20 border-2 border-green-400 text-green-400 cursor-not-allowed'
-                          : couponChecking
-                          ? 'bg-green-400/20 border-2 border-green-400 text-green-400 cursor-wait'
-                          : !formData.couponCode.trim()
-                          ? 'opacity-50 cursor-not-allowed bg-transparent border-2 border-gray-500/30 text-gray-500'
-                          : 'bg-transparent border-2 border-green-400/60 text-green-400 hover:bg-green-400/10 hover:border-green-400 cursor-pointer'
+                      onClick={handleVerifyCoupon}
+                      disabled={isVerifying}
+                      className={`w-full border-2 font-bold py-4 px-8 rounded-lg transition-all duration-300 transform shadow-lg ${
+                        isVerifying
+                          ? 'opacity-50 cursor-not-allowed bg-transparent border-gray-500/30 text-gray-500' 
+                          : 'bg-transparent border-green-400/60 text-green-400 hover:bg-green-400/10 hover:border-green-400 hover:text-green-300 hover:shadow-green-400/30'
                       }`}
                     >
-                      {couponApplied ? (
-                        <span className="flex items-center space-x-2">
-                          <Check className="w-5 h-5" />
-                          <span>Applied</span>
+                      {isVerifying ? (
+                        <span className="flex items-center justify-center gap-2">
+                          <Loader2 className="w-5 h-5 animate-spin" />
+                          Verifying...
                         </span>
-                      ) : couponChecking ? (
-                        'Checking...'
                       ) : (
-                        'Apply'
+                        'Verify Coupon'
                       )}
                     </button>
                   </div>
-                  {validationErrors.couponCode && (
-                    <p className="text-red-400 text-sm mt-1">{validationErrors.couponCode}</p>
-                  )}
-                  {couponApplied && (
-                    <p className="text-green-400 text-sm mt-1 flex items-center space-x-1">
-                      <Check className="w-4 h-4" />
-                      <span>Coupon applied successfully! ₹100 discount added.</span>
-                    </p>
-                  )}
-                </div>
-              )}
+                )}
 
-              {hasIEEEACM === 'no' && (
-                <div className="bg-green-400/5 border border-green-400/20 rounded-lg p-4 mt-4">
-                  <p className="text-gray-300 text-sm">
-                    No problem! Your registration fee is ₹600.
+                {hasIEEEACM === 'no' && (
+                  <div className="space-y-4 mt-6 pt-6 border-t border-green-400/20">
+                    <div className="bg-green-400/5 border border-green-400/20 rounded-lg p-4">
+                      <p className="text-gray-300 text-sm mb-3">
+                        No problem! You can proceed without a membership discount.
+                      </p>
+                    </div>
+                    
+                    <button
+                      onClick={() => setStep(3)}
+                      className="w-full border-2 font-bold py-4 px-8 rounded-lg transition-all duration-300 transform shadow-lg bg-transparent border-green-400/60 text-green-400 hover:bg-green-400/10 hover:border-green-400 hover:text-green-300 hover:shadow-green-400/30"
+                    >
+                      Continue to Payment
+                    </button>
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+
+          {step === 3 && (
+            <div className="space-y-6">
+              <div>
+                <h2 className="text-2xl font-bold text-white mb-2">Step 3: Submit Payment Details</h2>
+                <p className="text-gray-400 text-sm mb-6">Fill in your team details and upload payment proof</p>
+              </div>
+
+              <div className="space-y-2">
+                <label className="block text-white font-semibold text-lg">
+                  Team Name <span className="text-green-400">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={formData.teamName}
+                  onChange={(e) => setFormData({...formData, teamName: e.target.value})}
+                  className="w-full bg-transparent border-2 border-green-400/30 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-green-400/60 transition-all duration-300"
+                  placeholder="Enter team name"
+                />
+              </div>
+
+              <div className="space-y-2">
+                <label className="block text-white font-semibold text-lg">
+                  Team Leader Name <span className="text-green-400">*</span>
+                </label>
+                <div className="flex items-start space-x-2 mb-2 bg-blue-400/10 border border-blue-400/30 rounded-lg p-3">
+                  <AlertCircle className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                  <p className="text-blue-300 text-sm">
+                    Enter name exactly as it should appear on certificates
                   </p>
                 </div>
-              )}
-            </div>
+                <input
+                  type="text"
+                  value={formData.teamLeaderName}
+                  onChange={(e) => setFormData({...formData, teamLeaderName: e.target.value})}
+                  className="w-full bg-transparent border-2 border-green-400/30 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-green-400/60 transition-all duration-300"
+                  placeholder="Full name for certificate"
+                />
+              </div>
 
-            {/* QR Code Display */}
-            <div className="bg-green-400/5 border-2 border-green-400/30 rounded-xl p-6 sm:p-8">
-              <h3 className="text-2xl font-bold text-green-400 mb-6 text-center">
-                Scan QR Code to Pay
-              </h3>
-              <div className="flex justify-center mb-6">
-                <div className="relative w-full max-w-sm">
-                  <div className="aspect-square w-full bg-white rounded-2xl overflow-hidden shadow-2xl shadow-green-400/20 border-4 border-green-400/40">
-                    <img 
-                      src={couponApplied ? payment2 : payment1}
-                      alt="Payment QR Code"
-                      className="w-full h-full object-cover"
-                    />
+              <div className="space-y-2">
+                <label className="block text-white font-semibold text-lg">
+                  Team Size <span className="text-green-400">*</span>
+                </label>
+                <div className="flex space-x-4">
+                  <button
+                    type="button"
+                    onClick={() => setFormData({...formData, teamSize: '2'})}
+                    className={`flex-1 py-3 px-6 rounded-lg font-bold transition-all duration-300 ${
+                      formData.teamSize === '2'
+                        ? 'bg-green-400/20 border-2 border-green-400 text-green-400'
+                        : 'bg-transparent border-2 border-green-400/30 text-gray-400 hover:border-green-400/60 hover:text-green-400'
+                    }`}
+                  >
+                    2 Members
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setFormData({...formData, teamSize: '3'})}
+                    className={`flex-1 py-3 px-6 rounded-lg font-bold transition-all duration-300 ${
+                      formData.teamSize === '3'
+                        ? 'bg-green-400/20 border-2 border-green-400 text-green-400'
+                        : 'bg-transparent border-2 border-green-400/30 text-gray-400 hover:border-green-400/60 hover:text-green-400'
+                    }`}
+                  >
+                    3 Members
+                  </button>
+                </div>
+              </div>
+
+              <div className="space-y-2">
+                <label className="block text-white font-semibold text-lg">
+                  Teammate 1 <span className="text-green-400">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={formData.teammate1}
+                  onChange={(e) => setFormData({...formData, teammate1: e.target.value})}
+                  className="w-full bg-transparent border-2 border-green-400/30 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-green-400/60 transition-all duration-300"
+                  placeholder="Full name"
+                />
+              </div>
+
+              {formData.teamSize === '3' && (
+                <div className="space-y-2">
+                  <label className="block text-white font-semibold text-lg">
+                    Teammate 2 (Optional)
+                  </label>
+                  <input
+                    type="text"
+                    value={formData.teammate2}
+                    onChange={(e) => setFormData({...formData, teammate2: e.target.value})}
+                    className="w-full bg-transparent border-2 border-green-400/30 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-green-400/60 transition-all duration-300"
+                    placeholder="Full name"
+                  />
+                </div>
+              )}
+
+              {/* QR Code Payment Section */}
+              <div className="bg-green-400/5 border-2 border-green-400/30 rounded-xl p-6 sm:p-8">
+                <h3 className="text-2xl font-bold text-green-400 mb-6 text-center">
+                  Scan QR Code to Pay
+                </h3>
+                <div className="flex justify-center mb-6">
+                  <div className="relative w-full max-w-sm">
+                    <div className="aspect-square w-full bg-white rounded-2xl overflow-hidden shadow-2xl shadow-green-400/20 border-4 border-green-400/40 p-4 flex items-center justify-center">
+                      <QRCode 
+                        value={upiLink}
+                        size={256}
+                        level="H"
+                        className="w-full h-full"
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div className="text-center space-y-3">
+                  <p className="text-gray-300 text-base sm:text-lg">
+                    Scan this QR code with any UPI app to complete your payment
+                  </p>
+                  <div className="bg-green-400/10 border border-green-400/30 rounded-lg py-3 px-4">
+                    <p className="text-green-400 font-bold text-xl sm:text-2xl">
+                      Amount: ₹{paymentAmount}
+                    </p>
+                  </div>
+                  <div className="pt-4">
+                    <a
+                      href={upiLink}
+                      onClick={(e) => {
+                        if (!/Android|iPhone/i.test(navigator.userAgent)) {
+                          e.preventDefault();
+                          alert("Please scan the QR code or open this link on your mobile UPI app.");
+                        }
+                      }}
+                      className="inline-block bg-transparent border-2 border-green-400/60 text-green-400 hover:bg-green-400/10 hover:border-green-400 hover:text-green-300 transition-all duration-300 px-6 py-3 rounded-lg font-bold"
+                    >
+                      Pay ₹{paymentAmount} via UPI
+                    </a>
+                    <p className="text-gray-400 text-sm mt-2">
+                      (Mobile devices only)
+                    </p>
                   </div>
                 </div>
               </div>
-              <div className="text-center space-y-3">
-                <p className="text-gray-300 text-base sm:text-lg">
-                  Scan this QR code with any UPI app to complete your payment
-                </p>
-                <div className="bg-green-400/10 border border-green-400/30 rounded-lg py-3 px-4">
-                  <p className="text-green-400 font-bold text-xl sm:text-2xl">
-                    Amount: ₹{paymentAmount}
-                  </p>
-                </div>
+
+              <div className="space-y-2">
+                <label className="block text-white font-semibold text-lg">
+                  UTR ID / Transaction ID <span className="text-green-400">*</span>
+                </label>
+                <input
+                  type="text"
+                  value={formData.UTR_ID}
+                  onChange={(e) => setFormData({...formData, UTR_ID: e.target.value})}
+                  className="w-full bg-transparent border-2 border-green-400/30 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none focus:border-green-400/60 transition-all duration-300"
+                  placeholder="Enter transaction ID"
+                />
               </div>
-            </div>
 
-            <div className="space-y-2">
-              <label className="block text-white font-semibold text-lg">
-                Transaction ID / UTR Number <span className="text-green-400">*</span>
-              </label>
-              <input
-                type="text"
-                name="transactionId"
-                value={formData.transactionId}
-                onChange={handleInputChange}
-                required
-                className={`w-full bg-transparent border-2 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none transition-all duration-300 ${
-                  validationErrors.transactionId 
-                    ? 'border-red-400/60 focus:border-red-400' 
-                    : 'border-green-400/30 focus:border-green-400/60'
-                }`}
-                placeholder="Enter transaction ID from payment receipt"
-              />
-              {validationErrors.transactionId && (
-                <p className="text-red-400 text-sm mt-1">{validationErrors.transactionId}</p>
-              )}
-            </div>
-
-            {/* Screenshot Upload */}
-            <div className="space-y-2">
-              <label className="block text-white font-semibold text-lg">
-                Payment Screenshot <span className="text-green-400">*</span>
-              </label>
-              <div className="space-y-4">
-                <label className={`w-full bg-transparent border-2 rounded-lg px-4 py-3 text-white placeholder-gray-400 focus:outline-none transition-all duration-300 cursor-pointer flex items-center justify-between ${
-                  validationErrors.screenshot 
-                    ? 'border-red-400/60' 
-                    : screenshotPreview 
-                    ? 'border-green-400/60' 
-                    : 'border-green-400/30 hover:border-green-400/60'
-                }`}>
+              <div className="space-y-2">
+                <label className="block text-white font-semibold text-lg">
+                  Payment Screenshot <span className="text-green-400">*</span>
+                </label>
+                <label className="w-full bg-transparent border-2 border-green-400/30 hover:border-green-400/60 rounded-lg px-4 py-3 transition-all duration-300 cursor-pointer flex items-center justify-between">
                   <input
                     type="file"
                     accept="image/*"
                     onChange={handleFileChange}
                     className="hidden"
                   />
-                  <span className={screenshotPreview ? 'text-green-400' : 'text-gray-400'}>
-                    {screenshotPreview ? screenshot.name : 'Choose payment screenshot'}
+                  <span className={previewUrl ? 'text-green-400' : 'text-gray-400'}>
+                    {previewUrl ? selectedFile.name : 'Choose payment screenshot'}
                   </span>
-                  <Upload className={`w-5 h-5 ${screenshotPreview ? 'text-green-400' : 'text-gray-400'}`} />
+                  <Upload className={`w-5 h-5 ${previewUrl ? 'text-green-400' : 'text-gray-400'}`} />
                 </label>
                 
-                {screenshotPreview && (
+                {previewUrl && (
                   <div className="space-y-2">
                     <img 
-                      src={screenshotPreview} 
-                      alt="Payment Screenshot Preview" 
+                      src={previewUrl} 
+                      alt="Preview" 
                       className="max-h-48 mx-auto rounded-lg border-2 border-green-400/40"
                     />
                     <button
                       type="button"
                       onClick={() => {
-                        setScreenshot(null);
-                        setScreenshotPreview(null);
+                        setSelectedFile(null);
+                        setPreviewUrl(null);
                       }}
                       className="text-green-400 hover:text-green-300 text-sm underline block mx-auto"
                     >
@@ -780,34 +589,64 @@ const PaymentComponent = () => {
                     </button>
                   </div>
                 )}
-                
-                {validationErrors.screenshot && (
-                  <p className="text-red-400 text-sm">{validationErrors.screenshot}</p>
-                )}
               </div>
-            </div>
 
-            <div className="pt-6">
               <button
-                onClick={handleSubmit}
-                disabled={isLoading || !isFormValid()}
+                onClick={handleSubmitPayment}
+                disabled={isSubmitting}
                 className={`w-full border-2 font-bold py-4 px-8 rounded-lg transition-all duration-300 transform shadow-lg ${
-                  isLoading || !isFormValid()
+                  isSubmitting
                     ? 'opacity-50 cursor-not-allowed bg-transparent border-gray-500/30 text-gray-500' 
-                    : 'bg-transparent border-green-400/60 text-green-400 hover:scale-[1.02] hover:bg-green-400/10 hover:border-green-400 hover:text-green-300 hover:shadow-green-400/30 cursor-pointer'
+                    : 'bg-transparent border-green-400/60 text-green-400 hover:bg-green-400/10 hover:border-green-400 hover:text-green-300 hover:shadow-green-400/30'
                 }`}
               >
-                {isLoading ? 'Submitting Payment...' : 'Submit Payment'}
+                {isSubmitting ? 'Submitting Payment...' : 'Submit Payment'}
               </button>
-              
-              {!isFormValid() && !isLoading && (
-                <p className="text-green-400/60 text-sm mt-2 text-center">
-                  Please fill in all required fields to submit payment
-                </p>
-              )}
             </div>
+          )}
 
-          </div>
+          {step === 4 && submissionResult && (
+            <div className="text-center space-y-6">
+              <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center bg-green-400/20 border-2 border-green-400">
+                <CheckCircle className="w-12 h-12 text-green-400" />
+              </div>
+              
+              <h2 className="text-3xl font-bold text-white">Payment Submitted Successfully!</h2>
+              
+              <div className="bg-green-400/10 border-2 border-green-400/60 rounded-lg p-6">
+                <p className="text-lg font-semibold text-green-400 mb-2">Your New Team ID:</p>
+                <p className="text-4xl font-bold text-green-400">{submissionResult.newTeamId}</p>
+              </div>
+              
+              <div className="text-left space-y-3 bg-green-400/5 border border-green-400/20 rounded-lg p-6">
+                <p className="text-gray-300 flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5 text-green-400" />
+                  Team verification completed
+                </p>
+                <p className="text-gray-300 flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5 text-green-400" />
+                  {hasIEEEACM === 'yes' ? 'IEEE/ACM membership verified' : 'Membership status confirmed'}
+                </p>
+                <p className="text-gray-300 flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5 text-green-400" />
+                  Payment details submitted
+                </p>
+                <p className="text-gray-300 flex items-center gap-2">
+                  <CheckCircle className="w-5 h-5 text-green-400" />
+                  Screenshot uploaded successfully
+                </p>
+              </div>
+              
+              <div className="bg-blue-400/10 border border-blue-400/30 rounded-lg p-4">
+                <div className="flex items-start gap-3">
+                  <AlertCircle className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
+                  <p className="text-blue-300 text-sm text-left">
+                    Please save your new Team ID for future reference. You'll receive a confirmation email shortly.
+                  </p>
+                </div>
+              </div>
+            </div>
+          )}
         </div>
       </div>
 
@@ -820,6 +659,4 @@ const PaymentComponent = () => {
       </div>
     </div>
   );
-};
-
-export default PaymentComponent;
+}
