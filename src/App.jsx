@@ -17,6 +17,7 @@ import AdminLeaderboard from "./components/AdminLeaderboard";
 import QuizCountdown from "./components/QuizCountdown";
 import Form from "./components/Register";
 import Payment from "./components/payment";
+import Gallery2025 from "./components/Gallery";
 // ScrollToTop component - must be inside Router
 function ScrollToTop() {
   const location = useLocation();
@@ -60,6 +61,7 @@ function App() {
           <Route path="/admin/leaderboard" element={<AdminLeaderboard />} />
          <Route path="/test" element={<QuizApp/>}/>
          <Route path="/payment" element={<Payment/>}/>
+         <Route path="/gallery" element={<Gallery2025/>}/>
           {/* Optional: 404 Fallback Route */}
           <Route path="*" element={<h1>404 - Page Not Found</h1>} />
         </Routes>
