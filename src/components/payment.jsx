@@ -604,8 +604,7 @@ export default function PaymentVerificationForm() {
               </button>
             </div>
           )}
-
-          {step === 4 && submissionResult && (
+{step === 4 && submissionResult && (
             <div className="text-center space-y-6">
               <div className="w-20 h-20 mx-auto rounded-full flex items-center justify-center bg-green-400/20 border-2 border-green-400">
                 <CheckCircle className="w-12 h-12 text-green-400" />
@@ -614,8 +613,10 @@ export default function PaymentVerificationForm() {
               <h2 className="text-3xl font-bold text-white">Payment Submitted Successfully!</h2>
               
               <div className="bg-green-400/10 border-2 border-green-400/60 rounded-lg p-6">
-                <p className="text-lg font-semibold text-green-400 mb-2">Your New Team ID:</p>
-                <p className="text-4xl font-bold text-green-400">{submissionResult.newTeamId}</p>
+                <p className="text-lg font-semibold text-green-400 mb-3">Payment Under Verification</p>
+                <p className="text-gray-300 text-base">
+                  Your payment details have been received and are being reviewed by our team.
+                </p>
               </div>
               
               <div className="text-left space-y-3 bg-green-400/5 border border-green-400/20 rounded-lg p-6">
@@ -641,7 +642,7 @@ export default function PaymentVerificationForm() {
                 <div className="flex items-start gap-3">
                   <AlertCircle className="w-5 h-5 text-blue-400 flex-shrink-0 mt-0.5" />
                   <p className="text-blue-300 text-sm text-left">
-                    Please save your new Team ID for future reference. You'll receive a confirmation email shortly.
+                    You will receive an email confirmation with your new Team ID once your payment has been verified. Please check your inbox within 24-48 hours.
                   </p>
                 </div>
               </div>
