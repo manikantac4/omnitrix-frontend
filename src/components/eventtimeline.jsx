@@ -127,7 +127,7 @@ const Timeline = () => {
       date: "11 Oct, 1:00 PM",
       title: "Results of Shortlisting",
       eventDate: new Date('2025-10-11T08:00:00'),
-      alwaysGreen: true
+     
     },
     {
       icon: (
