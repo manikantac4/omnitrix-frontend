@@ -32,8 +32,7 @@ export default function PaymentVerificationForm() {
   const upiId = "9398742067@axl";
   const payeeName = "Omnitrix Hackathon";
   const currency = "INR";
-  const paymentAmount = hasIEEEACM === 'yes' ? 1 : 2;
-  
+  const paymentAmount = hasIEEEACM === 'yes' ? 500 : 600;  
   // Generate dynamic UPI link
   const upiLink = `upi://pay?pa=${upiId}&pn=${encodeURIComponent(payeeName)}&am=${paymentAmount}&cu=${currency}`;
 
