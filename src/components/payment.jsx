@@ -520,23 +520,7 @@ export default function PaymentVerificationForm() {
                       Amount: ₹{paymentAmount}
                     </p>
                   </div>
-                  <div className="pt-4">
-                    <a
-                      href={upiLink}
-                      onClick={(e) => {
-                        if (!/Android|iPhone/i.test(navigator.userAgent)) {
-                          e.preventDefault();
-                          alert("Please scan the QR code or open this link on your mobile UPI app.");
-                        }
-                      }}
-                      className="inline-block bg-transparent border-2 border-green-400/60 text-green-400 hover:bg-green-400/10 hover:border-green-400 hover:text-green-300 transition-all duration-300 px-6 py-3 rounded-lg font-bold"
-                    >
-                      Pay ₹{paymentAmount} via UPI
-                    </a>
-                    <p className="text-gray-400 text-sm mt-2">
-                      (Mobile devices only)
-                    </p>
-                  </div>
+                 
                 </div>
               </div>
 
