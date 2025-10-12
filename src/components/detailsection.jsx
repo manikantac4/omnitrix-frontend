@@ -45,7 +45,7 @@ const RegisterButton = ({ isVisible }) => {
   const handleClick = () => {
     setIsTransforming(true);
     setTimeout(() => {
-      window.location.href = '/payment';
+      window.location.href = '/';
     }, 3000);
   };
 
