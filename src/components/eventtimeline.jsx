@@ -149,7 +149,7 @@ const Timeline = () => {
       date: "13 Oct, 11:59 PM",
       title: "Payment Closes",
       eventDate: new Date('2025-10-13T23:59:59'),
-      alwaysGreen: true
+      
     },
     {
       icon: (

@@ -40,22 +40,21 @@ const MoneyIcon = () => (
 
 // RegisterButton component
 const RegisterButton = ({ isVisible }) => {
-  const [isTransforming, setIsTransforming] = useState(false);
+  // const [isTransforming, setIsTransforming] = useState(false);
 
-  const handleClick = () => {
-    setIsTransforming(true);
-    setTimeout(() => {
-      window.location.href = '/payment';
-    }, 3000);
-  };
+  // const handleClick = () => {
+  //   setIsTransforming(true);
+  //   setTimeout(() => {
+  //     window.location.href = '/payment';
+  //   }, 3000);
+  // };
 
   return (
     <>
       {/* Transformation Overlay */}
-      {isTransforming && (
+      {/* {isTransforming && (
         <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95">
           <div className="text-center max-w-md mx-auto px-6">
-            {/* Omnitrix Symbol */}
             <div className="mb-8 relative">
               <div className="w-32 h-32 mx-auto relative animate-spin-slow">
                 <div className="absolute inset-0 rounded-full border-4 border-green-400" style={{
@@ -73,7 +72,6 @@ const RegisterButton = ({ isVisible }) => {
               </div>
             </div>
 
-            {/* Transformation Text */}
             <div className="space-y-6">
               <h2 className="text-2xl font-bold text-green-300"
                 style={{ fontFamily: '"Orbitron", monospace' }}>
@@ -85,7 +83,6 @@ const RegisterButton = ({ isVisible }) => {
                 Please complete your payment to confirm your registration
               </p>
 
-              {/* Loading Bar */}
               <div className="mt-6 w-full h-1.5 mx-auto bg-gray-800 rounded-full overflow-hidden">
                 <div className="h-full bg-gradient-to-r from-green-500 to-green-300 rounded-full"
                   style={{ animation: 'loadingBar 3s ease-in-out forwards' }}
@@ -94,10 +91,10 @@ const RegisterButton = ({ isVisible }) => {
             </div>
           </div>
         </div>
-      )}
+      )} */}
       <div className="flex justify-center items-center">
         <button
-          onClick={handleClick}
+          // onClick={handleClick}
           className={`group relative px-8 py-4 text-lg md:text-xl font-black tracking-wider uppercase bg-transparent border-3 border-green-400 rounded-full overflow-hidden cursor-pointer transition-all duration-700 hover:scale-105 hover:border-green-300 transform ${
             isVisible ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"
           }`}
@@ -334,9 +331,9 @@ const OmnitrixRegistration = () => {
         <CountdownTimer isVisible={isVisible} />
 
         {/* Central Power Core - Register Button */}
-        <div className="flex justify-center mb-16">
+        {/* <div className="flex justify-center mb-16">
           <RegisterButton isVisible={isVisible} />
-        </div>
+        </div> */}
 
         {/* Event Details - 2x2 Grid */}
         <div className="max-w-4xl mx-auto mb-12">

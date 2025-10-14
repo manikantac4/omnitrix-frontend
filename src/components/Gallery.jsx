@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from 'react';
-import alien1 from '../assets/manoj.jpg';
-import alien2 from '../assets/sahith.jpg';
+import alien1 from '../assets/footer.png';
+/*import alien2 from '../assets/sahith.jpg';
 import alien3 from '../assets/pandu.jpg';
 import alien4 from '../assets/bharath.jpg';
 import alien5 from '../assets/pavan.jpg';
 import alien6 from '../assets/anand.jpg';
 import alien7 from '../assets/ratna.jpg';
 import alien8 from '../assets/praveen..webp';
-import alien9 from '../assets/yagnesh.jpg'
+import alien9 from '../assets/yagnesh.jpg'*/
 // import alien6 from '../assets/alien6.jpg';
 // import alien7 from '../assets/alien7.jpg';
 // import alien8 from '../assets/alien8.jpg';
@@ -25,14 +25,14 @@ const Gallery = () => {
   // Array of imported images - Add new images here
   const images = [
     alien1,
-    alien2,
+  /*  alien2,
     alien3,
     alien4,
     alien5,
     alien6,
     alien7,
     alien8,
-    alien9,
+    alien9,*/
   ].filter(img => img); // Filter out undefined images
 
   useEffect(() => {
