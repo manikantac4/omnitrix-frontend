@@ -18,6 +18,7 @@ import QuizCountdown from "./components/QuizCountdown";
 import Form from "./components/Register";
 import Payment from "./components/payment";
 import Gallery2025 from "./components/Gallery";
+import FirstRound from "./components/firstround";
 // ScrollToTop component - must be inside Router
 function ScrollToTop() {
   const location = useLocation();
@@ -62,6 +63,7 @@ function App() {
          <Route path="/test" element={<QuizApp/>}/>
          <Route path="/payment" element={<Payment/>}/>
          <Route path="/gallery" element={<Gallery2025/>}/>
+         <Route path="/first-round" element={<FirstRound/>}/>
           {/* Optional: 404 Fallback Route */}
           <Route path="*" element={<h1>404 - Page Not Found</h1>} />
         </Routes>
