@@ -6,19 +6,53 @@ import Openimg from "../assets/open.png";
 import Footer from './Footer';
 
 const TRACKS = [
-    { 
+   { 
       id: 'aiagents', 
-      title: 'AI Agents & Autonomous Systems', 
-      tag: 'Intelligent autonomous agents', 
-      description: 'Build sophisticated AI agents that can operate autonomously, make decisions, and interact with environments. Develop multi-agent systems, conversational agents, task automation bots, and intelligent assistants that can collaborate, learn from interactions, and execute complex workflows without human intervention.', 
+      title: 'AI Agents & Intelligent Automation', 
+      tag: 'Enterprise automation & intelligent systems', 
+      description: 'Build sophisticated AI agents that automate complex workflows, enhance productivity, and solve real-world enterprise challenges. Develop intelligent systems for banking operations, developer productivity, recruitment optimization, and task automation that combine autonomy with human oversight for optimal results.', 
       imageAlt: 'AI agents and autonomous systems', 
       imageSrc: AgentsImg,
       problemStatements: [
         {
-          title: 'Coming Soon',
-          statement: 'Problem statements will be released soon. Stay tuned for detailed challenge descriptions and requirements.',
-          scenario: '',
-          deliverables: []
+          title: 'Intelligent Workflow Agent for Repetitive Banking Tasks',
+          statement: 'Entry-level banking operations such as voucher verification, ledger updates, and clerical data entry are repetitive and prone to human error. These tasks consume valuable time that could be better used for customer-facing or analytical work. Participants should develop an AI-powered workflow automation agent capable of performing such repetitive tasks efficiently while maintaining human validation checkpoints for accuracy and compliance.',
+          scenario: 'An intelligent agent reads voucher details, verifies transaction data, updates ledgers automatically, and sends the summary to a clerk for final approval — reducing turnaround time and improving efficiency.',
+          deliverables: [
+            'AI Agent for repetitive data entry and verification',
+            'Human-in-the-loop validation system',
+            'Real-time dashboard for task progress and performance'
+          ]
+        },
+        {
+          title: 'KYC Transaction Agent for OTP Delay Mitigation',
+          statement: 'Bank transactions often fail due to OTP delays or mismatches during authentication, affecting user experience and transaction success rates. Participants should design an AI-driven KYC validation agent that minimizes transaction failures by predicting OTP delays, revalidating identity seamlessly, and improving overall transaction reliability.',
+          scenario: 'During an OTP delay, the agent verifies user identity through previously authenticated KYC data, validates risk factors, and allows conditional transaction completion with later confirmation.',
+          deliverables: [
+            'AI-based OTP delay prediction system',
+            'KYC validation and fallback authentication agent',
+            'Transaction success monitoring dashboard'
+          ]
+        },
+        {
+          title: 'Role-Based Resume Personalizer for ATS Optimization',
+          statement: 'Many job seekers fail to pass through Applicant Tracking Systems (ATS) due to non-optimized resumes. Participants should create an AI-powered Resume Personalizer Agent that automatically tailors resumes to specific job roles, improving ATS scores and alignment with role requirements.',
+          scenario: 'A user uploads a base resume; the AI analyzes a "Data Analyst" job description, rephrases skills, optimizes keyword usage, and outputs a role-specific resume ready for submission.',
+          deliverables: [
+            'AI-based resume optimization engine',
+            'Role-specific keyword and skill matching',
+            'ATS score analyzer and improvement dashboard'
+          ]
+        },
+        {
+          title: 'AI-Powered Code Editor with Contextual Assistance',
+          statement: 'Developers often struggle with repetitive coding tasks, debugging, and documentation. Participants should build an AI code editor agent that enhances developer productivity by offering real-time code suggestions, error fixes, documentation generation, and contextual understanding of the project.',
+          scenario: 'A developer writes a Python function; the agent detects inefficiency, suggests optimized code, auto-generates inline documentation, and provides debugging tips — all within the editor.',
+          deliverables: [
+            'AI-assisted code editor',
+            'Context-aware debugging and optimization features',
+            'Documentation auto-generator and performance insights dashboard'
+          ]
         }
       ]
     },
@@ -82,10 +116,79 @@ const TRACKS = [
       imageSrc: webImg,
       problemStatements: [
         {
-          title: 'Coming Soon',
-          statement: 'Problem statements will be released soon. Stay tuned for detailed challenge descriptions and requirements.',
+          title: 'GreyMatter Connect — The Peer Learning Network',
+          subtitle: 'Inspired by Grey Matter\'s intellect and problem-solving brilliance.',
+          statement: 'When the galaxy fell into chaos, knowledge became the rarest energy source. Grey Matter, the smartest of all Ben\'s transformations, realized that real strength lies not in power — but in shared wisdom. He designed GreyMatter Connect, an interstellar learning hub where beings from every planet could teach and learn from each other, using data streams as lessons and shared networks as classrooms. Now, it\'s your turn to build that hub — on Earth. Create a platform where users can find mentors and learners based on specific skills, connect instantly, and collaborate to grow together.',
           scenario: '',
-          deliverables: []
+          deliverables: [
+            'User authentication with mentor/learner roles',
+            'Skill-based matchmaking',
+            'Smart scheduling and chatting interface',
+            'Rating and feedback systems'
+          ],
+          upgrade: '🧠 Ultimate Upgrade (Alien: Echo Echo): Multiply your impact like Echo Echo — integrate real-time video mentoring with WebRTC or build an AI-based skill recommender that echoes users\' learning needs back to the perfect match.'
+        },
+        {
+          title: 'DiamondCivic — Citizen Issue Reporting Portal',
+          subtitle: 'As tough and reliable as Diamondhead — solving civic problems head-on.',
+          statement: 'In Bellwood, chaos spread as public systems started breaking down — roads cracked, lights failed, trash piled up. Ben, in his Diamondhead form, couldn\'t be everywhere at once. So he forged DiamondCivic — a crystal-clear system to help citizens report and track problems in their city, turning chaos into structured order. You, as a developer-hero, must now bring DiamondCivic to life.',
+          scenario: '',
+          deliverables: [
+            'Geolocation with image uploads for reporting',
+            'Categorize and track civic issues',
+            'Admin dashboard for resolution updates',
+            'Push/email notifications to users when their issue progresses'
+          ],
+          upgrade: '💎 Ultimate Upgrade (Alien: Chrome Stone): Reinforce it with Chrome Stone\'s resilience — add a heatmap visualization of reported issues and an AI-based routing engine that directs reports to the nearest active authority node.'
+        },
+        {
+          title: 'XLR8 Board — Real-Time Collaboration Platform',
+          subtitle: 'Move ideas as fast as XLR8 — brainstorm, sketch, and build together.',
+          statement: 'When the Plumbers needed to plan multi-planet defenses, communication lag was the enemy. XLR8 — the speedster of the Omnitrix — zipped between systems faster than thought, coordinating missions in milliseconds. He left behind XLR8 Board, a hyper-speed collaboration zone where teams could draw, ideate, and brainstorm together in real time. Now, Earth\'s developers must rebuild that board to match XLR8\'s pace.',
+          scenario: '',
+          deliverables: [
+            'WebSocket-based real-time drawing',
+            'Room-based sessions and authentication',
+            'Save and export boards for later review'
+          ],
+          upgrade: '💨 Ultimate Upgrade (Alien: FastTrack): Turbocharge your system like FastTrack — integrate live chat and voice sync, or an AI-driven summarizer that instantly compiles meeting ideas into structured notes while users draw and discuss.'
+        },
+        {
+          title: 'Goop Health — Community Wellness Tracker',
+          subtitle: 'Immune like Goop — connecting people through health and care.',
+          statement: 'When a strange virus from the Andromeda system spread across galaxies, Goop used his fluid body to form networks of healing zones, linking infected colonies to medical hubs. His adaptability became the foundation for Goop Health — a system that connects people through health initiatives. Now it\'s Earth\'s turn. Build an app that unites communities for health drives, donation camps, and wellness events, keeping everyone informed and connected.',
+          scenario: '',
+          deliverables: [
+            'Create and map community health events',
+            'Allow volunteer signups',
+            'Notify users of nearby wellness activities'
+          ],
+          upgrade: '🌿 Ultimate Upgrade (Alien: Ghostfreak): Phase into invisibility like Ghostfreak — create a chatbot that quietly guides users to resources, or a data visualization panel that shows real-time community health trends and impact.'
+        },
+        {
+          title: 'Upgrade — Team Productivity Dashboard',
+          subtitle: 'Upgrade your workflow — organize and strike efficiently.',
+          statement: 'When the Omnitrix team started expanding, even Ben needed structure. That\'s when Upgrade merged with a digital system, turning chaotic teamwork into synchronized energy. Upgrade can morph into any tech — and now, so can you. Build a platform that lets teams plan, track, and execute their projects with perfect sync and clarity.',
+          scenario: '',
+          deliverables: [
+            'Role-based login for Admins and Members',
+            'Task creation and progress visualization (Kanban or Gantt)',
+            'Real-time updates using WebSockets'
+          ],
+          upgrade: '⚡ Ultimate Upgrade (Alien: Brainstorm): Shock it with Brainstorm\'s intellect — integrate Google Calendar or Slack APIs to create a lightning-fast workflow that syncs communication, scheduling, and task updates all in one interface.'
+        },
+        {
+          title: 'Rath Arena — Smart Sports Court Booking Platform',
+          subtitle: 'Strong, fast, and competitive — just like Rath.',
+          statement: 'In the Ben 10 universe, even heroes need a sparring ground. Rath\'s arena was always full — with alien warriors reserving training rings, comparing stats, and battling for top rank. Now Rath challenges you to bring that energy to Earth. Develop a sports court booking system that helps users find, reserve, and rate courts nearby — from tennis to basketball to turf arenas.',
+          scenario: '',
+          deliverables: [
+            'List courts with images and details',
+            'Integrate Google Maps for location-based search',
+            'Booking and availability scheduler',
+            'Ratings and reviews for each venue'
+          ],
+          upgrade: '💥 Ultimate Upgrade (Alien: Cannonbolt): Roll in like Cannonbolt — add AI-based locality suggestions, showing users the best-rated, least crowded courts based on their GPS and play patterns.'
         }
       ]
     },
@@ -354,7 +457,7 @@ export default function HackathonTracksPanel() {
                     </div>
                   ) : active.problemStatements && active.problemStatements.length > 0 ? (
                     <div className="mt-4 space-y-4">
-                      {active.id === 'web3' ? (
+                      {(active.id === 'web3' || active.id === 'webdev') ? (
                         <>
                           <div className="flex items-center gap-2 mb-3">
                             <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -383,8 +486,12 @@ export default function HackathonTracksPanel() {
                           )}
 
                           {/* Selected Problem Statement */}
-                          <div className="p-4 bg-emerald-500/10 border border-emerald-400/30 rounded-lg space-y-3">
+                          <div className="p-6 bg-emerald-500/10 border border-emerald-400/30 rounded-lg space-y-4">
                             <h3 className="text-emerald-400 font-bold text-sm sm:text-base">{active.problemStatements[selectedProblem].title}</h3>
+                            
+                            {active.problemStatements[selectedProblem].subtitle && (
+                              <p className="text-xs sm:text-sm text-green-300 italic">{active.problemStatements[selectedProblem].subtitle}</p>
+                            )}
                             
                             <div>
                               <h4 className="text-green-400 font-semibold text-xs sm:text-sm mb-1">Problem Statement:</h4>
@@ -400,7 +507,7 @@ export default function HackathonTracksPanel() {
 
                             {active.problemStatements[selectedProblem].deliverables && active.problemStatements[selectedProblem].deliverables.length > 0 && (
                               <div>
-                                <h4 className="text-green-400 font-semibold text-xs sm:text-sm mb-2">Deliverables:</h4>
+                                <h4 className="text-green-400 font-semibold text-xs sm:text-sm mb-2">Core Mission Objectives:</h4>
                                 <ul className="space-y-1">
                                   {active.problemStatements[selectedProblem].deliverables.map((item, idx) => (
                                     <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-gray-300">
@@ -409,6 +516,12 @@ export default function HackathonTracksPanel() {
                                     </li>
                                   ))}
                                 </ul>
+                              </div>
+                            )}
+
+                            {active.problemStatements[selectedProblem].upgrade && (
+                              <div className="mt-3 p-3 bg-purple-500/10 border border-purple-400/30 rounded-lg">
+                                <p className="text-xs sm:text-sm text-purple-200 leading-relaxed">{active.problemStatements[selectedProblem].upgrade}</p>
                               </div>
                             )}
                           </div>
