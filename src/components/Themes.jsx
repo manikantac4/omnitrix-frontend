@@ -1,38 +1,119 @@
 import React, { useState, useRef, useEffect } from 'react';
 import webImg from "../assets/fourarms.png";
 import Blockimg from "../assets/block.jpg";
-import AgentsImg from "../assets/quantum.png"; // Updated image for AI agents
-import Appimg from "../assets/app.png";
+import AgentsImg from "../assets/quantum.png";
 import Openimg from "../assets/open.png";
-import Cybimg from "../assets/cyber.jpg";
-import Aimlimg from "../assets/AIML.png";
-import Footer from './Footer'; // Import the new Footer component
+import Footer from './Footer';
 
 const TRACKS = [
-    { id: 'aiml', title: 'Artificial Intelligence & Machine Learning', tag: 'Intelligent systems & automation', description: 'Develop AI-powered solutions using cutting-edge machine learning algorithms, neural networks, and deep learning frameworks. Create intelligent systems that can learn, adapt, and provide meaningful insights from complex data patterns.', imageAlt: 'AI and Machine Learning', imageSrc: Aimlimg},
-    { id: 'cybersecurity', title: 'Cybersecurity & Digital Defense', tag: 'Protecting digital infrastructure', description: 'Create robust security solutions to protect digital assets, networks, and sensitive information. Build innovative tools for threat detection, vulnerability assessment, and cyber defense mechanisms.', imageAlt: 'Cybersecurity and digital protection', imageSrc: Cybimg },
-    { id: 'aiagents', title: 'AI Agents & Autonomous Systems', tag: 'Intelligent autonomous agents', description: 'Build sophisticated AI agents that can operate autonomously, make decisions, and interact with environments. Develop multi-agent systems, conversational agents, task automation bots, and intelligent assistants that can collaborate, learn from interactions, and execute complex workflows without human intervention.', imageAlt: 'AI agents and autonomous systems', imageSrc: AgentsImg },
-    { id: 'webdev', title: 'Full-Stack Web Development', tag: 'Building the future of web', description: 'Create innovative web applications using modern frameworks and technologies. Build responsive, scalable, and user-friendly web solutions that address real-world problems.', imageAlt: 'Modern web development interface', imageSrc: webImg },
-    { id: 'web3', title: 'Web3 & Blockchain Innovation', tag: 'Decentralized future technologies', description: 'Build decentralized applications using blockchain technology, smart contracts, and cryptocurrency protocols. Create solutions for DeFi, NFTs, and decentralized governance systems.', imageAlt: 'Blockchain and web3 technology', imageSrc: Blockimg },
-    { id: 'appdev', title: 'Mobile Application Development', tag: 'Native & cross-platform excellence', description: 'Develop high-performance mobile applications for iOS and Android platforms. Create engaging user experiences with native functionality and cross-platform compatibility.', imageAlt: 'Mobile app development', imageSrc: Appimg},
-    { id: 'openinnovation', title: 'Open Innovation Challenge', tag: 'Creative solutions for global problems', description: 'This track allows maximum creativity and impact. Choose your own problem statement and create innovative solutions that can make a real difference in the world.', imageAlt: 'Innovation and creativity', imageSrc: Openimg}
+    { 
+      id: 'aiagents', 
+      title: 'AI Agents & Autonomous Systems', 
+      tag: 'Intelligent autonomous agents', 
+      description: 'Build sophisticated AI agents that can operate autonomously, make decisions, and interact with environments. Develop multi-agent systems, conversational agents, task automation bots, and intelligent assistants that can collaborate, learn from interactions, and execute complex workflows without human intervention.', 
+      imageAlt: 'AI agents and autonomous systems', 
+      imageSrc: AgentsImg,
+      problemStatements: [
+        {
+          title: 'Coming Soon',
+          statement: 'Problem statements will be released soon. Stay tuned for detailed challenge descriptions and requirements.',
+          scenario: '',
+          deliverables: []
+        }
+      ]
+    },
+    { 
+      id: 'web3', 
+      title: 'Web3 & Blockchain Innovation', 
+      tag: 'Decentralized future technologies', 
+      description: 'Build decentralized applications using blockchain technology, smart contracts, and cryptocurrency protocols. Create solutions for DeFi, NFTs, and decentralized governance systems.', 
+      imageAlt: 'Blockchain and web3 technology', 
+      imageSrc: Blockimg,
+      problemStatements: [
+        {
+          title: 'Decentralized Health Prediction & Alerting System',
+          statement: 'Patient health data is scattered across hospitals, wearables, and personal devices, raising concerns about privacy and reliability. Participants should build a platform that stores vital data on-chain or in decentralized storage, allowing off-chain ML models to analyze anonymized inputs and trigger predictive alerts for potential health issues. The system must preserve data integrity while enabling multiple parties — doctors, hospitals, and patients — to access insights securely.',
+          scenario: 'A smartwatch uploads heart rate and glucose data to a decentralized vault; an off-chain AI predicts abnormal trends and alerts doctors or patients through a smart contract-managed dashboard.',
+          deliverables: [
+            'On-chain patient data storage',
+            'Off-chain ML prediction module',
+            'Access-controlled alert dashboard'
+          ]
+        },
+        {
+          title: 'Trace the End Receiver of a Cryptocurrency Transaction',
+          statement: 'Illicit cryptocurrency flows, such as those related to drug trafficking or scams, are increasingly moving through mixers and cross-chain bridges, making it difficult to identify the real recipients. Participants should develop a tool that traces transactions, clusters related addresses, and highlights the most probable end receivers with supporting evidence, while clearly indicating confidence levels. The solution should help law enforcement visualize suspicious flows without compromising legal or privacy standards.',
+          scenario: 'Starting from a flagged wallet, the system maps downstream transactions across multiple chains, identifies likely cash-out points, and generates a ranked list of potential recipients with timestamped evidence.',
+          deliverables: [
+            'On-chain transaction parser',
+            'Address clustering and ranking visualization',
+            'Candidate receiver report'
+          ]
+        },
+        {
+          title: 'Blockchain and Web3 Development Platform',
+          statement: 'Developers face significant friction building and deploying applications across multiple blockchains due to inconsistent APIs, fragmented wallets, and lack of automation. Participants are tasked with designing a next-generation platform that unifies multi-chain interactions, automates smart contract deployment and upgrades, enables large-scale wallet minting, and integrates on-chain agents for autonomous workflows. The platform should provide developers with a seamless experience to build, test, and manage decentralized applications efficiently while maintaining security and reliability.',
+          scenario: 'A developer needs to launch a DAO app across Ethereum, Polygon, and Base, manage thousands of wallets, and trigger cross-chain agent actions — all coordinated from a single dashboard.',
+          deliverables: [
+            'Multi-chain API/SDK for developers',
+            'Smart contract lifecycle manager',
+            'Wallet minting and agent-based automation interface',
+            'Dashboard showing cross-chain operations'
+          ]
+        },
+        {
+          title: 'Predictive Maintenance via Blockchain',
+          statement: 'Industrial equipment downtime leads to huge financial losses, but predictive maintenance is often hampered by centralized data storage and limited cross-stakeholder access. Participants should create a blockchain-based system that securely logs sensor data from equipment, allowing multiple stakeholders — manufacturers, operators, and insurers — to access it for predictive analytics while maintaining data privacy. Off-chain ML models can run failure predictions, with alerts shared to authorized parties.',
+          scenario: 'Factory motor sensors push operational data to a blockchain or IPFS; predictive models detect potential failures and automatically notify maintenance teams, without exposing raw data to unauthorized users.',
+          deliverables: [
+            'On-chain equipment data registry',
+            'Off-chain ML failure prediction',
+            'Multi-stakeholder access control dashboard'
+          ]
+        }
+      ]
+    },
+    { 
+      id: 'webdev', 
+      title: 'Full-Stack Web Development', 
+      tag: 'Building the future of web', 
+      description: 'Create innovative web applications using modern frameworks and technologies. Build responsive, scalable, and user-friendly web solutions that address real-world problems.', 
+      imageAlt: 'Modern web development interface', 
+      imageSrc: webImg,
+      problemStatements: [
+        {
+          title: 'Coming Soon',
+          statement: 'Problem statements will be released soon. Stay tuned for detailed challenge descriptions and requirements.',
+          scenario: '',
+          deliverables: []
+        }
+      ]
+    },
+    { 
+      id: 'openinnovation', 
+      title: 'Open Innovation Challenge', 
+      tag: 'Creative solutions for global problems', 
+      description: 'This track allows maximum creativity and impact. Choose your own problem statement and create innovative solutions that can make a real difference in the world.', 
+      imageAlt: 'Innovation and creativity', 
+      imageSrc: Openimg,
+      problemStatements: []
+    }
 ];
 
 export default function HackathonTracksPanel() {
-  // Always start with first track (index 0)
   const [activeIndex, setActiveIndex] = useState(0);
   const [query, setQuery] = useState('');
   const [titleVisible, setTitleVisible] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [selectedProblem, setSelectedProblem] = useState(0);
   const listRef = useRef(null);
 
-  // Reset to clean state on component mount
   useEffect(() => {
     setActiveIndex(0);
     setQuery('');
     setMobileMenuOpen(false);
+    setSelectedProblem(0);
     
-    // Title animation
     const titleTimer = setTimeout(() => setTitleVisible(true), 300);
     return () => clearTimeout(titleTimer);
   }, []);
@@ -51,6 +132,10 @@ export default function HackathonTracksPanel() {
   useEffect(() => {
     const node = listRef.current?.querySelector(`[data-index="${activeIndex}"]`);
     if (node) node.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
+  }, [activeIndex]);
+
+  useEffect(() => {
+    setSelectedProblem(0);
   }, [activeIndex]);
 
   const handlePrev = () => setActiveIndex(i => Math.max(0, i - 1));
@@ -251,7 +336,7 @@ export default function HackathonTracksPanel() {
                   </div>
                 </div>
 
-                <div className="mt-4 sm:mt-6 text-gray-200 leading-relaxed flex-1">
+                <div className="mt-4 sm:mt-6 text-gray-200 leading-relaxed flex-1 overflow-y-auto max-h-[calc(100vh-400px)]">
                   <p className="text-sm sm:text-base mb-4">{active.description}</p>
 
                   {active.id === 'openinnovation' ? (
@@ -267,6 +352,82 @@ export default function HackathonTracksPanel() {
                         This track offers maximum flexibility and creative freedom.
                       </p>
                     </div>
+                  ) : active.problemStatements && active.problemStatements.length > 0 ? (
+                    <div className="mt-4 space-y-4">
+                      {active.id === 'web3' ? (
+                        <>
+                          <div className="flex items-center gap-2 mb-3">
+                            <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
+                            </svg>
+                            <span className="text-green-400 font-semibold text-base">Problem Statements</span>
+                          </div>
+
+                          {/* Problem Statement Selector */}
+                          {active.problemStatements.length > 1 && (
+                            <div className="flex flex-wrap gap-2 mb-4">
+                              {active.problemStatements.map((ps, idx) => (
+                                <button
+                                  key={idx}
+                                  onClick={() => setSelectedProblem(idx)}
+                                  className={`px-3 py-1.5 rounded-lg text-xs font-medium transition-all duration-300 ${
+                                    selectedProblem === idx
+                                      ? 'bg-green-400/20 text-green-400 border-2 border-green-400/60'
+                                      : 'bg-transparent text-gray-400 border-2 border-green-400/20 hover:border-green-400/40'
+                                  }`}
+                                >
+                                  Problem {idx + 1}
+                                </button>
+                              ))}
+                            </div>
+                          )}
+
+                          {/* Selected Problem Statement */}
+                          <div className="p-4 bg-emerald-500/10 border border-emerald-400/30 rounded-lg space-y-3">
+                            <h3 className="text-emerald-400 font-bold text-sm sm:text-base">{active.problemStatements[selectedProblem].title}</h3>
+                            
+                            <div>
+                              <h4 className="text-green-400 font-semibold text-xs sm:text-sm mb-1">Problem Statement:</h4>
+                              <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">{active.problemStatements[selectedProblem].statement}</p>
+                            </div>
+
+                            {active.problemStatements[selectedProblem].scenario && (
+                              <div>
+                                <h4 className="text-green-400 font-semibold text-xs sm:text-sm mb-1">Example Scenario:</h4>
+                                <p className="text-xs sm:text-sm text-gray-300 leading-relaxed">{active.problemStatements[selectedProblem].scenario}</p>
+                              </div>
+                            )}
+
+                            {active.problemStatements[selectedProblem].deliverables && active.problemStatements[selectedProblem].deliverables.length > 0 && (
+                              <div>
+                                <h4 className="text-green-400 font-semibold text-xs sm:text-sm mb-2">Deliverables:</h4>
+                                <ul className="space-y-1">
+                                  {active.problemStatements[selectedProblem].deliverables.map((item, idx) => (
+                                    <li key={idx} className="flex items-start gap-2 text-xs sm:text-sm text-gray-300">
+                                      <span className="text-green-400 mt-0.5">•</span>
+                                      <span>{item}</span>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
+                          </div>
+                        </>
+                      ) : (
+                        <div className="mt-4 p-3 sm:p-4 bg-emerald-500/10 border border-emerald-400/30 rounded-lg">
+                          <div className="flex items-center gap-2 mb-2">
+                            <svg className="w-4 h-4 sm:w-5 sm:h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
+                            </svg>
+                            <span className="text-emerald-400 font-semibold text-sm">Important Notice</span>
+                          </div>
+                          <p className="text-xs sm:text-sm text-gray-300">
+                            Problem statements will be released on <strong className="text-emerald-400">12 Oct, 9:00 AM</strong>. 
+                            Stay tuned for detailed challenge descriptions and requirements.
+                          </p>
+                        </div>
+                      )}
+                    </div>
                   ) : (
                     <div className="mt-4 p-3 sm:p-4 bg-emerald-500/10 border border-emerald-400/30 rounded-lg">
                       <div className="flex items-center gap-2 mb-2">
@@ -276,7 +437,7 @@ export default function HackathonTracksPanel() {
                         <span className="text-emerald-400 font-semibold text-sm">Important Notice</span>
                       </div>
                       <p className="text-xs sm:text-sm text-gray-300">
-                        Problem statements will be released on <strong className="text-emerald-400"> 12 Oct, 9:00 AM</strong>. 
+                        Problem statements will be released on <strong className="text-emerald-400">12 Oct, 9:00 AM</strong>. 
                         Stay tuned for detailed challenge descriptions and requirements.
                       </p>
                     </div>
