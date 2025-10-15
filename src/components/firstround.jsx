@@ -233,10 +233,10 @@ const IdeaSubmissionComponent = () => {
   );
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white p-4 sm:p-8">
+    <div className="min-h-screen bg-transparent text-white p-4 sm:p-8">
       {isLoading && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50">
-          <div className="bg-gray-800/90 border-2 border-green-400/60 rounded-xl p-8 shadow-2xl shadow-green-400/20">
+          <div className="bg-transparent border-2 border-green-400/60 rounded-xl p-8 shadow-2xl shadow-green-400/20">
             <LoadingAnimation />
           </div>
         </div>
@@ -244,7 +244,7 @@ const IdeaSubmissionComponent = () => {
 
       {showMessage && (
         <div className="fixed inset-0 bg-black/90 backdrop-blur-sm flex items-center justify-center z-50 p-4">
-          <div className={`bg-gray-800/90 border-2 rounded-xl p-8 shadow-2xl max-w-md w-full ${
+          <div className={`bg-transparent border-2 rounded-xl p-8 shadow-2xl max-w-md w-full ${
             messageType === 'success' 
               ? 'border-green-400/60 shadow-green-400/20' 
               : 'border-red-400/60 shadow-red-400/20'
@@ -309,7 +309,7 @@ const IdeaSubmissionComponent = () => {
       </div>
 
       <div className="max-w-4xl mx-auto mb-8">
-        <div className="bg-blue-500/10 border-2 border-blue-400/60 rounded-xl p-6 shadow-lg">
+        <div className="bg-transparent border-2 border-blue-400/60 rounded-xl p-6 shadow-lg">
           <div className="flex items-start space-x-4">
             <svg className="w-8 h-8 text-blue-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
@@ -329,7 +329,7 @@ const IdeaSubmissionComponent = () => {
       </div>
 
       <div className="max-w-4xl mx-auto">
-        <div className="bg-gray-800/50 border-2 border-green-400/30 rounded-xl p-8 hover:border-green-400/60 hover:shadow-lg hover:shadow-green-400/20 transition-all duration-300">
+        <div className="bg-transparent border-2 border-green-400/30 rounded-xl p-8 hover:border-green-400/60 hover:shadow-lg hover:shadow-green-400/20 transition-all duration-300">
           <div className="space-y-8">
             
             <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -342,7 +342,7 @@ const IdeaSubmissionComponent = () => {
                   name="teamId"
                   value={formData.teamId}
                   onChange={handleInputChange}
-                  className={`w-full bg-gray-900/50 border-2 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none transition-all duration-300 ${
+                  className={`w-full bg-transparent border-2 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none transition-all duration-300 ${
                     validationErrors.teamId 
                       ? 'border-red-400/60 focus:border-red-400' 
                       : 'border-green-400/30 focus:border-green-400/60'
