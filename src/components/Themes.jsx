@@ -6,7 +6,7 @@ import Openimg from "../assets/open.png";
 import Footer from './Footer';
 
 const TRACKS = [
-   { 
+    { 
       id: 'aiagents', 
       title: 'AI Agents & Intelligent Automation', 
       tag: 'Enterprise automation & intelligent systems', 
@@ -202,7 +202,6 @@ const TRACKS = [
       problemStatements: []
     }
 ];
-
 export default function HackathonTracksPanel() {
   const [activeIndex, setActiveIndex] = useState(0);
   const [query, setQuery] = useState('');
@@ -457,7 +456,7 @@ export default function HackathonTracksPanel() {
                     </div>
                   ) : active.problemStatements && active.problemStatements.length > 0 ? (
                     <div className="mt-4 space-y-4">
-                      {(active.id === 'web3' || active.id === 'webdev') ? (
+                      {(active.id === 'aiagents' || active.id === 'web3' || active.id === 'webdev') ? (
                         <>
                           <div className="flex items-center gap-2 mb-3">
                             <svg className="w-5 h-5 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
