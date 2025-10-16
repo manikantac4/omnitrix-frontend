@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import omnitrixImg from "../assets/omnitrix.png";
 
 const Ben10ComedyQuiz = () => {
   const questions = [
@@ -160,9 +161,14 @@ const Ben10ComedyQuiz = () => {
                 BEN 10
               </h1>
               <div className="relative w-32 h-32 mx-auto mb-6 bg-transparent rounded-full shadow-lg shadow-green-400/20 flex items-center justify-center border-4 border-green-400/30 animate-pulse">
-                <div className="w-24 h-24 bg-black rounded-full flex items-center justify-center">
-                  <div className="text-4xl">⚡</div>
-                </div>
+                <img 
+                  src={omnitrixImg} 
+                  alt="Omnitrix" 
+                  className="w-full h-full object-contain"
+                  style={{ 
+                    filter: 'drop-shadow(0 0 20px rgba(34, 197, 94, 0.3))'
+                  }}
+                />
               </div>
             </div>
             
@@ -263,7 +269,7 @@ const Ben10ComedyQuiz = () => {
           <div className="bg-transparent backdrop-blur-sm rounded-2xl p-8 border-2 border-green-400/30 shadow-2xl shadow-green-500/20 hover:border-green-400/60 transition-all duration-300 text-center space-y-6">
             <div className="relative">
               <div className="absolute inset-0 bg-green-500 opacity-20 blur-3xl rounded-full"></div>
-              <div className="relative w-32 h-32 mx-auto mb-6 bg-gradient-to-br from-green-500 to-green-700 rounded-full shadow-lg shadow-green-500/50 flex items-center justify-center border-4 border-green-400">
+              <div className="relative w-32 h-32 mx-auto mb-6 bg-transparent rounded-full shadow-lg shadow-green-400/20 flex items-center justify-center border-4 border-green-400/30">
                 <div className="w-24 h-24 bg-black rounded-full flex items-center justify-center">
                   <div className="text-5xl">🏆</div>
                 </div>
