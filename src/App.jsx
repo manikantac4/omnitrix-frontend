@@ -19,6 +19,7 @@ import Form from "./components/Register";
 import Payment from "./components/payment";
 import Gallery2025 from "./components/Gallery";
 import FirstRound from "./components/firstround";
+import Fun from  "./components/Funquiz"
 // ScrollToTop component - must be inside Router
 function ScrollToTop() {
   const location = useLocation();
@@ -64,6 +65,7 @@ function App() {
          <Route path="/payment" element={<Payment/>}/>
          <Route path="/gallery" element={<Gallery2025/>}/>
          <Route path="/first-round" element={<FirstRound/>}/>
+         <Route path='/funquiz' element={<Fun/>}/>
           {/* Optional: 404 Fallback Route */}
           <Route path="*" element={<h1>404 - Page Not Found</h1>} />
         </Routes>
