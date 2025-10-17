@@ -7,7 +7,6 @@ const IdeaSubmissionComponent = () => {
   const [messageType, setMessageType] = useState('success');
   const [messageContent, setMessageContent] = useState('');
   const [validationErrors, setValidationErrors] = useState({});
-  const [pptFile, setPptFile] = useState(null);
   const [formData, setFormData] = useState({
     teamId: '',
     teamName: '',
@@ -56,14 +55,6 @@ const IdeaSubmissionComponent = () => {
       errors.ideaDescription = 'Description must not exceed 500 words';
     }
 
-    if (!pptFile) {
-      errors.pptFile = 'PPT submission is required';
-    } else if (!pptFile.name.match(/\.(ppt|pptx)$/i)) {
-      errors.pptFile = 'Please upload a valid PowerPoint file (.ppt or .pptx)';
-    } else if (pptFile.size > 25 * 1024 * 1024) {
-      errors.pptFile = 'File size must be less than 25MB';
-    }
-
     setValidationErrors(errors);
     return Object.keys(errors).length === 0;
   };
@@ -98,19 +89,6 @@ const IdeaSubmissionComponent = () => {
     }
   };
 
-  const handleFileChange = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      setPptFile(file);
-      if (validationErrors.pptFile) {
-        setValidationErrors(prev => ({
-          ...prev,
-          pptFile: ''
-        }));
-      }
-    }
-  };
-
   const handleSubmit = async () => {
     if (!validateForm()) {
       setMessageType('error');
@@ -124,26 +102,25 @@ const IdeaSubmissionComponent = () => {
 
     setIsLoading(true);
 
-    const submissionData = new FormData();
-    submissionData.append('teamId', formData.teamId.trim());
-    submissionData.append('teamName', formData.teamName.trim());
-    submissionData.append('problemStatement', formData.problemStatement);
-    submissionData.append('ideaDescription', formData.ideaDescription.trim());
-    submissionData.append('pptFile', pptFile);
-
-    console.log('Submitting idea:', {
+    const submissionData = {
       teamId: formData.teamId.trim(),
       teamName: formData.teamName.trim(),
       problemStatement: formData.problemStatement,
-      ideaDescription: formData.ideaDescription.trim().substring(0, 100) + '...',
-      fileName: pptFile.name,
-      fileSize: (pptFile.size / (1024 * 1024)).toFixed(2) + ' MB'
+      ideaDescription: formData.ideaDescription.trim()
+    };
+
+    console.log('Submitting idea:', {
+      ...submissionData,
+      ideaDescription: submissionData.ideaDescription.substring(0, 100) + '...'
     });
 
     try {
-      const response = await fetch('YOUR_BACKEND_ENDPOINT_HERE/api/idea/submit', {
+      const response = await fetch('https://omnitrix-backend-epg5.onrender.com/api/submit/submit-idea', {
         method: 'POST',
-        body: submissionData
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(submissionData)
       });
 
       const data = await response.json();
@@ -163,7 +140,6 @@ const IdeaSubmissionComponent = () => {
           problemStatement: '',
           ideaDescription: ''
         });
-        setPptFile(null);
         setValidationErrors({});
       } else {
         console.error('❌ Submission failed:', data.error);
@@ -199,8 +175,7 @@ const IdeaSubmissionComponent = () => {
     return formData.teamId.trim() &&
            formData.teamName.trim() &&
            formData.problemStatement &&
-           formData.ideaDescription.trim() &&
-           pptFile;
+           formData.ideaDescription.trim();
   };
 
   const getWordCount = (text) => {
@@ -233,7 +208,7 @@ const IdeaSubmissionComponent = () => {
   );
 
   return (
-    <div className="min-h-screen bg-transparent text-white p-4 sm:p-8">
+    <div className="min-h-screen bg-gradient-to-br from-gray-900 via-gray-800 to-gray-900 text-white p-4 sm:p-8">
       {isLoading && (
         <div className="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="bg-transparent border-2 border-green-400/60 rounded-xl p-8 shadow-2xl shadow-green-400/20">
@@ -319,8 +294,6 @@ const IdeaSubmissionComponent = () => {
               <ul className="text-blue-200 space-y-2 text-sm">
                 <li>• Use your registered Team ID and Team Name</li>
                 <li>• Your idea description should be between 50-500 words</li>
-                <li>• Upload a PowerPoint presentation (.ppt or .pptx) of your idea</li>
-                <li>• Maximum file size: 25MB</li>
                 <li>• Make sure all information is accurate before submitting</li>
               </ul>
             </div>
@@ -342,7 +315,7 @@ const IdeaSubmissionComponent = () => {
                   name="teamId"
                   value={formData.teamId}
                   onChange={handleInputChange}
-                  className={`w-full bg-transparent border-2 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none transition-all duration-300 ${
+                  className={`w-full bg-gray-900/50 border-2 rounded-lg px-4 py-3 text-white placeholder-gray-500 focus:outline-none transition-all duration-300 ${
                     validationErrors.teamId 
                       ? 'border-red-400/60 focus:border-red-400' 
                       : 'border-green-400/30 focus:border-green-400/60'
@@ -443,53 +416,6 @@ const IdeaSubmissionComponent = () => {
                 </p>
               </div>
             )}
-
-            <div className="space-y-2">
-              <label className="block text-white font-semibold text-lg">
-                PPT Submission <span className="text-red-400">*</span>
-              </label>
-              <div className="relative">
-                <input
-                  type="file"
-                  accept=".ppt,.pptx"
-                  onChange={handleFileChange}
-                  className="hidden"
-                  id="ppt-upload"
-                />
-                <label
-                  htmlFor="ppt-upload"
-                  className={`flex items-center justify-center w-full bg-gray-900/50 border-2 rounded-lg px-4 py-8 cursor-pointer transition-all duration-300 ${
-                    validationErrors.pptFile 
-                      ? 'border-red-400/60 hover:border-red-400' 
-                      : 'border-green-400/30 hover:border-green-400/60'
-                  }`}
-                >
-                  <div className="text-center">
-                    {pptFile ? (
-                      <>
-                        <svg className="w-12 h-12 text-green-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12h6m-6 4h6m2 5H7a2 2 0 01-2-2V5a2 2 0 012-2h5.586a1 1 0 01.707.293l5.414 5.414a1 1 0 01.293.707V19a2 2 0 01-2 2z" />
-                        </svg>
-                        <p className="text-green-400 font-semibold mb-1">{pptFile.name}</p>
-                        <p className="text-gray-400 text-sm">{(pptFile.size / (1024 * 1024)).toFixed(2)} MB</p>
-                        <p className="text-green-300 text-sm mt-2">Click to change file</p>
-                      </>
-                    ) : (
-                      <>
-                        <svg className="w-12 h-12 text-gray-400 mx-auto mb-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                        </svg>
-                        <p className="text-gray-400 mb-2">Click to upload PowerPoint file</p>
-                        <p className="text-gray-500 text-sm">Supported formats: .ppt, .pptx (Max 25MB)</p>
-                      </>
-                    )}
-                  </div>
-                </label>
-              </div>
-              {validationErrors.pptFile && (
-                <p className="text-red-400 text-sm mt-1">{validationErrors.pptFile}</p>
-              )}
-            </div>
 
             <div className="pt-6">
               <button
