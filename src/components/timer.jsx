@@ -4,7 +4,7 @@ const Timer = () => {
   const alienImages = [null, '👽', '🛸', '🌟', '⚡', '🔥'];
 
   // Configuration
-  const TIMER_DURATION = 13 * 50 * 60; // 10 hours 50 minutes in seconds
+  const TIMER_DURATION = 24 * 60 * 60; // 10 hours 50 minutes in seconds
   const START_TIME_KEY = 'omnitrix_start_time';
   const TIMER_STARTED_KEY = 'omnitrix_timer_started';
   const CHECKED_CHECKPOINTS_KEY = 'omnitrix_checked_checkpoints';
