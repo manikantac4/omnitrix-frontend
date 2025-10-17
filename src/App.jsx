@@ -21,6 +21,7 @@ import Gallery2025 from "./components/Gallery";
 import FirstRound from "./components/firstround";
 import Fun from  "./components/Funquiz";
 import Timer from "./components/timer";
+import TechStackSubmissionComponent from "./components/TechStackSubmissionComponent";
 // ScrollToTop component - must be inside Router
 function ScrollToTop() {
   const location = useLocation();
@@ -68,6 +69,7 @@ function App() {
          <Route path="/first-round" element={<FirstRound/>}/>
          <Route path='/funquiz' element={<Fun/>}/>
          <Route path='/timer' element ={<Timer/>}/>
+         <Route path="/second-round" element={<TechStackSubmissionComponent/>}/>
           {/* Optional: 404 Fallback Route */}
           <Route path="*" element={<h1>404 - Page Not Found</h1>} />
         </Routes>
