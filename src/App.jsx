@@ -9,6 +9,7 @@ import Detail from "./components/detailsection";
 import FAQ from "./components/FAQ";
 import Theme from "./components/Themes";
 import Sponsor from "./components/sponser";
+import MVPSubmissionComponent from "./components/MVPComponent";
 import Contact from "./components/contact";
 import Prize from "./components/prizes";
 import Hacktime from "./components/hacktime";
@@ -70,6 +71,7 @@ function App() {
          <Route path='/funquiz' element={<Fun/>}/>
          <Route path='/timer' element ={<Timer/>}/>
          <Route path="/second-round" element={<TechStackSubmissionComponent/>}/>
+         <Route path="/third-round" element={<MVPSubmissionComponent/>}/>
           {/* Optional: 404 Fallback Route */}
           <Route path="*" element={<h1>404 - Page Not Found</h1>} />
         </Routes>
