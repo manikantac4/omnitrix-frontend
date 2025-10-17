@@ -107,7 +107,7 @@ const MVPSubmissionComponent = () => {
     console.log('Submitting MVP features:', submissionData);
 
     try {
-      const response = await fetch('http://localhost:5000/api/submit/mvp-features', {
+      const response = await fetch('https://omnitrix-backend-epg5.onrender.com/api/submit/mvp-features', {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json'
