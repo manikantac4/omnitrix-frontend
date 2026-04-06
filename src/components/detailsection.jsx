@@ -40,66 +40,14 @@ const MoneyIcon = () => (
 
 // RegisterButton component
 const RegisterButton = ({ isVisible }) => {
-  // const [isTransforming, setIsTransforming] = useState(false);
-
-  // const handleClick = () => {
-  //   setIsTransforming(true);
-  //   setTimeout(() => {
-  //     window.location.href = '/payment';
-  //   }, 3000);
-  // };
-
   return (
     <>
-      {/* Transformation Overlay */}
-      {/* {isTransforming && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/95">
-          <div className="text-center max-w-md mx-auto px-6">
-            <div className="mb-8 relative">
-              <div className="w-32 h-32 mx-auto relative animate-spin-slow">
-                <div className="absolute inset-0 rounded-full border-4 border-green-400" style={{
-                  boxShadow: '0 0 40px rgba(34, 197, 94, 0.8), inset 0 0 40px rgba(34, 197, 94, 0.3)',
-                  animation: 'omnitrixPulse 1s ease-in-out infinite'
-                }}></div>
-                <div className="absolute inset-4 rounded-full border-2 border-green-300/50"></div>
-                <div className="absolute inset-8 rounded-full bg-green-400/20"></div>
-                <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-10 h-10 bg-green-400 rounded-full"
-                  style={{
-                    boxShadow: '0 0 30px rgba(34, 197, 94, 1)',
-                    animation: 'corePulse 0.5s ease-in-out infinite'
-                  }}
-                ></div>
-              </div>
-            </div>
-
-            <div className="space-y-6">
-              <h2 className="text-2xl font-bold text-green-300"
-                style={{ fontFamily: '"Orbitron", monospace' }}>
-                Redirecting to Payment
-              </h2>
-              
-              <p className="text-base text-white/70 leading-relaxed"
-                style={{ fontFamily: '"Orbitron", monospace', fontWeight: '400' }}>
-                Please complete your payment to confirm your registration
-              </p>
-
-              <div className="mt-6 w-full h-1.5 mx-auto bg-gray-800 rounded-full overflow-hidden">
-                <div className="h-full bg-gradient-to-r from-green-500 to-green-300 rounded-full"
-                  style={{ animation: 'loadingBar 3s ease-in-out forwards' }}
-                ></div>
-              </div>
-            </div>
-          </div>
-        </div>
-      )} */}
       <div className="flex justify-center items-center">
         <button
-          // onClick={handleClick}
           className={`group relative px-8 py-4 text-lg md:text-xl font-black tracking-wider uppercase bg-transparent border-3 border-green-400 rounded-full overflow-hidden cursor-pointer transition-all duration-700 hover:scale-105 hover:border-green-300 transform ${
             isVisible ? "translate-y-0 opacity-100" : "translate-y-20 opacity-0"
           }`}
           style={{
-            fontFamily: '"Orbitron", "Exo 2", "Rajdhani", monospace',
             boxShadow: `
               0 0 20px rgba(34, 197, 94, 0.6),
               0 0 40px rgba(34, 197, 94, 0.4),
@@ -155,13 +103,13 @@ const RegisterButton = ({ isVisible }) => {
             ></div>
           </div>
 
-          <span className="relative z-10 text-green-300 group-hover:text-white transition-colors duration-300 drop-shadow-[0_0_10px_rgba(34,197,94,0.8)]">
+          <span className="relative z-10 text-green-300 group-hover:text-white transition-colors duration-300 drop-shadow-[0_0_10px_rgba(34,197,94,0.8)] text-sm sm:text-base font-bold tracking-widest uppercase">
             Proceed to Payment Phase!
           </span>
         </button>
-        <img 
-          src={Heat} 
-          alt="Omnitrix" 
+        <img
+          src={Heat}
+          alt="Omnitrix"
           className="w-40 h-40 object-contain"
         />
       </div>
@@ -218,14 +166,19 @@ const CountdownTimer = ({ isVisible }) => {
       isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
     }`} style={{ transitionDelay: '0.5s' }}>
       <div className="text-center mb-8">
-        <h2 className="text-2xl md:text-3xl font-bold text-green-300 mb-6" style={{ fontFamily: '"Orbitron", monospace' }}>
+        {/* Title matches Timeline: text-3xl sm:text-4xl font-bold tracking-wide uppercase */}
+        <h2 className="text-3xl sm:text-4xl font-bold text-white mb-4 tracking-wide uppercase">
           EVENT STARTS IN
         </h2>
-        
-        <div className="flex justify-center items-center space-x-4 md:space-x-8 flex-wrap gap-4">
+        <div className="w-20 sm:w-24 h-1 bg-gradient-to-r from-green-400 to-emerald-500 mx-auto rounded-full shadow-lg shadow-green-400/50 animate-pulse mb-4"></div>
+        <p className="text-green-400 text-xs sm:text-sm font-medium tracking-wider uppercase">
+          Hackathon Countdown Timer
+        </p>
+
+        <div className="flex justify-center items-center space-x-4 md:space-x-8 flex-wrap gap-4 mt-6">
           {timeUnits.map((unit, index) => (
             <div key={unit.label} className="relative group">
-              <div 
+              <div
                 className="bg-transparent backdrop-blur-sm border-2 border-green-400/50 rounded-2xl p-4 md:p-6 min-w-[80px] md:min-w-[100px] hover:border-green-300/70 transition-all duration-500"
                 style={{
                   boxShadow: `
@@ -236,14 +189,16 @@ const CountdownTimer = ({ isVisible }) => {
                   animationDelay: `${index * 0.2}s`
                 }}
               >
-                <div className="text-3xl md:text-4xl font-black text-green-300 font-mono leading-none mb-2">
+                {/* Number: matches Timeline date style — text-xs sm:text-sm font-semibold */}
+                <div className="text-3xl sm:text-4xl font-bold text-green-400 font-mono leading-none mb-2">
                   {String(unit.value).padStart(2, '0')}
                 </div>
-                <div className="text-xs md:text-sm font-bold text-green-400/80 tracking-widest" style={{ fontFamily: '"Orbitron", monospace' }}>
+                {/* Label: matches Timeline small label — text-xs font-medium tracking-wider uppercase */}
+                <div className="text-xs font-medium text-green-400/80 tracking-wider uppercase">
                   {unit.label}
                 </div>
               </div>
-              
+
               <div className="absolute -top-1 -left-1 w-3 h-3 border-t-2 border-l-2 border-green-300/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="absolute -top-1 -right-1 w-3 h-3 border-t-2 border-r-2 border-green-300/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
               <div className="absolute -bottom-1 -left-1 w-3 h-3 border-b-2 border-l-2 border-green-300/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
@@ -293,7 +248,7 @@ const OmnitrixRegistration = () => {
 
   return (
     <div className="min-h-screen bg-transparent relative overflow-hidden py-16 px-4">
-      
+
       {/* Background Particles */}
       <div className="absolute inset-0 pointer-events-none">
         {[...Array(20)].map((_, i) => (
@@ -330,38 +285,39 @@ const OmnitrixRegistration = () => {
         {/* Countdown Timer */}
         <CountdownTimer isVisible={isVisible} />
 
-        {/* Central Power Core - Register Button */}
-        {/* <div className="flex justify-center mb-16">
-          <RegisterButton isVisible={isVisible} />
-        </div> */}
-
         {/* Event Details - 2x2 Grid */}
         <div className="max-w-4xl mx-auto mb-12">
           <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
             {eventDetails.map((detail, index) => (
-              <div 
+              <div
                 key={index}
                 className={`group relative transform transition-all duration-1000 ${
                   isVisible ? 'translate-y-0 opacity-100' : 'translate-y-20 opacity-0'
-                }`} 
+                }`}
                 style={{ transitionDelay: `${detail.delay}s` }}
               >
-                <div className="p-6 bg-transparent backdrop-blur-sm border border-green-400/30 rounded-xl hover:border-green-400/60 transition-all duration-500 hover:bg-green-400/5 h-full"
-                     onMouseEnter={(e) => {
-                       e.currentTarget.style.transform = 'translateY(-5px)';
-                       e.currentTarget.style.boxShadow = '0 10px 40px rgba(34, 197, 94, 0.15)';
-                     }}
-                     onMouseLeave={(e) => {
-                       e.currentTarget.style.transform = 'translateY(0px)';
-                       e.currentTarget.style.boxShadow = 'none';
-                     }}>
+                <div
+                  className="p-6 bg-transparent backdrop-blur-sm border border-green-400/30 rounded-xl hover:border-green-400/60 transition-all duration-500 hover:bg-green-400/5 h-full"
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.transform = 'translateY(-5px)';
+                    e.currentTarget.style.boxShadow = '0 10px 40px rgba(34, 197, 94, 0.15)';
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.transform = 'translateY(0px)';
+                    e.currentTarget.style.boxShadow = 'none';
+                  }}
+                >
                   <div className="flex items-start space-x-4 h-full">
-                    <div className="text-green-400 group-hover:text-green-300 transition-colors duration-300 flex-shrink-0 mt-1">{detail.icon}</div>
+                    <div className="text-green-400 group-hover:text-green-300 transition-colors duration-300 flex-shrink-0 mt-1">
+                      {detail.icon}
+                    </div>
                     <div className="flex-grow flex flex-col justify-center">
-                      <h3 className="text-lg font-bold text-green-300 mb-2 leading-tight" style={{ fontFamily: '"Orbitron", monospace' }}>
+                      {/* Title: matches Timeline event title — text-xs sm:text-sm font-medium */}
+                      <h3 className="text-sm sm:text-base font-bold text-white mb-2 leading-tight tracking-wide uppercase">
                         {detail.title}
                       </h3>
-                      <p className="text-white/80 text-sm leading-relaxed" style={{ fontFamily: '"Orbitron", monospace', fontWeight: '400' }}>
+                      {/* Subtitle: matches Timeline date label — text-xs sm:text-sm font-semibold text-green-400 */}
+                      <p className="text-green-400 text-xs sm:text-sm font-semibold tracking-wide">
                         {detail.subtitle}
                       </p>
                     </div>
@@ -374,11 +330,15 @@ const OmnitrixRegistration = () => {
 
         {/* Bottom CTA */}
         <div className="text-center mt-12">
-          <div className={`inline-block px-8 py-4 bg-green-900/20 backdrop-blur-sm rounded-full border border-green-400/30 transform transition-all duration-1000 ${
-            isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
-          }`} style={{ transitionDelay: '1.8s' }}>
-            <p className="text-green-300 font-medium text-lg" style={{ fontFamily: '"Orbitron", monospace', fontWeight: '500' }}>
-              Ready to transform your ideas into reality? Join the ultimate coding experience! 
+          <div
+            className={`inline-block px-8 py-4 bg-green-900/20 backdrop-blur-sm rounded-full border border-green-400/30 transform transition-all duration-1000 ${
+              isVisible ? 'translate-y-0 opacity-100' : 'translate-y-10 opacity-0'
+            }`}
+            style={{ transitionDelay: '1.8s' }}
+          >
+            {/* CTA text: matches Timeline subtitle style — text-xs sm:text-sm font-medium tracking-wider */}
+            <p className="text-green-400 text-xs sm:text-sm font-medium tracking-wider uppercase">
+              Ready to transform your ideas into reality? Join the ultimate coding experience!
             </p>
           </div>
         </div>
@@ -386,8 +346,6 @@ const OmnitrixRegistration = () => {
 
       {/* Custom Styles */}
       <style>{`
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@400;700;900&family=Rajdhani:wght@400;700&display=swap');
-
         @keyframes powerCorePulse {
           0%, 100% { 
             box-shadow: 
@@ -458,15 +416,6 @@ const OmnitrixRegistration = () => {
           50% { 
             transform: scale(1.2);
             box-shadow: 0 0 50px rgba(34, 197, 94, 1), 0 0 70px rgba(34, 197, 94, 0.7);
-          }
-        }
-
-        @keyframes textGlow {
-          0%, 100% { 
-            text-shadow: 0 0 20px rgba(34, 197, 94, 0.8);
-          }
-          50% { 
-            text-shadow: 0 0 30px rgba(34, 197, 94, 1), 0 0 40px rgba(34, 197, 94, 0.8);
           }
         }
 
