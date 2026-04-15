@@ -160,7 +160,7 @@ const Timeline = () => {
       date: "17 Oct, 11:00 AM",
       title: "Hackathon Starts",
       eventDate: new Date('2025-10-17T11:00:00'),
-      alwaysGreen: true
+      
     },
     {
       icon: (
@@ -171,7 +171,7 @@ const Timeline = () => {
       date: "18 Oct, 11:00 AM",
       title: "Hackathon Ends",
       eventDate: new Date('2025-10-18T11:00:00'),
-      alwaysGreen: true
+      
     }
   ];
 
