@@ -67,13 +67,13 @@ const SponsorsComponent = () => {
     },
     {
       name: "Pandu ",
-      role: "IEE Web Master",
+      role: "IEEE Web Master",
       image: pandu,
       linkedin: "https://www.linkedin.com/in/pandu-ranga-tummuri-1b1b772a2?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" // Placeholder for LinkedIn URL
     },
    {
       name: "Sahith",
-      role: "TECHNICAL LEAD",
+      role: "Technical lead",
       image: sahith,
       linkedin: "LINKEDIN_PROFILE_URL_SAHITH" // Placeholder for LinkedIn profile
     }
