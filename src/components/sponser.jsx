@@ -11,6 +11,7 @@ import hodImage from "../assets/Hod.jpg";
 import  iEEE from "../assets/ieee.webp";
 import prabhas from "../assets/prabhas.jpg";
 import charan from "../assets/charan.jpg";
+import sahith from "../assets/sahith.jpg";
 import likitha from "../assets/likitha.jpg";
 import acm from "../assets/acm.jpg";
 import mam from "../assets/jaya lakshmi.jpg"; 
@@ -65,16 +66,16 @@ const SponsorsComponent = () => {
       linkedin: "https://www.linkedin.com/in/manojkumar-allu-1537b6242?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" // Placeholder for LinkedIn URL
     },
     {
-      name: "Pandu",
-      role: "Web Master",
+      name: "Pandu ",
+      role: "IEE Web Master",
       image: pandu,
       linkedin: "https://www.linkedin.com/in/pandu-ranga-tummuri-1b1b772a2?utm_source=share&utm_campaign=share_via&utm_content=profile&utm_medium=android_app" // Placeholder for LinkedIn URL
     },
-    {
-      name: "Poojitha",
-      role: "IEEE VICE CHAIR", 
-      image: poojitha,
-      linkedin: "" // Placeholder for LinkedIn URL
+   {
+      name: "Sahith",
+      role: "TECHNICAL LEAD",
+      image: sahith,
+      linkedin: "LINKEDIN_PROFILE_URL_SAHITH" // Placeholder for LinkedIn profile
     }
   ];
 
